@@ -1,0 +1,118 @@
+<!--[*  $Id: mailer_admin_modifyconfig.htm 23981 2008-03-17 10:37:07Z markwest $  *]-->
+<!--[include file="mailer_admin_menu.htm"]-->
+<!--[pnajaxheader nobehaviour=true noscriptaculous=true modname=Mailer filename=mailer_admin_modifyconfig.js]-->
+<div class="pn-admincontainer">
+<div class="pn-adminpageicon"><!--[pnimg modname=core src=configure.gif set=icons/large alt='_MODIFYCONFIG' altml=true]--></div>
+<h2><!--[pnml name="_MODIFYCONFIG"]--></h2>
+<form class="pn-adminform" action="<!--[pnmodurl modname="Mailer" type="admin" func="updateconfig"]-->" method="post" enctype="application/x-www-form-urlencoded">
+<div>
+	<input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Mailer"]-->" />
+    <fieldset>
+    <legend><!--[pnml name=_MAILER_GENERALSETTINGS]--></legend>
+	<div class="pn-adminformrow">
+		<label for="mailer_queuetype"><!--[pnml name="_MAILER_QUEUE_HANDLING"]--></label>
+		<select id="mailer_queuetype" name="queuetype"><!--[html_options options=$queuetypes selected=$queuetype]--></select>
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_mailertype"><!--[pnml name="_MAILER_TRANSPORT"]--></label>
+		<select id="mailer_mailertype" name="mailertype"><!--[html_options options=$mailertypes selected=$mailertype]--></select>
+	</div>
+	<div class="pn-adminformrow">
+		<!--[pnml name=_CHARSET assign=defaultcharset]-->
+		<label for="mailer_charset"><!--[pnml name="_MAILER_CHARSET" charset=$defaultcharset]--></label>
+		<input id="mailer_charset" name="charset" type="text" size="10" maxlength="20" value="<!--[$charset|pnvarprepfordisplay]-->" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_encoding"><!--[pnml name="_MAILER_ENCODING"]--></label>
+        <select id="mailer_encoding" name="encoding">
+            <option value="8bit"<!--[if $encoding eq '8bit']--> selected="selected"<!--[/if]-->>8bit</option>
+            <option value="7bit"<!--[if $encoding eq '7bit']--> selected="selected"<!--[/if]-->>7bit</option>
+            <option value="binary"<!--[if $encoding eq 'binary']--> selected="selected"<!--[/if]-->>binary</option>
+            <option value="base64"<!--[if $encoding eq 'base64']--> selected="selected"<!--[/if]-->>base64</option>
+            <option value="quoted-printable"<!--[if $encoding eq 'quoted-printable']--> selected="selected"<!--[/if]-->>quoted-printable</option>
+        </select>
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_html"><!--[pnml name="_MAILER_CONTENTTYPE"]--></label>
+        <input id="mailer_html" type="checkbox" name="html" value="1"<!--[if $html]--> checked="checked"<!--[/if]--> />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_wordwrap"><!--[pnml name="_MAILER_WORDWRAP"]--></label>
+		<input id="mailer_wordwrap" name="wordwrap" type="text" size="3" maxlength="3" value="<!--[$wordwrap|pnvarprepfordisplay]-->" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_msmailheaders"><!--[pnml name="_MAILER_MSMAILHEADERS"]--></label>
+		<!--[if $msmailheaders eq 1]-->
+			<input id="mailer_msmailheaders" name="msmailheaders" type="checkbox" value="1" checked="checked" />
+		<!--[else]-->
+			<input id="mailer_msmailheaders" name="msmailheaders" type="checkbox" value="1" />
+		<!--[/if]-->
+	</div>
+    </fieldset>
+
+    <fieldset id="mailer_queue_settings">
+    <legend><!--[pnml name=_MAILER_QUEUE_SETTINGS]--></legend>
+    <!--[pnml name="_MAILER_QUEUE_MODE_EXPLANATION"]-->
+	<div class="pn-adminformrow" id="mailer_queue_frequency">
+		<label for="mailer_queuefrequency"><!--[pnml name="_MAILER_QUEUE_FREQUENCY"]--></label>
+		<input id="mailer_queuefrequency" name="queuefrequency" type="text" size="3" maxlength="3" value="<!--[$queuefrequency|pnvarprepfordisplay]-->" />
+	</div>
+	<div class="pn-adminformrow" id="mailer_queue_cronpwd">
+		<label for="mailer_queuecronpwd"><!--[pnml name="_MAILER_QUEUE_CRON_PWD"]--><br /></label>
+		<input id="mailer_queuecronpwd" name="queuecronpwd" type="text" size="10" maxlength="10" value="<!--[$queuecronpwd|pnvarprepfordisplay]-->" />
+		<!--[if $queuecronpwd ne '']-->
+		  <!--[pnml name="_MAILER_CRON_JOB_URL_CALL"]-->: <!--[pnmodurl fqurl="true" modname="Mailer" func="cron" pwd=$queuecronpwd]-->
+		<!--[else]-->
+		  <!--[pnml name="_MAILER_NO_CRON_PWD_STORED_YET"]-->
+		<!--[/if]-->
+	</div>
+	</fieldset>
+
+    <fieldset id="mailer_sendmailsettings">
+    <legend><!--[pnml name=_MAILER_SENDMAILSETTINGS]--></legend>
+	<div class="pn-adminformrow">
+		<label for="mailer_sendmailpath"><!--[pnml name="_MAILER_SENDMAILPATH"]--></label>
+		<input id="mailer_sendmailpath" name="sendmailpath" type="text" size="50" maxlength="50" value="<!--[$sendmailpath|pnvarprepfordisplay]-->" />
+	</div>
+    </fieldset>
+    <fieldset id="mailer_smtpsettings">
+    <legend><!--[pnml name=_MAILER_SMTPSETTINGS]--></legend>
+	<div class="pn-adminformrow">
+		<label for="mailer_smtpserver"><!--[pnml name="_MAILER_SMTPSERVER"]--></label>
+		<input id="mailer_smtpserver" name="smtpserver" type="text" size="30" maxlength="50" value="<!--[$smtpserver|pnvarprepfordisplay]-->" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_smtpport"><!--[pnml name="_MAILER_SMTPPORT"]--></label>
+		<input id="mailer_smtpport" name="smtpport" type="text" size="5" maxlength="5" value="<!--[$smtpport|pnvarprepfordisplay]-->" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_smtptimeout"><!--[pnml name="_MAILER_SMTPTIMEOUT"]--></label>
+		<input id="mailer_smtptimeout" name="smtptimeout" type="text" size="5" maxlength="5" value="<!--[$smtptimeout|pnvarprepfordisplay]-->" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_smtpauth"><!--[pnml name="_MAILER_SMTPAUTH"]--></label>
+		<!--[if $smtpauth eq 1]-->
+		<input id="mailer_smtpauth" name="smtpauth" type="checkbox" value="1" checked="checked" />
+		<!--[else]-->
+		<input onclick="mailer_smtpauth_onchange()" id="mailer_smtpauth" name="smtpauth" type="checkbox" value="1" />
+		<!--[/if]-->
+	</div>
+    <div id="mailer_smtp_authentication">
+	<div class="pn-adminformrow">
+		<label for="mailer_smtpusername"><!--[pnml name="_MAILER_SMTPUSERNAME"]--></label>
+		<input id="mailer_smtpusername" name="smtpusername" type="text" size="30" maxlength="50" value="<!--[$smtpusername|pnvarprepfordisplay]-->" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_smtppassword"><!--[pnml name="_MAILER_SMTPPASSWORD"]--></label>
+		<input id="mailer_smtppassword" name="smtppassword" type="password" size="30" maxlength="30" value="<!--[$smtppassword|pnvarprepfordisplay]-->" />
+	</div>
+    </div>
+    </fieldset>
+    <!--[pnmodcallhooks hookobject=module hookaction=modifyconfig module=Mailer]-->
+    <div class="pn-adminformrow pn-adminformbuttons">
+    	<!--[pnbutton src=button_ok.gif set=icons/small alt="_UPDATECONFIG" title="_UPDATECONFIG"]-->
+        <a href="<!--[pnmodurl modname=Mailer type=admin]-->"><!--[pnimg modname=core src=button_cancel.gif set=icons/small altml=true titleml=true alt="_CANCEL" title="_CANCEL"]--></a>
+    </div>
+</div>
+</form>
+</div>

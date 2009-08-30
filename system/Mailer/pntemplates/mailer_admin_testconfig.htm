@@ -1,0 +1,51 @@
+<!--[*  $Id: mailer_admin_testconfig.htm 25500 2009-03-28 12:45:40Z herr.vorragend $  *]-->
+<!--[include file="mailer_admin_menu.htm"]-->
+<div class="pn-admincontainer">
+<div class="pn-adminpageicon"><!--[pnimg modname=core src=inbox.gif set=icons/large alt='_MAILER_TESTCONFIG' altml=true]--></div>
+<h2><!--[pnml name=_MAILER_TESTCONFIG]--></h2>
+<form class="pn-adminform" action="<!--[pnmodurl modname="Mailer" type="admin" func="sendmessage"]-->" method="post" enctype="application/x-www-form-urlencoded">
+<div>
+	<input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Mailer"]-->" />
+	<div class="pn-adminformrow">
+		<label for="mailer_fromname"><!--[pnml name="_MAILER_FROMNAME"]--></label>
+		<span id="mailer_fromname"><!--[pnconfiggetvar name=sitename]--></span>
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_fromname"><!--[pnml name="_MAILER_FROMADDRESS"]--></label>
+		<span id="mailer_fromaddress"><!--[pnconfiggetvar name=adminmail]--></span>
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_toname"><!--[pnml name="_MAILER_TONAME"]--></label>
+		<input id="mailer_toname" name="toname" type="text" size="30" maxlength="50" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_toname"><!--[pnml name="_MAILER_TOADDRESS"]--></label>
+		<input id="mailer_toaddress" name="toaddress" type="text" size="30" maxlength="50" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_subject"><!--[pnml name="_MAILER_SUBJECT"]--></label>
+		<input id="mailer_subject" name="subject" type="text" size="30" maxlength="50" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_html"><!--[pnml name="_MAILER_HTML"]--></label>
+		<input id="mailer_html" type="checkbox" name="html" value="1" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_pnmail"><!--[pnml name="_MAILER_PNMAIL"]--></label>
+		<input id="mailer_pnmail" type="checkbox" name="pnmail" value="1" />
+	</div>
+	<div class="pn-adminformrow">
+		<label for="mailer_noqueue"><!--[pnml name="_MAILER_NO_QUEUE_MODE"]--></label>
+		<input id="mailer_noqueue" type="checkbox" name="noqueue" value="1" />
+	</div>
+	<div class="pn-formrow">
+		<label for="mailer_body"><!--[pnml name="_MAILER_BODY"]--></label>
+		<textarea id="mailer_body" class="pn-form-text" name="body" cols="50" rows="10"></textarea>
+	</div>
+    <div class="pn-adminformrow pn-adminformbuttons">
+        <!--[pnbutton src=button_ok.gif set=icons/small alt="_MAILER_TESTCONFIG" title="_MAILER_TESTCONFIG"]-->
+        <a href="<!--[pnmodurl modname=Mailer type=admin]-->"><!--[pnimg modname=core src=button_cancel.gif set=icons/small altml=true titleml=true alt="_CANCEL" title="_CANCEL"]--></a>
+    </div>
+</div>
+</form>
+</div>

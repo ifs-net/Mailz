@@ -1,0 +1,40 @@
+<!--[*  $Id:  $  *]-->
+<!--[include file="mailer_admin_menu.htm"]-->
+<!--[pnajaxheader nobehaviour=true noscriptaculous=true modname=Mailer filename=mailer_admin_modifyconfig.js]-->
+<div class="pn-admincontainer">
+<div class="pn-adminpageicon"><!--[pnimg modname=core src=configure.gif set=icons/large alt='_MODIFYCONFIG' altml=true]--></div>
+<h2><!--[pnml name="_MAILER_TEMPLATES"]--></h2>
+<p>
+    <!--[pnml name="_MAILER_TEMPLATE_EXPLANATION"]-->:
+    <ul>
+        <li>mailer_text_header.htm (<!--[pnml name="_MAILER_TPL_HEADER_TEXT"]-->)</li>
+        <li>mailer_text_footer.htm (<!--[pnml name="_MAILER_TPL_FOOTER_TEXT"]-->)</li>
+        <li>mailer_html_header.htm (<!--[pnml name="_MAILER_TPL_HEADER_HTML"]-->)</li>
+        <li>mailer_html_footer.htm (<!--[pnml name="_MAILER_TPL_FOOTER_HTML"]-->)</li>
+    </ul>
+</p>
+<p>
+    <!--[pnml name="_MAILER_DEV_OVERRIDE_OPTION"]-->
+</p>
+
+<h2><!--[pnml name="_MAILER_TEMPLATES_PREVIEW"]--></h2>
+<p><!--[pnml name="_MAILER_TPL_USAGE_HINTS"]--></p>
+
+<h2><!--[pnml name="_MAILER_TEMPLATES_TEXT_PREVIEW"]--></h2>
+<!--[if $text_preview ne '']-->
+    <div class="mailer_plaintext">
+    <!--[$text_preview|pnvarprepfordisplay|nl2br]-->
+    </div>
+<!--[else]-->
+    <p><!--[pnml name="_MAILER_NO_TPL_FOUND"]--></p>
+<!--[/if]-->
+<p><!--[pnml name="_MAILER_TPL_TEXT_LINEBREAKS_HINT"]--></p>
+<h2><!--[pnml name="_MAILER_TEMPLATES_HTML_PREVIEW"]--></h2>
+<!--[if $html_preview ne '']-->
+        <iframe src="<!--[pnmodurl modname="Mailer" type="admin" func="templates" html="1"]-->" width="100%" height="500" name="HTML_PREVIEW">
+            Please update your browser software. Your software is outdated or does not support IFRAMES.
+        </iframe>
+<!--[else]-->
+    <p><!--[pnml name="_MAILER_NO_TPL_FOUND"]--></p>
+<!--[/if]-->
+</div>
