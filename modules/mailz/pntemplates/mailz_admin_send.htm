@@ -1,0 +1,54 @@
+<!--[include file="mailz_admin_header.htm"]-->
+
+
+<!--[if $id gt 0]-->
+
+    <h1><!--[$title|pnvarprepfordisplay]--></h1>
+    <ul>
+    <!--[if $contenttype ne 't']-->
+    <li><a target="_blanc" href="<!--[pnmodurl modname="mailz" type="admin" func="preview" id=$id contenttype="h"]-->"><!--[pnml name="_MAILZ_OPEN_PREVIEW"]--> (html)</a></li>
+    <!--[/if]-->
+    <!--[if $contenttype ne 'h']-->
+    <li><a target="_blanc" href="<!--[pnmodurl modname="mailz" type="admin" func="preview" id=$id contenttype="t"]-->"><!--[pnml name="_MAILZ_OPEN_PREVIEW"]--> (text)</a></li>
+    <!--[/if]-->
+    </ul>
+
+    <!--[pnform]-->
+    <!--[pnformvalidationsummary]-->
+    
+    <p>
+    <!--[pnformlabel for="uname" text="_MAILZ_SEND_TO_USER"]-->:<br />
+    <!--[pnformtextinput id="uname" textMode="singleLine" maxLength="255" mandatory="1"]--><br />
+    </p>
+    
+    <p>
+    <!--[pnformbutton commandName="update" text="_MAILZ_SEND"]--> 
+    </p>
+    <!--[/pnform]-->
+
+    <h3><!--[pnml name="_MAILZ_SEND_PROCESS"]--></h3>
+    <p>
+        <a href="<!--[pnmodurl modname="mailz" type="admin" func="send" id=$id authid=$authid send="1"]-->"><!--[pnml name="_MAILZ_SEND_NOW"]--></a> (<!--[pnml name="_MAILZ_SENDING_HINTS"]-->)
+    </p>
+    
+<!--[else]-->
+
+    <!--[if $newsletters|@count eq 0]-->
+    	<ul>
+    		<li><!--[pnml name="_MAILZ_NO_NEWSLETTERS"]--></li>
+    	</ul>
+    <!--[else]-->
+
+    <!--[pnml name="_MAILZ_LOAD_NEWSLETTER_FIRST"]-->
+
+    <ul>
+	<!--[foreach from=$newsletters item="item"]-->
+	   <li>
+	       <a href="<!--[pnmodurl modname="mailz" type="admin" func="send" id=$item.id]-->"><!--[$item.title|pnvarprepfordisplay]--></a>
+	   </li>
+	<!--[/foreach]-->
+    </ul>
+    <!--[/if]-->
+    
+<!--[/if]-->
+<!--[include file="mailz_admin_footer.htm"]-->

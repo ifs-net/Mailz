@@ -1,0 +1,36 @@
+<!--[include file="mailz_admin_header.htm"]-->
+
+<p>
+<!--[pnml name="_MAILZ_BACKEND_SETTINGS"]-->
+</p>
+
+
+<!--[pnform]-->
+
+    <!--[pnformvalidationsummary]-->
+
+    <p>
+    <!--[pnformlabel for="myprofile_name" text=_MAILZ_MYPROFILE_NAME_FIELD]-->:<br />
+    <!--[pnformdropdownlist id="myprofile_name" items=$fields_items]--><br />
+    </p>
+
+    <p>
+    <!--[pnml name="_MAILZ_REPLACEMENTS"]-->
+    <ul>
+        <li>%%UID%% [user id]</li>
+        <li>%%UNAME [username]</li>
+        <li>%%EMAIL%% [user email address]</li>
+    </ul>
+    </p>
+
+    <p>
+        <!--[pnml name="_MAILZ_CRON_URL"]-->: <!--[pnmodurl fqurl="true" modname="mailz" type="user" func="cron" id="NEWSLETTER_ID" pwd="CRON_PASSWORD"]-->
+    </p>
+
+    <p>
+    <!--[pnformbutton commandName="update" text="_MAILZ_STORE"]--> 
+    </p>
+
+<!--[/pnform]-->
+
+<!--[include file="mailz_admin_footer.htm"]-->

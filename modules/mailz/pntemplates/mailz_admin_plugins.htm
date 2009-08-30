@@ -1,0 +1,210 @@
+<!--[include file="mailz_admin_header.htm"]-->
+
+<!--[pnajaxheader prototype="1" scriptaculous="1"]-->
+
+<p>
+<!--[pnml name="_MAILZ_PLUGINS_DESCRIPTION"]-->
+</p>
+
+<!--[if $newsletter.id gt 0]-->
+
+<h3><!--[pnml name="_MAILZ_PLUGIN_MANAGEMENT_FOR"]--> <!--[$newsletter.title|pnvarprepfordisplay]--></h3>
+
+
+<!--[if $id gt 0]-->
+    <!--[if $preview eq '']-->
+        <div class="pn-informationmsg">
+            <fieldset><legend><!--[pnml name="_MAILZ_PLUGIN_DESCRIPTION"]--></legend>
+            <span class="mailz_important"><!--[$plugindata.title]-->:</span><br />
+            <!--[$plugindata.description]-->
+            </fieldset>
+        </div>
+    <!--[/if]-->
+    <!--[if $preview ne '']-->
+        <fieldset><legend><!--[pnml name="_MAILZ_PREVIEW"]--></legend>
+            <!--[if $preview eq 't']--><pre><!--[/if]-->
+                <!--[pnmodapifunc modname="mailz" type="common" func="getPluginContent" contenttype=$preview id=$id nid=$newsletter.id last=$newsletter.last]-->
+            <!--[if $preview eq 't']--></pre><!--[/if]-->
+        </fieldset>
+    <ul>
+        <li><a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" nl=$newsletter.id]-->"><!--[pnml name="_MAILZ_BACK"]--></a></li>
+    </ul>
+
+    <!--[else]-->
+
+    <!--[pnform]-->
+    <!--[pnformvalidationsummary]-->
+
+    <p>
+    <!--[pnformlabel for="title" text="_MAILZ_TITLE"]-->:<br />
+    <!--[pnformtextinput id="title" textMode="singleLine" maxLength="255" mandatory="1"]--><br />
+    </p>
+
+    <!--[if $newsletter.contenttype ne 't']-->
+        <p>
+        <!--[pnformlabel for="header_html" text="_MAILZ_HEADER_HTML"]-->:<br />
+        <!--[pnformtextinput id="header_html" textMode="multiLine" rows="4" cols="40" mandatory="0"]--><br />
+        </p>
+
+        <p>
+        <!--[pnformlabel for="footer_html" text="_MAILZ_FOOTER_HTML"]-->:<br />
+        <!--[pnformtextinput id="footer_html" textMode="multiLine" rows="4" cols="40" mandatory="0"]--><br />
+        </p>
+    <!--[/if]-->
+
+    <!--[if $newsletter.contenttype ne 'h']-->
+        <p>
+        <!--[pnformlabel for="header_text" text="_MAILZ_HEADER_TEXT"]-->:<br />
+        <!--[pnformtextinput id="header_text" textMode="multiLine" rows="4" cols="40" mandatory="0"]--><br />
+        </p>
+
+        <p>
+        <!--[pnformlabel for="footer_text" text="_MAILZ_FOOTER_TEXT"]-->:<br />
+        <!--[pnformtextinput id="footer_text" textMode="multiLine" rows="4" cols="40" mandatory="0"]--><br />
+        </p>
+    <!--[/if]-->
+    
+    <p>
+    <!--[pnformlabel for="params" text="_MAILZ_PLUGIN_PARAMS"]-->:<br />
+    <!--[pnformtextinput id="params" textMode="singleLine" maxLength="999" mandatory="0"]--><br />
+    </p>
+
+    <p>
+    <!--[pnformlabel for="inactive" text=_MAILZ_IS_INACTIVE]-->:<br />
+    <!--[pnformdropdownlist id="inactive" items=$inactive_items]--><br />
+    </p>
+
+	<p>
+	<!--[pnformcheckbox id="delete" checked="0"]-->
+	<!--[pnformlabel for="delete" text=_MAILZ_DELETE]-->
+	</p>
+
+    <p>
+    <!--[pnformbutton commandName="update" text="_MAILZ_STORE"]--> 
+    <!--[pnformbutton commandName="back" text="_MAILZ_BACK"]--> 
+    </p>
+    <!--[/pnform]-->
+
+    <!--[/if]-->
+<!--[else]-->
+
+    <p>
+    <!--[pnml name="_MAILZ_PLUGIN_USE_TEXT"]-->
+    </p>
+
+    <div class="mailz_link mailz_hidden" id="mailz_pluginopener">
+        <img src="images/icons/extrasmall/agt_forward.gif" /> <!--[pnml name="_MAILZ_SHOW_PLUGINLIST"]-->
+    </div>
+    <div id="mailz_pluginlist">
+    <ul>
+    <!--[foreach from=$plugins item="plugin"]-->
+        <li>
+        <strong><!--[$plugin.title|pnvarprepfordisplay]-->:</strong><br />
+        <!--[$plugin.description|pnvarprepfordisplay]--><br />
+        <a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" nl=$newsletter.id action="add" mod=$plugin.module pluginid=$plugin.pluginid]-->"><!--[pnml name="_MAILZ_ADD"]--></a>
+        </li>
+    <!--[/foreach]-->
+    </ul>
+    </div>
+    <div class="mailz_link mailz_hidden" id="mailz_plugincloser">
+        <img src="images/icons/extrasmall/agt_stop.gif" /> <!--[pnml name="_MAILZ_HIDE_PLUGINLIST"]-->
+    </div>
+    <!--[if $plugins|@count eq 0]-->
+    	<ul>
+    		<li><!--[pnml name="_MAILZ_NO_PLUGINS"]--></li>
+    	</ul>
+    <!--[else]-->
+    	<table class="mailz_table">
+    		<tr>
+    			<th><!--[pnml name="_MAILZ_PL_ID"]--></th>
+    			<th><!--[pnml name="_MAILZ_POSITION"]--></th>
+    			<th><!--[pnml name="_MAILZ_MODULENAME"]--></th>
+    			<th><!--[pnml name="_MAILZ_TITLE"]--></th>
+    			<th><!--[pnml name="_MAILZ_ACTIVE"]--></th>
+		      	<th><!--[pnml name="_MAILZ_ACTION"]--></th>
+    		</tr>
+    	<!--[foreach from=$nl_plugins item="item"]-->
+    		<tr style="background-color: #<!--[cycle values="eee,ddd"]-->">
+    			<td><!--[$item.id]--></td>
+    			<td>
+                    <!--[if $item.previous gt 0]-->
+                        <a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" nl=$newsletter.id action="switch" p1=$item.id p2=$item.previous]-->"><img src="modules/mailz/pnimages/up.gif" /></a>
+                    <!--[/if]-->
+                    <!--[if $item.next gt 0]-->
+                        <a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" nl=$newsletter.id action="switch" p1=$item.id p2=$item.next]-->"><img src="modules/mailz/pnimages/down.gif" /></a>
+                    <!--[/if]-->
+                </td>
+    			<td><!--[$item.module|pnvarprepfordisplay]--></td>
+    			<td><!--[$item.title|pnvarprepfordisplay]--></td>
+    			<td>
+                    <!--[if $item.inactive eq 0]-->
+                        <!--[pnml name="_MAILZ_YES"]-->
+                    <!--[else]-->
+                        <!--[pnml name="_MAILZ_NO"]-->
+                    <!--[/if]-->
+                </td>
+                    <td>
+    				<a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" id=$item.id nl=$newsletter.id]-->"><!--[pnml name="_MAILZ_MODIFY"]--></a><br />
+    				<!--[pnml name="_MAILZ_PREVIEW"]-->: 
+                    <!--[if $newsletter.contenttype ne 't']-->
+                        <a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" preview="h" id=$item.id nl=$newsletter.id]-->"><!--[pnml name="_MAILZ_PREVIEW_HTML"]--></a>
+                    <!--[/if]-->
+                    <!--[if $newsletter.contenttype eq 'c']-->, <!--[/if]-->
+                    <!--[if $newsletter.contenttype ne 'h']-->
+                    <a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" preview="t" id=$item.id nl=$newsletter.id]-->"><!--[pnml name="_MAILZ_PREVIEW_TEXT"]--></a>
+                    <!--[/if]-->
+    			</td>
+	   	</tr>
+        	<!--[/foreach]-->
+    	</table>
+    <!--[/if]-->
+
+
+
+<!--[/if]-->
+
+
+
+<!--[else]-->
+
+    <div class="pn-informationmsg"><!--[pnml name="_MAILZ_LOAD_NL_FIRST"]--></div>
+    <ul>    
+    <!--[foreach from=$newsletters item="item"]-->
+        <li><a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" nl=$item.id]-->"><!--[$item.title|pnvarprepfordisplay]--></a></li>
+    <!--[foreachelse]-->
+        <li><!--[pnml name="_MAILZ_NO_NEWSLETTERS"]--></li>
+    <!--[/foreach]-->
+    </ul>
+    
+<!--[/if]-->
+
+<!--[include file="mailz_admin_footer.htm"]-->
+
+<!--[if $id gt 0]-->
+<!--[else]-->
+<script type="text/javascript" >
+
+    function mailz_listeners() {
+        $('mailz_pluginopener').removeClassName('mailz_hidden');
+        $('mailz_plugincloser').removeClassName('mailz_hidden');
+        $('mailz_plugincloser').hide();
+        $('mailz_pluginlist').hide();
+		Event.observe('mailz_pluginopener', 'click', function(event) {
+        	new Effect.BlindUp('mailz_pluginopener', { delay: 0.1 });
+        	new Effect.BlindDown('mailz_pluginlist', { delay: 0.1 });
+        	new Effect.BlindDown('mailz_plugincloser', { delay: 0.1 });
+		  	return false;
+		});					
+		Event.observe('mailz_plugincloser', 'click', function(event) {
+        	new Effect.BlindUp('mailz_pluginlist', { delay: 0.1 });
+        	new Effect.BlindUp('mailz_plugincloser', { delay: 0.1 });
+        	new Effect.BlindDown('mailz_pluginopener', { delay: 0.1 });
+		  	return false;
+		});					
+        
+    }
+
+    mailz_listeners();
+    
+</script>
+<!--[/if]-->

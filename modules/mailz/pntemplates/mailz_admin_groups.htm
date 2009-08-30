@@ -1,0 +1,97 @@
+<!--[include file="mailz_admin_header.htm"]-->
+
+<p>
+<!--[pnml name="_MAILZ_GROUP_DESCRIPTION"]-->
+</p>
+
+
+<!--[pnform]-->
+<!--[pnformvalidationsummary]-->
+
+<p>
+<!--[pnformlabel for="title" text="_MAILZ_GROUP_TITLE"]-->:<br />
+<!--[pnformtextinput id="title" textMode="singleLine" maxLength="125" mandatory="1"]--><br />
+</p>
+
+<p>
+<!--[pnformlabel for="description" text="_MAILZ_DESCRIPTION"]-->:<br />
+<!--[pnformtextinput id="description" textMode="multiLine" rows="4" cols="40" mandatory="0"]--><br />
+</p>
+
+<p>
+<!--[pnformlabel for="query" text="_MAILZ_SQL_QUERY"]-->:<br />
+<!--[pnformtextinput id="query" textMode="multiLine" rows="4" cols="40" mandatory="0"]--><br />
+<!--[pnml name="_MAILZ_SQL_REPLACEMENTS"]-->:
+<ul>
+<li>$$$DAY$$$ => <!--[pnml name="_MAILZ_CUR_DAY"]--></li>
+<li>$$$MONTH$$$ => <!--[pnml name="_MAILZ_CUR_MONTH"]--></li>
+<li>$$$YEAR$$$ => <!--[pnml name="_MAILZ_CUR_YEAR"]--></li>
+</ul>
+
+</p>
+
+<p>
+<!--[pnformlabel for="api" text="_MAILZ_API_CALL"]-->:<br />
+<!--[pnformtextinput textMode="singleLine" maxLength="255" id="api" mandatory="0"]--><br />
+</p>
+
+<!--[if $id gt 0]-->
+    <p>
+    <!--[pnformcheckbox id="delete" checked="0"]-->
+    <!--[pnformlabel for="delete" text=_MAILZ_DELETE]-->
+    </p>
+<!--[/if]-->
+
+<p>
+<!--[pnformbutton commandName="update" text="_MAILZ_STORE"]--> 
+</p>
+<!--[/pnform]-->
+
+
+<!--[if $groups|@count eq 0]-->
+	<ul>
+		<li><!--[pnml name="_MAILZ_NO_GROUPS"]--></li>
+	</ul>
+<!--[else]-->
+
+	<table class="mailz_table">
+		<tr>
+			<th><!--[pnml name="_MAILZ_GROUP_ID"]--></th>
+			<th><!--[pnml name="_MAILZ_TITLE"]--></th>
+			<th><!--[pnml name="_MAILZ_DESCRIPTION"]--></th>
+			<th><!--[pnml name="_MAILZ_QUERY"]--></th>
+			<th><!--[pnml name="_MAILZ_API"]--></th>
+			<th><!--[pnml name="_MAILZ_RANGE"]--></th>
+			<th><!--[pnml name="_MAILZ_ACTION"]--></th>
+		</tr>
+	<!--[foreach from=$groups item="item"]-->
+		<tr style="background-color: #<!--[cycle values="eee,ddd"]-->">
+			<td><!--[$item.id]--></td>
+			<td><!--[$item.title|pnvarprepfordisplay]--></td>
+			<td><!--[$item.description|pnvarprepfordisplay|truncate:150:'...']--></td>
+			<td>
+                <!--[if $item.query ne '']-->
+                    <!--[pnml name="_MAILZ_YES"]-->
+                <!--[else]-->
+                    <!--[pnml name="_MAILZ_NO"]-->
+                <!--[/if]-->
+            </td>
+			<td>
+                <!--[if $item.api ne '']-->
+                    <!--[pnml name="_MAILZ_YES"]-->
+                <!--[else]-->
+                    <!--[pnml name="_MAILZ_NO"]-->
+                <!--[/if]-->
+            </td>
+            <td><!--[groupitems id=$item.id]--></td>
+			<td>
+				<a href="<!--[pnmodurl modname="mailz" type="admin" func="groups" id=$item.id]-->"><!--[pnml name="_MAILZ_MODIFY"]--></a>
+			</td>
+		</tr>
+	<!--[/foreach]-->
+	</table>
+
+<!--[/if]-->
+
+
+<!--[include file="mailz_admin_footer.htm"]-->
