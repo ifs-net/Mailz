@@ -20,7 +20,7 @@
 </p>
 
 <p>
-<!--[pnformlabel for="description" text="_MAILZ_DESCRIPTION"]-->:<br />
+<!--[pnformlabel for="description" text="_MAILZ_NL_DESCRIPTION"]-->:<br />
 <!--[pnformtextinput id="description" textMode="multiLine" rows="4" cols="40" mandatory="0"]--><br />
 </p>
 
@@ -81,7 +81,7 @@
 
 <p>
 <!--[pnformlabel for="groups" text=_MAILZ_TARGET_GROUPS]-->:<br />
-<!--[pnformcheckboxlist id="groups" items=$groups_items mandatory="1"]--><br />
+<!--[pnformcheckboxlist id="groups" items=$groups_items mandatory="0"]--><br />
 </p>
 
 <p>
@@ -98,70 +98,58 @@
 <!--[if $id gt 0]-->
 <!--[else]-->
 
-<!--[if $newsletters|@count eq 0]-->
-	<ul>
-		<li><!--[pnml name="_MAILZ_NO_NEWSLETTERS"]--></li>
-	</ul>
-<!--[else]-->
+    <!--[if $newsletters|@count eq 0]-->
+    	<ul>
+    		<li><!--[pnml name="_MAILZ_NO_NEWSLETTERS"]--></li>
+    	</ul>
+    <!--[else]-->
 
-	<table class="mailz_table">
-		<tr>
-			<th><!--[pnml name="_MAILZ_ID"]--></th>
+    	<table class="mailz_table">
+    		<tr>
+    			<th><!--[pnml name="_MAILZ_ID"]--></th>
 			<th><!--[pnml name="_MAILZ_TITLE"]--></th>
-			<th><!--[pnml name="_MAILZ_NL_DESCRIPTION"]--></th>
-			<th><!--[pnml name="_MAILZ_NL_USE_ARCHIVE"]--></th>
-			<th><!--[pnml name="_MAILZ_NL_CONTENT_TYPE"]--></th>
-			<th><!--[pnml name="_MAILZ_NL_PUBLIC"]--></th>
-			<th><!--[pnml name="_MAILZ_ACTIVE"]--></th>
-			<th><!--[pnml name="_MAILZ_TARGET_GROUPS"]--></th>
-			<th><!--[pnml name="_MAILZ_ACTION"]--></th>
-		</tr>
-	<!--[foreach from=$newsletters item="item"]-->
-		<tr style="background-color: #<!--[cycle values="eee,ddd"]-->">
-			<td><!--[$item.id]--></td>
-			<td><!--[$item.title|pnvarprepfordisplay]--></td>
-			<td><!--[$item.description|pnvarprepfordisplay|truncate:50:'...']--></td>
-			<td>
-                <!--[if $item.archive eq 1]-->
-                    <!--[pnml name="_MAILZ_YES"]-->
-                <!--[else]-->
-                    <!--[pnml name="_MAILZ_NO"]-->
-                <!--[/if]-->
-            </td>
-			<td>
-                <!--[nlcontenttype newsletter=$item]-->
-            </td>
-            <td>
-                <!--[if $item.public eq 1]-->
-                    <!--[pnml name="_MAILZ_YES"]-->
-                <!--[else]-->
-                    <!--[pnml name="_MAILZ_NO"]-->
-                <!--[/if]-->
-            </td>
-            <td>
-                <!--[if $item.inactive eq 0]-->
-                    <!--[pnml name="_MAILZ_YES"]-->
-                <!--[else]-->
-                    <!--[pnml name="_MAILZ_NO"]-->
-                <!--[/if]-->
-            </td>
-            <td>
-                <!--[pnmodapifunc modname="mailz" type="common" func="getNewsletterGroups" id=$item.id assign="relations"]-->
-                <!--[targetgroups groups=$relations]-->
-            </td>
-			<td>
-				<a href="<!--[pnmodurl modname="mailz" type="admin" func="newsletters" id=$item.id]-->"><!--[pnml name="_MAILZ_MODIFY"]--></a>, 
-				<a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" nl=$item.id]-->"><!--[pnml name="_MAILZ_PLUGINS"]--></a>,
-				<a href="<!--[pnmodurl modname="mailz" type="admin" func="send" id=$item.id]-->"><!--[pnml name="_MAILZ_MANAGE_PREVIEW_SEND"]--></a>.
-			</td>
-		</tr>
-	<!--[/foreach]-->
-	</table>
+    <!--			<th><!--[pnml name="_MAILZ_NL_DESCRIPTION"]--></th> -->
+    			<th><img src="images/icons/extrasmall/recur.gif" alt="<!--[pnml name="_MAILZ_SERIAL_NR"]-->" title="<!--[pnml name="_MAILZ_SERIAL_NR"]-->" /></th>
+    			<th><!--[pnml name="_MAILZ_NL_USE_ARCHIVE"]--></th>
+    			<th><!--[pnml name="_MAILZ_NL_CONTENT_TYPE"]--></th>
+    			<th><!--[pnml name="_MAILZ_NL_PUBLIC"]--></th>
+    			<th><!--[pnml name="_MAILZ_ACTIVE"]--></th>
+    			<th><!--[pnml name="_MAILZ_TARGET_GROUPS"]--></th>
+    			<th><!--[pnml name="_MAILZ_ACTION"]--></th>
+    		</tr>
+    	<!--[foreach from=$newsletters item="item"]-->
+    		<tr style="background-color: #<!--[cycle values="eee,ddd"]-->">
+    			<td><!--[$item.id]--></td>
+    			<td><!--[$item.title|pnvarprepfordisplay]--></td>
+    <!--			<td><!--[$item.description|pnvarprepfordisplay|truncate:25:'...']--></td> -->
+    			<td><!--[$item.serialnumber]--></td>
+    			<td>
+                    <!--[yesno item=$item.archive yes="1"]-->
+                </td>
+    			<td>
+                    <!--[nlcontenttype newsletter=$item]-->
+                </td>
+                <td>
+                    <!--[yesno item=$item.public yes="1"]-->
+                </td>
+                <td>
+                    <!--[yesno item=$item.inactive yes="0"]-->
+                </td>
+                <td>
+                        <!--[pnmodapifunc modname="mailz" type="common" func="getNewsletterGroups" id=$item.id assign="relations"]-->
+                    <!--[targetgroups groups=$relations]-->
+                </td>
+    			<td>
+    	   			<a href="<!--[pnmodurl modname="mailz" type="admin" func="newsletters" id=$item.id]-->"><img src="images/icons/extrasmall/xedit.gif" alt="<!--[pnml name="_MAILZ_MODIFY"]-->" title="<!--[pnml name="_MAILZ_MODIFY"]-->" /></a>
+        			<a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" nl=$item.id]-->"><img src="images/icons/extrasmall/utilities.gif" alt="<!--[pnml name="_MAILZ_PLUGINS"]-->" title="<!--[pnml name="_MAILZ_PLUGINS"]-->" /></a>
+        			<a href="<!--[pnmodurl modname="mailz" type="admin" func="send" id=$item.id]-->"><img src="images/icons/extrasmall/mail_send.gif" alt="<!--[pnml name="_MAILZ_MANAGE_PREVIEW_SEND"]-->" title="<!--[pnml name="_MAILZ_MANAGE_PREVIEW_SEND"]-->" /></a>
+    			</td>
+    		</tr>
+    	<!--[/foreach]-->
+	   </table>
+    
+    <!--[/if]-->
 
-<!--[/if]-->
-
-
-<!--[include file="mailz_admin_footer.htm"]-->
 
 <!--[if $id gt 0]-->
 <!--[else]-->
@@ -193,3 +181,5 @@
 <!--[/if]-->
 
 <!--[/if]-->
+
+<!--[include file="mailz_admin_footer.htm"]-->

@@ -70,22 +70,14 @@
 			<td><!--[$item.title|pnvarprepfordisplay]--></td>
 			<td><!--[$item.description|pnvarprepfordisplay|truncate:150:'...']--></td>
 			<td>
-                <!--[if $item.query ne '']-->
-                    <!--[pnml name="_MAILZ_YES"]-->
-                <!--[else]-->
-                    <!--[pnml name="_MAILZ_NO"]-->
-                <!--[/if]-->
+                <!--[yesno item=$item.query yes="" reverse="1"]-->
             </td>
 			<td>
-                <!--[if $item.api ne '']-->
-                    <!--[pnml name="_MAILZ_YES"]-->
-                <!--[else]-->
-                    <!--[pnml name="_MAILZ_NO"]-->
-                <!--[/if]-->
+                <!--[yesno item=$item.api yes="" reverse="1"]-->
             </td>
             <td><!--[groupitems id=$item.id]--></td>
 			<td>
-				<a href="<!--[pnmodurl modname="mailz" type="admin" func="groups" id=$item.id]-->"><!--[pnml name="_MAILZ_MODIFY"]--></a>
+				<a href="<!--[pnmodurl modname="mailz" type="admin" func="groups" id=$item.id]-->"><img src="images/icons/extrasmall/xedit.gif" alt="<!--[pnml name="_MAILZ_MODIFY"]-->" title="<!--[pnml name="_MAILZ_MODIFY"]-->" /></a>
 			</td>
 		</tr>
 	<!--[/foreach]-->

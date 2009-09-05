@@ -24,16 +24,22 @@ function mailz_commonapi_getGroups($args)
 /*
  * get newsletters
  *
- * @param   $args['id']         int     optional, newsletter id
- * @param   $args['inactive']   int     optional, show inactive, too (==1)
+ * @param   $args['id']             int     optional, newsletter id
+ * @param   $args['inactive']       int     optional, show inactive, too (==1)
+ * @param   $args['subscribable']   int     optional, show only subscribable newsletters (==1)
  * @return  array
  */
 function mailz_commonapi_getNewsletters($args)
 {
-    $id         = (int) $args['id'];
-    $inactive   = (int) $args['inactive'];
+    $id             = (int) $args['id'];
+    $subscribable   = (int) $args['subscribable'];
+    $inactive       = (int) $args['inactive'];
+    $whereA = array();
+    if ($subscribable == 1) {
+        $whereA[] = 'subscribable = 1';
+    }
     if ($inactive != 1) {
-        $where = 'inactive != 1';
+        $whereA[] = 'inactive != 1';
     }
     if ($id > 0) {
         $result = DBUtil::selectObjectByID('mailz_newsletters',$id);
@@ -41,6 +47,7 @@ function mailz_commonapi_getNewsletters($args)
             $result = false;
         }
     } else {
+        $where = implode(' AND ',$whereA);
         $result = DBUtil::selectObjectArray('mailz_newsletters',$where);
     }
     return $result;
@@ -266,7 +273,6 @@ function mailz_commonapi_getPluginContent($args)
         $output="\n\n\n".$plugin['title']."\n--------------------\n".$plugin['header_text'].$content.$plugin['footer_text'];
     }
 
-    $output = pnModAPIFunc('mailz','common','outputReplacements',array('text' => $output, 'uid' => $uid));
     return $output;
 }
 
@@ -274,23 +280,36 @@ function mailz_commonapi_getPluginContent($args)
  * make replacements in text
  *
  * @param   $args['text']       string      output 
+ * @param   $args['email']      string      email address if different from user's email
+ * @param   $args['uid']        int         user id for the recpipient
  * @return  string
  */
 function mailz_commonapi_outputReplacements($args)
 {
+    // Get Parameters
     $output = $args['text'];
-    $uid = $args['uid'];
-    // replace name if needed
+    $uid    = $args['uid'];
+    $email  = $args['email'];
+    if (!(isset($email) && ($email != ''))) {
+        $email = pnUserGetVar('email',$uid);
+    }
+
+    // Replace some parts of the content now
     $modvars = pnModGetVar('mailz');
     if (isset($modvars['myprofile_name']) && ($modvars['myprofile_name'] != '')) {
         // Load user's profile
         $profile = pnModAPIFunc('MyProfile','user','getProfile',array('uid' => $uid));
         $output = str_replace('%%NAME%%',$profile[$modvars['myprofile_name']]['value'], $output);
     }
-    $output = str_replace('%%EMAIL%%', pnUserGetVar('email',$uid), $output);
+    $output = str_replace('%%EMAIL%%', $email, $output);
     $output = str_replace('%%UID%%', $uid, $output);
-    $output = str_replace('%%UNAME%%', pnUserGetVar('uname',$uid), $output);
-
+    if ($uid > 1) {
+        $output = str_replace('%%UNAME%%', pnUserGetVar('uname',$uid), $output);
+    } else {
+        $output = str_replace('%%UNAME%%', _MAILZ_UNREG_READER, $output);
+    }
+    
+    // Return replaced output
     return $output;    
 }
 
@@ -307,7 +326,7 @@ function mailz_commonapi_getNewsletterOutput($args)
     $id          = (int)    $args['id'];
     $contenttype = (string) $args['contenttype'];
     $uid         = (int)    $args['uid'];
-    if (!($uid >= 1) || (!($id > 0)) || (($contenttype != 'h') && ($contenttype != 't'))) {
+    if (($contenttype != 'h') && ($contenttype != 't')) {
         return false;
     }
 
@@ -365,7 +384,6 @@ function mailz_commonapi_getGroupRecipients($args)
             $args = $dummy[3];
             $paramsdumy = explode(';',$args);
             $argsArray = array();
-    //        print "mod $mod type $type func $func";
             foreach ($paramsdummy as $item) {
                 $d = explode(',',$item);
                 $key = $d[0];
@@ -385,7 +403,7 @@ function mailz_commonapi_getGroupRecipients($args)
 }
 
 /**
- * queue newsletter for sending and creation
+ * queue newsletter for sending and creation - the main function that initiates the mailing
  *
  * @param   $args['id']     int     newsletter id
  * @return  boolean
@@ -398,7 +416,6 @@ function mailz_commonapi_queueNewsletter($args)
     // Check for newsletter in queue that was not yet sent
     $where = 'nid = '.$newsletter['id'];
     $res = DBUtil::selectObjectCount('mailz_queue',$where);
-    print $res;
     if ($res > 0) {
         // If user has admin permissions for mailz module display message!
         if (SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
@@ -412,41 +429,62 @@ function mailz_commonapi_queueNewsletter($args)
     } else {
         // get groups
         $groups = pnModAPIFunc('mailz','common','getNewsletterGroups',array('id' => $id));
-        if (!$groups) {
-            return false;
-        } else {
-            // get recipients
-            foreach ($groups as $group) {
-                $recipients = pnModAPIFunc('mailz','common','getGroupRecipients',array('id' => $group));
-                if (!$recipients) {
-                    return false;
+        // get recipients
+            
+        // Is newsletter subscribable and should these mails also be sent?
+        if ($newsletter['subscribable'] == 1) {
+            $where = "nid = ".$newsletter['id'];
+            $result = DBUtil::selectObjectArray('mailz_subscriptions',$where);
+            $counter = 0;
+            foreach ($result as $item) {
+                if ($item['uid'] > 1) {
+                  $obj[$item['uid']] = array (
+                    'nid'   => $id,
+                    'uid'   => $item['uid']
+                  );
                 } else {
-                    // Insert items into working queue
-                    foreach ($recipients as $uid) {
-                        $obj[] = array(
-                                'nid'   => $id,
-                                'uid'   => $uid
-                            );
-                    }
-                    // Last object for archivating roder
-                    $obj[0] = array(
+                    $counter--;
+                    $obj[$counter] = array (
                         'nid'   => $id,
-                        'uid'   =>  -999
+                        'uid'   => 0,
+                        'email' => $item['email']
                     );
-                    // And another for updating newsletter data
-                    $obj[0] = array(
-                        'nid'   => $id,
-                        'uid'   =>  -9999
-                    );
-                    // Insert all into DB
-                    $result = DBUtil::insertObjectArray($obj,'mailz_queue');
-                    if (!$result) {
-                        return false;
-                    } else {
-                        return true;
-                    }
                 }
             }
+        }
+        
+        // Now retrieve target groups
+        foreach ($groups as $group) {
+            $recipients = pnModAPIFunc('mailz','common','getGroupRecipients',array('id' => $group));
+            // Insert items into working queue
+            // If a person is listed in multiple groups that person will only get one mail
+            foreach ($recipients as $uid) {
+                $obj[$uid] = array(
+                        'nid'   => $id,
+                        'uid'   => $uid
+                    );
+            }
+        }
+        // Object for archivating order
+        if ($newsletter['archive'] == 1) {
+            $obj[] = array(
+                'nid'   => $id,
+                'uid'   =>  -999,
+                'email' => count($obj)
+            );
+        }
+        // And another for updating newsletter core data
+        $obj[] = array(
+            'nid'   => $id,
+            'uid'   =>  -9999
+        );
+
+        // Insert all into DB
+        $result = DBUtil::insertObjectArray($obj,'mailz_queue');
+        if (!$result) {
+            return false;
+        } else {
+            return true;
         }
     }
 }
@@ -461,12 +499,14 @@ function mailz_commonapi_queueNewsletter($args)
  */
 function mailz_commonapi_sendNewsletter($args)
 {
+    // Cache newsletter
     static $nl_cache;
     $id = (int) $args['id'];
     if (!($id > 0)) {
         return false;
     }
     
+    // Check parameters, get and cache newsletter
     if (!isset($nl_cache) || !isset($nl_cache[$id]) || ($nl_cache[$id]['id'] != $id)) {
         $newsletter = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id));
         if (!$newsletter) {
@@ -475,60 +515,76 @@ function mailz_commonapi_sendNewsletter($args)
             $nl_cache[$id] = $newsletter;
         }
     }
-    
     $newsletter = $nl_cache[$id];
-//    prayer($newsletter);
 
-    // Send this Newsletter for this user id now
+    // Get email address for the user.
     $uid = $args['uid'];
-    $toaddress = pnUserGetVar('email',$uid);
-    if ( !isset($toaddress) || ($toaddress == '') && ($uid >= 0)) {
+    if ($uid > 1) {
+        $toaddress = pnUserGetVar('email',$uid);
+    } else {
+        $toaddress = $args['email'];
+    }
+    
+    if ((!isset($toaddress) || ($toaddress == '')) && ($uid >= 0)) {
         return false;
     }
 
-    // ToDo later maybe
+    // If the newsletter is available in both formats and there is no format 
+    // specified we will take html format - Todo: Take user's preferences later
     if ($newsletter['contenttype'] == 'c') {
         $newsletter['contenttype'] = 'h';
     }
     
-    // Send mail
+    // Send mail now
+    // Create body and subject for email and set content tyoe
     $subject = $newsletter['title'];
-    $subject = pnModAPIFunc('mailz','common','outputReplacements',array('text' => $subject, 'uid' => $uid));
-
     $body = pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $newsletter['id'], 'uid' => $uid, 'contenttype' => $newsletter['contenttype']));
+    $html = ($newsletter['contenttype'] == 'h');
+//    if ($newsletter['contenttype'] == 'h') {
+//        $header = array('header' => '\nMIME-Version: 1.0\nContent-type: text/html');
+//        $html = true;
+//    } else {
+//        $header = array('header' => '\nMIME-Version: 1.0\nContent-type: text/plain');
+//        $html = false;
+//    }
     
-    if ($newsletter['contenttype'] == 'h') {
-        $header = array('header' => '\nMIME-Version: 1.0\nContent-type: text/html');
-        $html = true;
-    } else {
-        $header = array('header' => '\nMIME-Version: 1.0\nContent-type: text/plain');
-        $html = false;
-    }
-    
+    // Set name or handle archive and core data updates for newsletter's core data here
     if ($uid > 1) {
         $toname = pnUserGetVar('uname');
     } else  if ($uid == -999) {
         // put into archive!
         if ($newsletter['archive'] == 0) {
+            // Just return true if no archive should be done. This case should never
+            // happen because if there is no archive to do queueNewsletter function
+            // should not put this element inside the mailz working queue
             return true;
         }
+        // Create newsletter for archive now and insert into DB
         $obj = array(
-                'nid'       => $newsletter['id'],
-                'subject'   => $subject,
-                'body_html' => pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $newsletter['id'], 'uid' => 1, 'contenttype' => 'h')),
-                'body_text' => pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $newsletter['id'], 'uid' => 1, 'contenttype' => 't')),
-                'public'    => $newsletter['public'],
-                'date'      => date("Y-m-h H:i:s",time())
+                'nid'           => $newsletter['id'],
+                'subject'       => $subject,
+                'body_html'     => pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $newsletter['id'], 'uid' => 0, 'contenttype' => 'h')),
+                'body_text'     => pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $newsletter['id'], 'uid' => 0, 'contenttype' => 't')),
+                'public'        => $newsletter['public'],
+                'date'          => date("Y-m-h H:i:s",time()),
+                'recipients'    => $args['email']
             );
         $result = DBUtil::insertObject($obj,'mailz_archive');
+        // Object inserted into archive table and returning result now.
         return $result;
     } else if ($uid == -9999) {
         // update newsletter data
         $newsletter['last'] = date("Y-m-d H:i:s",time());
         $newsletter['serialnumber']++;
+        // Update newsletter object and return result
         $result = DBUtil::updateObject($newsletter,'mailz_newsletters');
         return $result;
     }
+
+    // Replacements
+    $subject = pnModAPIFunc('mailz','common','outputReplacements',array('text' => $subject, 'uid' => $uid, 'email' => $toaddress));
+    $body    = pnModAPIFunc('mailz','common','outputReplacements',array('text' => $body,    'uid' => $uid, 'email' => $toaddress));
+    $body    = str_replace('="/','="'.pnGetBaseURL(), $body); // make relative urls absolute
 
     // Call mailer api
     if ($newsletter['delay'] > 0) {
@@ -537,8 +593,6 @@ function mailz_commonapi_sendNewsletter($args)
     if ($newsletter['adddate'] == 1) {
         $subject = $subject.' ('.date("d.m.Y",time()).')';
     }
-    // Replace some strings
-    $body = str_replace('="/','="'.pnGetBaseURL(), $body);
     $mailerargs = array(
             'html'          => $html,
 //            'toaddress'     => 'netbiker@netbiker.de',
@@ -602,4 +656,231 @@ function mailz_commonapi_sqlReplacements($args)
     $t = str_replace('$$$MONTH$$$', date("m",time()), $t);
     $t = str_replace('$$$DAY$$$',   date("d",time()), $t);
     return $t;
+}
+
+/**
+ * subscibe to a newsletter
+ * 
+ * @param   $args['uid']            int     optional user id
+ * @param   $args['email']          string  optional email address
+ * @param   $args['contenttype']    string  optional content type
+ * @param   $args['id']             int     id of newsletter to apply action
+ * @return  boolean
+ */
+function mailz_commonapi_subscribe($args) 
+{
+    $id          = (int) $args['id'];
+    $uid         = (int) $args['uid'];
+    $contenttype = (string) $args['contenttype'];
+    $email       = (string) $args['email'];
+    $email       = strtolower($email);
+    $newsletter  = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id));
+    if (!$newsletter || ($newsletter['id'] != $id)) {
+        return false;
+    }
+
+    if (($contenttype != 'h') && ($contenttype != 't')) {
+        $contenttype = 'c';
+    }
+    
+    // Check for existing subscription
+    if (pnModAPIFunc('mailz','common','isSubscribed',$args)) {
+        return false;
+    }
+    
+    // Construct object
+    if ($uid > 1) {
+        $obj = array(
+            'nid'           => $id,
+            'uid'           => $uid,
+            'date'          => date("Y-m-d H:i:s"),
+            'ip'            => $_SERVER['SERVER_ADDR'],
+            'contenttype'   => $contenttype,
+            'confirmed'     => 1
+        );
+    } else {
+        $code = rand(100000000000000,999999999999999);
+        $obj = array(
+            'nid'           => $id,
+            'date'          => date("Y-m-d H:i:s"),
+            'ip'            => $_SERVER['SERVER_ADDR'],
+            'contenttype'   => $contenttype,
+            'email'         => $email,
+            'code'          => $code
+        );
+    }
+    
+    // Write object to DB if code == ''
+    $result = DBUtil::insertObject($obj,'mailz_subscriptions');
+    if (($code != '') && $result) {
+        $subject = _MAILZ_NEWSLETTER_CONFIRM;
+        $render = pnRender::getInstance('mailz');
+        $render->assign('obj', $obj);
+        $render->assign('newsletter', $newsletter);
+        $body = $render->fetch('mailz_email_confirm.htm');
+        // Send email
+        $margs = array (
+            'toaddress' => $email,
+            'subject'   => $subject,
+            'body'      => $body,
+            'html'      => true,
+            'priority'  => 1,
+            'quiet'     => 1
+        );
+        $mail = pnModAPIFunc('Mailer','user','sendmessage',$margs);
+        if (!$mail) {
+            DBUtil::deleteObject($obj,'mailz_subscriptions');
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        return $result;
+    }
+}
+/**
+ * unsubscibe to a newsletter
+ * 
+ * @param   $args['uid']            int     optional user id
+ * @param   $args['email']          string  optional emaila ddress
+ * @param   $args['contenttype']    string  optional emaila ddress
+ * @param   $args['id']             int     id of newsletter to apply action
+ * @return  boolean
+ */
+function mailz_commonapi_unsubscribe($args) 
+{
+    $id          = (int) $args['id'];
+    $uid         = (int) $args['uid'];
+    $email       = (string) $args['email'];
+    $email       = strtolower($email);
+    $newsletter  = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id));
+    if (!$newsletter || ($newsletter['id'] != $id)) {
+        return false;
+    }
+
+    // Check for existing subscription
+    if (!pnModAPIFunc('mailz','common','isSubscribed',$args)) {
+        return false;
+    }
+    
+    if ($uid > 1) {
+        $where = 'nid = '.$id.' AND uid = '.$uid;
+        $obj = DBUtil::selectObject('mailz_subscriptions',$where);
+        if (!$obj) {
+            return false;
+        } else {
+            $result = DBUtil::deleteObject($obj,'mailz_subscriptions');
+            if ($result) {
+                LogUtil::registerStatus(_MAILZ_UNSUBSCRIBED);
+            }
+            return $result;
+        }
+      
+    } else {
+        // Send a email to recipient with a generated validation code 
+        $where = "email like '".$email."' AND nid = ".$id." AND uid = 0";
+        $obj = DBUtil::selectObject('mailz_subscriptions',$where);
+        if (!$obj) {
+            return false;
+        } else {
+            // Generate Code for user
+            $obj['code'] = rand(100000000000000,999999999999999);
+            $subject = _MAILZ_NEWSLETTER_CONFIRM_DELETION;
+            $render = pnRender::getInstance('mailz');
+            $render->assign('obj', $obj);
+            $render->assign('newsletter', $newsletter);
+            $body = $render->fetch('mailz_email_confirm_deletion.htm');
+            // Send email
+                $margs = array (
+                'toaddress' => $obj['email'],
+                'subject'   => $subject,
+                'body'      => $body,
+                'html'      => true,
+                'priority'  => 1,
+                'quiet'     => 1
+            );
+            $mail = pnModAPIFunc('Mailer','user','sendmessage',$margs);
+            if (!$mail) {
+                return false;
+            } else {
+                DBUtil::updateObject($obj,'mailz_subscriptions');
+                LogUtil::registerStatus(_MAILZ_UNSUBSCRIPTION_MAIL_SENT);
+                return true;
+                }
+        }
+    }
+    
+    return false;    
+}
+
+/**
+ * update subscription to a newsletter
+ * 
+ * @param   $args['uid']            int     optional user id
+ * @param   $args['email']          string  optional emaila ddress
+ * @param   $args['contenttype']    string  optional emaila ddress
+ * @param   $args['id']             int     id of newsletter to apply action
+ * @return  boolean
+ */
+function mailz_commonapi_update($args) 
+{
+    $id          = (int) $args['id'];
+    $uid         = (int) $args['uid'];
+    $contenttype = (string) $args['contenttype'];
+    $newsletter  = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id));
+    if (!$newsletter || ($newsletter['id'] != $id)) {
+        return false;
+    }
+
+    // Check for existing subscription
+    if (!pnModAPIFunc('mailz','common','isSubscribed',$args)) {
+        return false;
+    }
+    
+    $where = 'nid = '.$id.' AND uid = '.$uid;
+    $obj = DBUtil::selectObject('mailz_subscriptions',$where);
+    if (!$obj) {
+        return false;
+    } else {
+        $obj['contenttype'] = $contenttype;
+        $result = DBUtil::updateObject($obj,'mailz_subscriptions');
+        return $result;
+    }
+
+    return false;    
+}
+
+/**
+ * check for subscription
+ *
+ * @param   $args['id']     int     newsletter id
+ * @param   $args['uid']    int     optional, uid
+ * @param   $args['email']  string  optional, email address
+ * @return  boolean
+ */
+function mailz_commonapi_isSubscribed($args)
+{
+    // Get parameters
+    $id    = (int)    $args['id'];
+    $uid   = (int)    $args['uid'];
+    $email = (string) $args['email'];
+    
+    if (!($id > 0)) {
+        return false;
+    }
+
+    // Check for subscription
+    if ($uid > 1) {
+        $where2 = 'uid = '.$uid;
+    } else {
+        $where2 = "email like '".DataUtil::formatForStore($email)."'";
+    }
+    $where = 'nid = '.$id.' AND '.$where2;
+    $result = DBUtil::selectObjectCount('mailz_subscriptions',$where);
+    if ($result && ($result > 0)) {
+        return true;
+    } else {
+        return false;
+    }
+
 }
