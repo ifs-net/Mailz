@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package      mailz
+ * @version      $Id$
+ * @author       Florian Schießl
+ * @link         http://www.ifs-net.de
+ * @copyright    Copyright (C) 2009
+ * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ */
 
 define('_MAILZ_USER_PAGE', 'Verwaltung von Newslettern für');
 define('_MAILZ_NO_NEWSLETTERS_FOUND', 'Keine Newsletter zur Anzeige gefunden');
