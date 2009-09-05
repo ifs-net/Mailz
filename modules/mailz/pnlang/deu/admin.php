@@ -96,6 +96,7 @@ define('_MAILZ_ID', 'ID');
 define('_MAILZ_NL_DESCRIPTION', 'Beschreibung (wird öffentlich angezeigt) für den Newsletter');
 define('_MAILZ_MANAGE_PREVIEW_SEND', 'Vorschau & Senden');
 define('_MAILZ_SHOW_CREATE_NL_FORM', 'Formular zum Erstellen neuer Newsletter einblenden');
+define('_MAILZ_SUBSCRIPTIONS', 'Abos');
 define('_MAILZ_HIDE_CREATE_NL_FORM', 'Formular zum Erstellen neuer Newsletter ausblenden    ');
 define('_MAILZ_SERIAL_NR', 'Durchläufe');
 define('_MAILZ_NL_USE_ARCHIVE', 'Archiv');
