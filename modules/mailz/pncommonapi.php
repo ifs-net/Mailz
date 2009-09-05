@@ -433,21 +433,23 @@ function mailz_commonapi_queueNewsletter($args)
             
         // Is newsletter subscribable and should these mails also be sent?
         if ($newsletter['subscribable'] == 1) {
-            $where = "nid = ".$newsletter['id'];
+            $where = "nid = ".$newsletter['id']." AND confirmed = 1";
             $result = DBUtil::selectObjectArray('mailz_subscriptions',$where);
             $counter = 0;
             foreach ($result as $item) {
                 if ($item['uid'] > 1) {
                   $obj[$item['uid']] = array (
-                    'nid'   => $id,
-                    'uid'   => $item['uid']
+                    'nid'           => $id,
+                    'contenttype'   => $item['contenttype'],
+                    'uid'           => $item['uid']
                   );
                 } else {
                     $counter--;
                     $obj[$counter] = array (
-                        'nid'   => $id,
-                        'uid'   => 0,
-                        'email' => $item['email']
+                        'nid'           => $id,
+                        'contenttype'   => $item['contenttype'],
+                        'uid'           => 0,
+                        'email'         => $item['email']
                     );
                 }
             }
@@ -492,9 +494,10 @@ function mailz_commonapi_queueNewsletter($args)
 /**
  * send a newsletter
  *
- * @param   $args['id']         int     newsletter id
- * @param   $args['uid']        int     user id
- * @param   $args['email']      string  email for unreg. subscribers
+ * @param   $args['id']          int     newsletter id
+ * @param   $args['uid']         int     user id
+ * @param   $args['contenttype'] char    h, t or c
+ * @param   $args['email']       string  email for unreg. subscribers
  * @return bool
  */
 function mailz_commonapi_sendNewsletter($args)
@@ -532,7 +535,14 @@ function mailz_commonapi_sendNewsletter($args)
     // If the newsletter is available in both formats and there is no format 
     // specified we will take html format - Todo: Take user's preferences later
     if ($newsletter['contenttype'] == 'c') {
-        $newsletter['contenttype'] = 'h';
+        $uc = (string) $args['contenttype'];
+        if ($uc == 'h') {
+            $newsletter['contenttype'] = 'h';
+        } else if ($uc == 't') {
+            $newsletter['contenttype'] = 't';
+        } else {
+            $newsletter['contenttype'] = 'h';
+        }
     }
     
     // Send mail now
@@ -574,6 +584,7 @@ function mailz_commonapi_sendNewsletter($args)
         return $result;
     } else if ($uid == -9999) {
         // update newsletter data
+        $newsletter = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id));
         $newsletter['last'] = date("Y-m-d H:i:s",time());
         $newsletter['serialnumber']++;
         // Update newsletter object and return result
@@ -633,7 +644,7 @@ function mailz_commonapi_systeminit()
             $items = DBUtil::selectObjectArray('mailz_queue',$where,$orderby,-1,$numrows);
             // process items
             foreach ($items as $item) {
-                $result = pnModAPIFunc('mailz','common','sendNewsletter',array('id' => $item['nid'], 'uid' => $item['uid'], 'email' => $item['email']));
+                $result = pnModAPIFunc('mailz','common','sendNewsletter',array('id' => $item['nid'], 'uid' => $item['uid'], 'email' => $item['email'], 'contenttype' => $item['contenttype']));
                 if ($result) {
                     DBUtil::deleteObject($item,'mailz_queue');
                 }

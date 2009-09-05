@@ -7,6 +7,20 @@
  */
 function mailz_admin_main()
 {
+  /*
+    $where = "MyProfile_forenbutler != ''";
+    $res = DBUtil::selectObjectArray('myprofile',$where);
+    $obj = array();
+    foreach ($res as $i) {
+        $obj[] = array(
+            'nid' => 9,
+            'uid' => $i['id'],
+            'confirmed' => 1,
+            'contenttype' => $i['forenbutler'][0]
+        );
+    }
+//    DBUtil::insertObjectArray($obj,'mailz_subscriptions');
+  */
     // Security check
     if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();      

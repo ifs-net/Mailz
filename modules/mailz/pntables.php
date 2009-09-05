@@ -119,12 +119,14 @@ function mailz_pntables()
         'id'            => 'id',
         'nid'           => 'nid',
         'uid'           => 'uid',
+        'contenttype'   => 'contenttype',
         'email'         => 'email'
     );
     $table['mailz_archive_column_def'] = array (
         'id'            => "I AUTOINCREMENT PRIMARY",
         'nid'           => "I NOTNULL DEFAULT 0",
         'uid'           => "I NOTNULL DEFAULT 0",
+        'contenttype'   => "C(1) NOTNULL DEFAULT 'c'",
         'email'         => "XL NOTNULL"
     );
     // Subcription entries table
