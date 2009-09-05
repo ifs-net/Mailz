@@ -131,6 +131,7 @@ function mailz_pntables()
     $table['mailz_subscriptions_column'] = array (
         'id'            => 'id',
         'nid'           => 'nid',
+        'uid'           => 'uid',
         'date'          => 'date',
         'ip'            => 'ip',
         'email'         => 'email',
@@ -141,6 +142,7 @@ function mailz_pntables()
     $table['mailz_subscriptions_column_def'] = array (
         'id'            => "I AUTOINCREMENT PRIMARY",
         'nid'           => "I NOTNULL DEFAULT 0",
+        'uid'           => "I NOTNULL DEFAULT 0",
         'date'          => "T NOTNULL DEFAULT '0000-00-00 00:00:00'",
         'ip'            => "C(30) NOTNULL DEFAULT ''",
         'email'         => "C(125) NOTNULL DEFAULT ''",

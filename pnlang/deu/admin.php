@@ -1,10 +1,11 @@
 <?php
 
 // general
+define('_MAILZ_UNREG_READER', 'Gast');
 define('_MAILZ_BACKEND', 'Administrationsbackend MAILZ');
 define('_MAILZ_ADMIN_MAIN', 'Startseite, Modulkonfiguration');
 define('_MAILZ_TARGET_GROUPS', 'Zielgruppen');
-define('_MAILZ_NEWSLETTERS', 'Newsletter');
+define('_MAILZ_NEWSLETTERS', 'Newsletter und Mailings');
 define('_MAILZ_PLUGINS', 'Plugins');
 define('_MAILZ_ARCHIVE', 'Archiv');
 define('_MAILZ_YES', 'ja');
@@ -15,10 +16,10 @@ define('_MAILZ_UPDATED', 'Daten aktualisiert');
 define('_MAILZ_UPDATE_ERROR', 'Fehler beim Aktualisieren der Daten');
 define('_MAILZ_DELETE_ERROR', 'Fehler beim Löschvorgang');
 define('_MAILZ_STORE_ERROR', 'Fehler beim Speichern von Daten');
-define('_MAILZ_HTML', 'HTML (formatierter Text)');
+define('_MAILZ_HTML', 'html');
 define('_MAILZ_PREVIEW_AND_SEND', 'Vorschau und verschicken');
-define('_MAILZ_TEXT', 'TEXT (unformatierter Text)');
-define('_MAILZ_COMBINED', 'KOMBINIERT (beide Formate, Benutzer wählt selbst)');
+define('_MAILZ_TEXT', 'nur text');
+define('_MAILZ_COMBINED', 'kombiniert: text+html');
 define('_MAILZ_INACTIVE', 'inaktiv');
 define('_MAILZ_BACK', 'zurück');
 define('_MAILZ_ACTIVE', 'aktiv');
@@ -65,7 +66,7 @@ define('_MAILZ_SETTINGS_STORED', 'Daten gespeichert');
 define('_MAILZ_GROUP_CREATION_ERROR', 'Fehler beim erstellen der Zielgruppe');
 define('_MAILZ_NO_GROUPS', 'Keine Gruppen angelegt');
 define('_MAILZ_MODIFY', 'editieren');
-define('_MAILZ_ACTION', 'Aktion');
+define('_MAILZ_ACTION', 'Aktionen');
 define('_MAILZ_TITLE', 'Titel');
 define('_MAILZ_GROUP_ID', 'Gruppen-ID');
 define('_MAILZ_QUERY', 'SQL-Query');
@@ -92,11 +93,13 @@ define('_MAILZ_NEWSLETTER_CREATION_ERROR', 'Fehler beim Speichern des Newsletter
 define('_MAILZ_DEFINE_GROUPS_FIRST', 'Zuerst müssen Zielgruppen angelegt werden - nur so können Newsletter angelegt und bearbeitet werden!');
 define('_MAILZ_MIN_DELAY', 'Verzögerung beim Versenden in Minuten');
 define('_MAILZ_ID', 'ID');
+define('_MAILZ_NL_DESCRIPTION', 'Beschreibung (wird öffentlich angezeigt) für den Newsletter');
 define('_MAILZ_MANAGE_PREVIEW_SEND', 'Vorschau & Senden');
 define('_MAILZ_SHOW_CREATE_NL_FORM', 'Formular zum Erstellen neuer Newsletter einblenden');
 define('_MAILZ_HIDE_CREATE_NL_FORM', 'Formular zum Erstellen neuer Newsletter ausblenden    ');
-define('_MAILZ_NL_USE_ARCHIVE', 'Archivierung');
-define('_MAILZ_NL_CONTENT_TYPE', 'Versandart');
+define('_MAILZ_SERIAL_NR', 'Durchläufe');
+define('_MAILZ_NL_USE_ARCHIVE', 'Archiv');
+define('_MAILZ_NL_CONTENT_TYPE', 'Inhalt');
 define('_MAILZ_ADD_DATE_TO_SUBJECT', 'Versandatum an Betreffzeile des Newsletters anhängen');
 define('_MAILZ_FROMADDRESS', 'Absenderadresse, wenn von Zikula-Standardeinstellung abgewichen werden soll');
 define('_MAILZ_PRIORITY', 'Priorität für Mailer-Warteschlange (1=hoch, 10=gering)');

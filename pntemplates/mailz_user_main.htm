@@ -1,0 +1,91 @@
+<!--[include file="mailz_user_header.htm"]-->
+
+
+<h1><!--[pnml name="_MAILZ_USER_PAGE"]--> <!--[pnconfiggetvar name="sitename"]--></h1>
+
+<p>
+<!--[pnml name="_MAILZ_USER_INTRO_TEXT"]-->
+</p>
+
+<!--[foreach from=$newsletters item="nl"]-->
+    <h3><!--[$nl.title|pnvarprepfordisplay]--> <!--[subscribedinfo id=$nl.id uid=$uid]--></h3>
+    <div><!--[$nl.description|pnvarprepfordisplay]--></div>
+    <div id="mailz_nl_options_<!--[$nl.id]-->" class="mailz_hidden mailz_link">
+        <img src="images/icons/extrasmall/agt_forward.gif" alt="<!--[pnml name="_NEWSLETTER_SHOW_OPTIONS"]-->" title="<!--[pnml name="_NEWSLETTER_SHOW_OPTIONS"]-->" />
+        <!--[pnml name="_NEWSLETTER_SHOW_OPTIONS"]-->
+    </div>
+    <div id="mailz_nl_options_close_<!--[$nl.id]-->" class="mailz_hidden mailz_link">
+        <img src="images/icons/extrasmall/agt_stop.gif" alt="<!--[pnml name="_NEWSLETTER_HIDE_OPTIONS"]-->" title="<!--[pnml name="_NEWSLETTER_HIDE_OPTIONS"]-->" />
+        <!--[pnml name="_NEWSLETTER_HIDE_OPTIONS"]-->
+    </div>
+    <div id="mailz_nl_options_content_<!--[$nl.id]-->">
+        <div>
+            <form method="post" action="<!--[pnmodurl modname="mailz" type="user" func="subscribe"]-->">
+                <p>
+                    <!--[pnml name="_MAILZ_UNAME"]-->: <!--[$uname]--><br />
+                    <!--[pnml name="_MAILZ_EMAIL"]-->:
+                    <!--[if $email ne '']-->
+                        <!--[$email]-->
+                    <!--[else]-->
+                        <input type="text" name="email" value="<!--[$email]-->" />
+                    <!--[/if]-->
+                    <br />
+                    <select name="action">
+                    <!--[if $nl.subscribed ne 1]-->
+                        <option selected="selected" value="subscribe"><!--[pnml name="_MAILZ_SUBSCRIBE"]--></option>
+                    <!--[else]-->
+                        <!--[if $nl.contenttype eq 'c' and $uid gt 1]-->
+                        <option selected="selected" value="update"><!--[pnml name="_MAILZ_UPDATE_CONTENTTYPE"]--></option>
+                        <!--[/if]-->
+                    <!--[/if]-->
+                    <!--[if ($nl.subscribed eq 1) or ($uid lt 2)]-->
+                        <option value="unsubscribe"><!--[pnml name="_MAILZ_UNSUBSCRIBE"]--></option>
+                    <!--[/if]-->
+                    </select><br />
+                    <!--[if $nl.contenttype eq 'c']-->
+                        <select name="contenttype">
+                            <option value="h"><!--[pnml name="_MAILZ_HTML"]--></option>
+                            <option value="t"><!--[pnml name="_MAILZ_TEXT"]--></option>
+                        </select><br />
+                    <!--[/if]-->
+                    <input type="hidden" name="authid" value="<!--[$authid]-->" />
+                    <input type="hidden" name="id"     value="<!--[$nl.id]-->" />
+                    <input type="submit" value="<!--[pnml name="_MAILZ_DO_SUBSCRIBE_ACTION"]-->" />
+                </p>
+            </form>
+        </div>
+    </div>
+    </p>
+<!--[foreachelse]-->
+    <!--[pnml name="_MAILZ_NO_NEWSLETTERS_FOUND"]-->
+<!--[/foreach]-->
+
+
+<!--[include file="mailz_user_footer.htm"]-->
+
+<script type="text/javascript" >
+
+    function mailz_listeners() {
+        <!--[foreach from=$newsletters item="nl"]-->
+            $('mailz_nl_options_<!--[$nl.id]-->').removeClassName('mailz_hidden');
+            $('mailz_nl_options_close_<!--[$nl.id]-->').removeClassName('mailz_hidden');
+            $('mailz_nl_options_close_<!--[$nl.id]-->').hide();
+            $('mailz_nl_options_content_<!--[$nl.id]-->').hide();
+    		Event.observe('mailz_nl_options_<!--[$nl.id]-->', 'click', function(event) {
+            	new Effect.BlindDown('mailz_nl_options_content_<!--[$nl.id]-->', { delay: 0.1 });
+            	new Effect.BlindDown('mailz_nl_options_close_<!--[$nl.id]-->', { delay: 0.1 });
+            	new Effect.BlindUp('mailz_nl_options_<!--[$nl.id]-->', { delay: 0.1 });
+    		  	return false;
+	       	});					
+    		Event.observe('mailz_nl_options_close_<!--[$nl.id]-->', 'click', function(event) {
+            	new Effect.BlindUp('mailz_nl_options_content_<!--[$nl.id]-->', { delay: 0.1 });
+            	new Effect.BlindUp('mailz_nl_options_close_<!--[$nl.id]-->', { delay: 0.1 });
+            	new Effect.BlindDown('mailz_nl_options_<!--[$nl.id]-->', { delay: 0.1 });
+    		  	return false;
+	       	});					
+        <!--[/foreach]-->
+    }
+
+    mailz_listeners();
+    
+</script>

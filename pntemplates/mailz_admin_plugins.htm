@@ -137,11 +137,7 @@
     			<td><!--[$item.module|pnvarprepfordisplay]--></td>
     			<td><!--[$item.title|pnvarprepfordisplay]--></td>
     			<td>
-                    <!--[if $item.inactive eq 0]-->
-                        <!--[pnml name="_MAILZ_YES"]-->
-                    <!--[else]-->
-                        <!--[pnml name="_MAILZ_NO"]-->
-                    <!--[/if]-->
+                    <!--[yesno item=$item.inactive yes="0"]-->
                 </td>
                     <td>
     				<a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" id=$item.id nl=$newsletter.id]-->"><!--[pnml name="_MAILZ_MODIFY"]--></a><br />

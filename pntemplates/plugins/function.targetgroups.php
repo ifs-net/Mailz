@@ -4,7 +4,7 @@ function smarty_function_targetgroups($params, &$smarty)
 {
     $groups = $params['groups'];
     if (!$groups) {
-        return 'wrong parameters';
+        return 'N/A';
     }
     $output = array();
     foreach ($groups as $group) {
