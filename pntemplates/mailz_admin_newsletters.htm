@@ -114,6 +114,7 @@
     			<th><!--[pnml name="_MAILZ_NL_CONTENT_TYPE"]--></th>
     			<th><!--[pnml name="_MAILZ_NL_PUBLIC"]--></th>
     			<th><!--[pnml name="_MAILZ_ACTIVE"]--></th>
+    			<th><!--[pnml name="_MAILZ_SUBSCRIPTIONS]--></th>
     			<th><!--[pnml name="_MAILZ_TARGET_GROUPS"]--></th>
     			<th><!--[pnml name="_MAILZ_ACTION"]--></th>
     		</tr>
@@ -134,6 +135,13 @@
                 </td>
                 <td>
                     <!--[yesno item=$item.inactive yes="0"]-->
+                </td>
+                <td>
+                    <!--[if $item.subscribable eq 0]-->
+                        <img src="images/icons/extrasmall/button_cancel.gif" />
+                    <!--[else]-->
+                        <!--[subscriptions id=$item.id]-->
+                    <!--[/if]-->
                 </td>
                 <td>
                         <!--[pnmodapifunc modname="mailz" type="common" func="getNewsletterGroups" id=$item.id assign="relations"]-->
