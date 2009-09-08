@@ -31,3 +31,11 @@ $modversion['admin']          = 1;
 // This one adds the info to the DB, so that users can click on the 
 // headings in the permission module
 $modversion['securityschema'] = array('mailz::' => 'Action Name::Newsletter ID');
+
+// Dependencies of this module
+$modversion['dependencies'] = array(
+	array(	'modname'    => 'advMailer',
+			'minversion' => '1.0', 'maxversion' => '',
+            'status'     => PNMODULE_DEPENDENCY_REQUIRED    )
+    );
+      
