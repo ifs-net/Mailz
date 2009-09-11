@@ -8,6 +8,7 @@
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
  */
 
+// main
 define('_MAILZ_USER_PAGE', 'Verwaltung von Newslettern für');
 define('_MAILZ_NO_NEWSLETTERS_FOUND', 'Keine Newsletter zur Anzeige gefunden');
 define('_NEWSLETTER_SHOW_OPTIONS', 'Abonnement-Optionen anzeigen');
@@ -45,3 +46,13 @@ define('_MAILZ_UNSUBSCRIPTION_TO_CONFIRM', 'Um sicherzugehen, dass niemand fremd
 define('_MAILZ_UNSUBSCRIPTION_MAIL_SENT', 'Eine Email mit einem Bestätigungslink zur Austragung wurde verschickt!');
 define('_MAILZ_UNSUBSCRIPTION_ERROR', 'Es ist ein Fehler beim Löschen des Abonnements aufgetreten - bitte an den Seitenbetreiber wenden!');
 define('_MAILZ_UNSUBSCRIPTION_DONE', 'Das Abonnement wurde erfolgreich storniert. Der Datensatz wurde vollständig gelöscht!');
+
+// archive
+define('_MAILZ_ARCHIVE_FOR', 'Newsletter-Archiv für');
+define('_MAILZ_ARCHIVE_HINTS', 'Es ist möglich, sich hier alte, archivierte Newsletter anzusehen, soweit diese archiviert wurden. Nachdem ein Newsletter ausgewählt wurde, werden alle archivierten Ausgaben aufgelistet und sind anwählbar.');
+define('_MAILZ_NO_NEWSLETTER_ARCHIVED', 'Es ist kein Newsletter mit Archiv vorhanden');
+define('_MAILZ_BACK_TO_ARCHIVE_OVERVIEW', 'Zurück zum Archiv-Überblick');
+define('_MAILZ_DATE', 'Datum');
+define('_MAILZ_SUBJECT', 'Betreff');
+define('_MAILZ_ACTION', 'Aktion');
+define('_MAILZ_VIEW', 'anzeigen');
