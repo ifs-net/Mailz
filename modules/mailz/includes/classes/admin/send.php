@@ -64,30 +64,41 @@ class mailz_admin_sendHandler
 			// get the pnForm data and do a validation check
 		    $obj = $render->pnFormGetValues();
 		    if (!$render->pnFormIsValid()) return false;
-                        die("todo");
 
             // Get username
-            $uid     = (int) pnUserGetIDFromName($obj['uname']);
-            $email   = pnUserGetvar('email', $uid);
-            if (($uid > 1)) {
-                // Send Newsletter in needed formats
+            $uname   = (string) $obj['uname'];
+            $uid     = (int) pnUserGetIDFromName($uname);
+            if ($uid > 1) {
+                // We will queue the newsletter - the easiest way to send it out...
+                $obj = array();
                 switch ($this->nl['contenttype']) {
                     case 'c':
-                        die("todo");
-                        break;
+                        $queue[] = array(
+                            'contenttype'   => 'h',
+                            'uid'           => $uid,
+                            'nid'           => $this->nl['id']
+                        );
                     case 't':
-                        die("todo");
+                        $queue[] = array(
+                            'contenttype'   => 't',
+                            'uid'           => $uid,
+                            'nid'           => $this->nl['id']
+                        );
                         break;
                     case 'h':
-                        die("todo");
-                        break;
+                        $queue[] = array(
+                            'contenttype'   => 'h',
+                            'uid'           => $uid,
+                            'nid'           => $this->nl['id']
+                        );
                 }
+                $result = DBUtil::insertobjectArray($queue,'mailz_queue');
                 LogUtil::registerStatus(_MAILZ_NL_SENT_TO.' '.$obj['uname'].' ('.$uid.')');
             } else {
                 LogUtil::registerStatus(_MAILZ_USER_NOT_FOUND);
             }
 			// Redirect
-			return $render->pnFormRedirect(pnModURL('mailz','admin','send'));
+			return $render->pnFormRedirect(pnModURL('mailz','admin','send',array('id' => $this->nl['id'])));
 		}
     }
 }

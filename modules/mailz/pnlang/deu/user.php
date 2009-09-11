@@ -58,3 +58,6 @@ define('_MAILZ_DATE', 'Datum');
 define('_MAILZ_SUBJECT', 'Betreff');
 define('_MAILZ_ACTION', 'Aktion');
 define('_MAILZ_VIEW', 'anzeigen');
+define('_MAILZ_NEWSLETTER_METADATA', 'Daten zum Newsletter');
+define('_MAILZ_NEWSLETTER_SERIALNUMBERS', 'Verschickte Emails');
+define('_MAILZ_LAST_SENT_DATE', 'Letzter Versand am');
