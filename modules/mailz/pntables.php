@@ -130,7 +130,7 @@ function mailz_pntables()
         'contenttype'   => 'contenttype',
         'email'         => 'email'
     );
-    $table['mailz_archive_column_def'] = array (
+    $table['mailz_queue_column_def'] = array (
         'id'            => "I AUTOINCREMENT PRIMARY",
         'nid'           => "I NOTNULL DEFAULT 0",
         'uid'           => "I NOTNULL DEFAULT 0",
