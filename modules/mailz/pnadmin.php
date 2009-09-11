@@ -141,6 +141,25 @@ function mailz_admin_subscriptions()
 }
 
 /**
+ * subscription management function
+ * 
+ * @return       output
+ */
+function mailz_admin_archive()
+{
+    // Security check
+    if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();      
+    }
+
+	// Create output and call handler class
+	$render = pnRender::getInstance('mailz');
+
+    // Return the output
+    return $render->fetch('mailz_admin_archive.htm');
+}
+
+/**
  * preview newsleter
  *
  * @param   $args['id']             newsletter id

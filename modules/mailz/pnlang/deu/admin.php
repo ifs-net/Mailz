@@ -149,3 +149,7 @@ define('_MAILZ_SEARCH_EMAIL', 'Nach Emailadresse (auch Teile) suchen');
 define('_MAILZ_NO_SUBSCRIPTIONS', 'Keine Eintragungen (bei Verwendung der Suchfunktion keine Eintragung mit entsprechender Einschränkung) gefunden');
 define('_MAILZ_SUBSCRIPTION_DELETION_ERROR', 'Fehler beim Entfernen des Abonnements');
 define('_MAILZ_SUBSCRIPTION_DELETED', 'Abonnement gelöscht');
+
+// archive
+define('_MAILZ_SHOW_ARCHIVE', 'Archiv aufrufen');
+define('_MAILZ_ARCHIVE_HINTS', 'Hier kann die Archivfunktion für Endnutzer verwendet werden. Archive, welche als nicht öffentlich markiert sind, werden nur für Administratoren angezeigt und für Gäste ausgeblendet.');
