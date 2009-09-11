@@ -963,22 +963,34 @@ function mailz_commonapi_getSubscriptions($args)
 /**
  * get Newsletter archive
  *
- * @param   $args['nid']    int     general newsletter id
- * @param   $args['id']     int     get specific newsletter 
+ * @param   $args['nid']            int     general newsletter id
+ * @param   $args['id']             int     get specific newsletter 
+ * @param   $args['count']          int     count items only
+ * @param   $args['limitoffset']    int     optional limit offset
+ * @param   $args['numrows']        int     optional items to display
  * @return  object
  */
 function mailz_commonapi_getArchivedNewsletter($args)
 {
-    $id  = (int) $args['id'];
-    $nid = (int) $args['nid'];
+    $id    = (int) $args['id'];
+    $nid   = (int) $args['nid'];
+    $count = (int) $args['count'];
     if (!($id > 0) && !($nid > 0)) {
         return false;
     }
     if ($id > 0) {
         $result = DBUtil::selectObjectByID('mailz_archive',$id);
+        if (($count == 1) && $result) {
+            return 1;
+        }
     } else {
-        $where = 'nid = '.$nid;
-        $result = DBUtil::selectObjectArray('mailz_archive',$where);
+        $where   = 'nid = '.$nid;
+        $orderby = 'date DESC';
+        if ($count == 1) {
+            $result = DBUtil::selectObjectCount('mailz_archive',$where);
+        } else {
+            $result = DBUtil::selectObjectArray('mailz_archive',$where,$orderby,$args['limitoffset'],$args['numrows']);
+        }
     }
     return $result;
 }

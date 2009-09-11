@@ -9,6 +9,12 @@
 <!--[pnml name="_MAILZ_USER_INTRO_TEXT"]-->
 </p>
 
+<!--[if $usearchive eq 1]-->
+    <p>
+    <!--[pnml name="_MAILZ_VISIT_ARCHIVE"]-->: <a href="<!--[pnmodurl modname="mailz" func="archive"]-->"><!--[pnml name="_MAILZ_ARCHIVE"]--></a>
+    </p>
+<!--[/if]-->
+
 <!--[foreach from=$newsletters item="nl"]-->
     <h3><!--[$nl.title|pnvarprepfordisplay]--> <!--[subscribedinfo id=$nl.id uid=$uid]--></h3>
     <div><!--[$nl.description|pnvarprepfordisplay]--></div>
