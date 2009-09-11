@@ -10,7 +10,7 @@
 
 $modversion['name']           = 'mailz';
 // the version string must not exceed 10 characters!
-$modversion['version']        = '1.1';
+$modversion['version']        = '1.0';
 $modversion['description']    = 'enhanced zk powered newsletter and mailing system';
 $modversion['displayname']    = 'mailz';
 
