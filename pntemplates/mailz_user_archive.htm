@@ -1,0 +1,59 @@
+<!--[* $Id: mailz_user_main.htm 11 2009-09-05 15:35:46Z quan $ *]-->
+<!--[include file="mailz_user_header.htm"]-->
+
+<h1><!--[pnml name="_MAILZ_ARCHIVE_FOR"]--> <!--[pnconfiggetvar name="sitename"]--></h1>
+
+<!--[if $newsletter.id gt 0]-->
+
+
+    <!--[if $archivenewsletter.id gt 0]-->
+
+        <p>
+        <a href="<!--[pnmodurl modname="mailz" func="archive" id=$newsletter.id]-->"><!--[pnml name="_MAILZ_BACK_TO_ARCHIVE_OVERVIEW"]--> "<!--[$newsletter.title|pnvarprepfordisplay]-->"</a>
+        </p>
+        <div class="mailz_nl_view">
+            <!--[$archivenewsletter.body_html]-->
+        </div>
+        
+    <!--[else]-->
+
+        <p>
+        <a href="<!--[pnmodurl modname="mailz" func="archive" ]-->"><!--[pnml name="_MAILZ_BACK_TO_ARCHIVE_OVERVIEW"]--></a>
+        </p>
+    
+     	<table class="mailz_table">
+      		<tr>
+       			<th><!--[pnml name="_MAILZ_DATE"]--></th>
+       			<th><!--[pnml name="_MAILZ_SUBJECT"]--></th>
+       			<th><!--[pnml name="_MAILZ_ACTION"]--></th>
+       		</tr>
+        
+        
+        <!--[foreach from=$archive item="item"]-->
+            <tr>
+                <td><!--[$item.date|pndate_format]--></td>
+                <td><!--[$item.subject]--></td>
+                <td>
+                        <a href="<!--[pnmodurl fqurl="true" modname="mailz" func="archive" id=$newsletter.id item=$item.id]-->"><img src="images/icons/extrasmall/demo.gif" alt="<!--[pnml name="_MAILZ_VIEW"]-->" title="<!--[pnml name="_MAILZ_VIEW"]-->"/></a>
+                </td>
+            </tr>
+        <!--[/foreach]-->
+        </table>
+    <!--[/if]-->
+
+<!--[else]-->
+
+    <p>
+    <!--[pnml name="_MAILZ_ARCHIVE_HINTS"]-->
+
+    <ul>
+    <!--[foreach item="item" from=$newsletters]-->
+        <li><a href="<!--[pnmodurl modname="mailz" func="archive" id=$item.id]-->"><!--[$item.title|pnvarprepfordisplay]--></a></li>
+    <!--[foreachelse]-->
+        <li><!--[pnml name="_MAILZ_NO_NEWSLETTER_ARCHIVED"]--></li>
+    <!--[/foreach]-->
+    </ul>
+
+<!--[/if]-->
+
+<!--[include file="mailz_user_footer.htm"]-->

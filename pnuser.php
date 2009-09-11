@@ -200,3 +200,50 @@ function mailz_user_d()
     }
     return pnRedirect(pnModURL('mailz'));
 }
+
+/**
+ * show newsletter archive
+ *
+ * @return output
+ */
+function mailz_user_archive()
+{
+    // Security check
+    if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_OVERVIEW)) {
+        return LogUtil::registerPermissionError();      
+    }
+
+	// Create output and call handler class
+	$render = pnRender::getInstance('mailz');
+	
+    
+    // If a special newsletter is chosen load data
+    $id = (int) FormUtil::getPassedValue('id');
+    if ($id > 0) {
+        $newsletter = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id));
+        if ($newsletter) {
+            $render->assign('newsletter', $newsletter);
+            $item = (int) FormUtil::getPassedValue('item');
+            if ($item > 0) {
+                $item = pnModAPIFunc('mailz','common','getArchivedNewsletter',array('id' => $item));
+                if (!$item || ($item['nid'] != $newsletter['id'])) {
+                    return LogUtil::registerPermissionError();
+                } else {
+                    $render->assign('archivenewsletter', $item);
+                }
+            }
+            // get Archive
+            $archive = pnModAPIFunc('mailz','common','getArchivedNewsletter',array('nid' => $id));
+            $render->assign('archive', $archive);
+        }
+    }
+    if (!$newsletter) {
+        // Assign all newsletters otherwise for overview
+    	$newsletters = pnModAPIFunc('mailz','common','getNewsletters',array('archived' => 1));
+        $render->assign('newsletters', $newsletters);
+    }
+    
+    // Return the output
+    return $render->fetch('mailz_user_archive.htm');
+   
+}

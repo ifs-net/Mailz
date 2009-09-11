@@ -34,6 +34,7 @@ function mailz_commonapi_getGroups($args)
  *
  * @param   $args['id']             int     optional, newsletter id
  * @param   $args['inactive']       int     optional, show inactive, too (==1)
+ * @param   $args['archived']       int     optional, show only newsletters having archived newsletters (==1)
  * @param   $args['subscribable']   int     optional, show only subscribable newsletters (==1)
  * @return  array
  */
@@ -42,6 +43,7 @@ function mailz_commonapi_getNewsletters($args)
     $id             = (int) $args['id'];
     $subscribable   = (int) $args['subscribable'];
     $inactive       = (int) $args['inactive'];
+    $archived       = (int) $args['archived'];
     $whereA = array();
     if ($subscribable == 1) {
         $whereA[] = 'subscribable = 1';
@@ -55,6 +57,11 @@ function mailz_commonapi_getNewsletters($args)
             $result = false;
         }
     } else {
+        if ($archived == 1) {
+            $tables = pnDBGetTables();
+            $archivetable = $tables['mailz_archive'];
+            $whereA[] = "id in (SELECT DISTINCT nid FROM ".$archivetable.")";
+        }
         $where = implode(' AND ',$whereA);
         $result = DBUtil::selectObjectArray('mailz_newsletters',$where);
     }
@@ -951,4 +958,27 @@ function mailz_commonapi_getSubscriptions($args)
         $recipients = DBUtil::selectObjectArray('mailz_subscriptions',$where,'',$args['limitoffset'],$args['numrows']);
     }
     return $recipients;
+}
+
+/**
+ * get Newsletter archive
+ *
+ * @param   $args['nid']    int     general newsletter id
+ * @param   $args['id']     int     get specific newsletter 
+ * @return  object
+ */
+function mailz_commonapi_getArchivedNewsletter($args)
+{
+    $id  = (int) $args['id'];
+    $nid = (int) $args['nid'];
+    if (!($id > 0) && !($nid > 0)) {
+        return false;
+    }
+    if ($id > 0) {
+        $result = DBUtil::selectObjectByID('mailz_archive',$id);
+    } else {
+        $where = 'nid = '.$nid;
+        $result = DBUtil::selectObjectArray('mailz_archive',$where);
+    }
+    return $result;
 }
