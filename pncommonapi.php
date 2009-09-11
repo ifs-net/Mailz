@@ -483,11 +483,12 @@ function mailz_commonapi_queueNewsletter($args)
             }
         }
         // Object for archivating order
+        $counter = (int)count($obj);
         if ($newsletter['archive'] == 1) {
             $obj[] = array(
                 'nid'   => $id,
                 'uid'   =>  -999,
-                'email' => count($obj)
+                'email' => $counter
             );
         }
         // And another for updating newsletter core data
@@ -495,7 +496,6 @@ function mailz_commonapi_queueNewsletter($args)
             'nid'   => $id,
             'uid'   =>  -9999
         );
-
         // Insert all into DB
         $result = DBUtil::insertObjectArray($obj,'mailz_queue');
         if (!$result) {
@@ -648,15 +648,17 @@ function mailz_commonapi_systeminit()
             $numrows = 10;
             // get $numrows items of mail queue
             // Order: newsletter by newsletter, lowest id (archivate order!) last, highest first
-            $orderby = 'email DESC, nid ASC, uid DESC';
-            $items = DBUtil::selectObjectArray('mailz_queue',$where,$orderby,-1,$numrows);
+            $orderby = 'nid ASC, uid DESC, email DESC';
+            $items = DBUtil::selectObjectArray('mailz_queue','',$orderby,'',$numrows);
             // process items
             foreach ($items as $item) {
-                $result = pnModAPIFunc('mailz','common','sendNewsletter',array('id' => $item['nid'], 'uid' => $item['uid'], 'email' => $item['email'], 'contenttype' => $item['contenttype']));
-//                if ($result) {
-// We will handle each mail as sent at the moment. Error handling is written down on the ToDo list ;-)
-                    DBUtil::deleteObject($item,'mailz_queue');
-//                }
+                if (count($items > 2) && ($item['uid'] >= 0)) {
+                    $result = pnModAPIFunc('mailz','common','sendNewsletter',array('id' => $item['nid'], 'uid' => $item['uid'], 'email' => $item['email'], 'contenttype' => $item['contenttype']));
+    //                if ($result) {
+    // We will handle each mail as sent at the moment. Error handling is written down on the ToDo list ;-)
+                        DBUtil::deleteObject($item,'mailz_queue');
+    //                }
+                }
             }
             pnModDelVar('mailz','lock');
         }
