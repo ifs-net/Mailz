@@ -32,6 +32,9 @@ define('_MAILZ_INACTIVE', 'inaktiv');
 define('_MAILZ_BACK', 'zurück');
 define('_MAILZ_ACTIVE', 'aktiv');
 define('_MAILZ_SEARCH', 'suchen');
+define('_MAILZ_POWERED_BY', 'powered by');
+define('_MAILZ_YOU_LIKE_IT', 'Das Modul ist nützlich und gefällt gut');
+define('_MAILZ_DONATE', 'Unterstütze die Entwicklung');
 
 // main
 define('_MAILZ_MYPROFILE_NAME_FIELD', 'Hier kann ein Feld des MyProfile-Profils ausgewählt werden, welches später im gesamten Newsletter vor Auslieferung durch die Zeichenfolge %%NAME%% ersetzt wird');
