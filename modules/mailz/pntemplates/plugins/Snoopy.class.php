@@ -1,7 +1,7 @@
 <?php
 /**
  * @package      advMailer
- * @version      $Id: pnuser.php 6 2009-09-07 19:48:24Z quan $
+ * @version      $Id$
  * @author       Florian Schießl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
