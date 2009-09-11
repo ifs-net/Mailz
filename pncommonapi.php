@@ -903,3 +903,52 @@ function mailz_commonapi_isSubscribed($args)
     }
 
 }
+
+/**
+ * get Subscriptions for a Newsletter
+ *
+ * @param   $args['id']             int     newsletter id
+ * @param   $args['unconfirmed']    int     ==1, optional to show unconfirmed, too
+ * @param   $args['limitoffset']    int     for pager usage
+ * @param   $args['numrows']        int     for pager - items to show on a single page
+ * @param   $args['uname']          string  optional for user filter
+ * @param   $args['email']          string  optional for email filter
+ * @return  array
+ */
+function mailz_commonapi_getSubscriptions($args)
+{
+    // Check parameters
+    $nl          = pnModAPIFunc('mailz','common','getNewsletters',$args);
+    $id          = (int)    $args['id'];
+    $unconfirmed = (int)    $args['unconfirmed'];
+    $uname       = (string) $args['uname'];
+    $email       = (string) $args['email'];
+    if (!$nl || ($nl['id'] != $id)) {
+        return false;
+    }
+    // Construct SQL where part
+    $wa = array();
+    if ($unconfirmed != 1) {
+        $wa[] = 'confirmed != 0';
+    }
+    $wa[] = 'nid = '.$id;
+    if (isset($email) && ($email != '')) {
+        $wa[] = "email like '%".DataUtil::formatForStore($email)."%'";
+    }
+    if (isset($uname) && ($uname != '')) {
+        $uid = pnUserGetIDFromName($uname);
+        if ($uid > 2) {
+            $wa[] = "uid = ".$uid;
+        } else {
+            return false;
+        }
+    }
+    $where = implode(' AND ',$wa);
+    // Get objects
+    if ($count == 1) {
+        $recipients = DBUtil::selectObjectCount('mailz_subscriptions',$where);
+    } else {
+        $recipients = DBUtil::selectObjectArray('mailz_subscriptions',$where,'',$args['limitoffset'],$args['numrows']);
+    }
+    return $recipients;
+}

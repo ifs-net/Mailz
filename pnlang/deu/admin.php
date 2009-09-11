@@ -31,6 +31,7 @@ define('_MAILZ_COMBINED', 'kombiniert: text+html');
 define('_MAILZ_INACTIVE', 'inaktiv');
 define('_MAILZ_BACK', 'zurück');
 define('_MAILZ_ACTIVE', 'aktiv');
+define('_MAILZ_SEARCH', 'suchen');
 
 // main
 define('_MAILZ_MYPROFILE_NAME_FIELD', 'Hier kann ein Feld des MyProfile-Profils ausgewählt werden, welches später im gesamten Newsletter vor Auslieferung durch die Zeichenfolge %%NAME%% ersetzt wird');
@@ -130,3 +131,18 @@ define('_MAILZ_SEND_NOW', 'Versand starten');
 define('_MAILZ_QUEUED_WAIT', 'Der Newsletter wurde erfolgreich zum Senden eingestellt. Dies kann etwas dauern. Nach dem vollständigen Abschluss des Sendens wird der Newsletter - sofern archivieren für diesen aktiviert ist, automatisch archiviert.');
 define('_MAILT_QUEUE_ERROR', 'Ein Fehler ist im Warteschlangensystem aufgetreten, der Newsletter wurde nicht verschickt.');
 define('_MAILZ_NEWSLETTER_ALREADY_IN_QUEUE', 'Es befindet sich noch ein nicht vollständig abgearbeiteter Newsletter in der Warteschlange. Bitte diese notfalls manuell bereinigen und dann Empfängerkreis prüfen!');
+
+
+// subscriptions
+define('_MAILZ_SUBSCRIPTIONS_FOR', 'Abonnenten vom Newsletter');
+define('_MAILZ_IP', 'IP-Adresse');
+define('_MAILZ_DATE', 'Datum');
+define('_MAILZ_CONFIRMED', 'bestätigt');
+define('_MAILZ_EMAIL', 'Emailadresse');
+define('_MAILZ_UNAME', 'Benutzername');
+define('_MAILZ_CONTENTTYPE', 'bevorzugter Empfang');
+define('_MAILZ_SEARCH_UNAME', 'Nach exaktem Benutzernamen suchen');
+define('_MAILZ_SEARCH_EMAIL', 'Nach Emailadresse (auch Teile) suchen');
+define('_MAILZ_NO_SUBSCRIPTIONS', 'Keine Eintragungen (bei Verwendung der Suchfunktion keine Eintragung mit entsprechender Einschränkung) gefunden');
+define('_MAILZ_SUBSCRIPTION_DELETION_ERROR', 'Fehler beim Entfernen des Abonnements');
+define('_MAILZ_SUBSCRIPTION_DELETED', 'Abonnement gelöscht');
