@@ -49,13 +49,8 @@ function mailz_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case 1.0:
-    	// install system init hook
-        if (!pnModRegisterHook('zikula', 'systeminit', 'API', 'mailz', 'common', 'systeminit')) {
-            LogUtil::registerError(_ERRORCREATINGHOOK);
-            return false;
-        }
-        pnModAPIFunc('Modules', 'admin', 'enablehooks', array('callermodname' => 'zikula', 'hookmodname' => 'mailz'));
+        case '1.0':
+        default:
     }   
     return true;
 }
