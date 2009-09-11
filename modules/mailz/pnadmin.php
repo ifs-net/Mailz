@@ -133,6 +133,28 @@ function mailz_admin_newsletters()
 }
 
 /**
+ * subscription management function
+ * 
+ * @return       output
+ */
+function mailz_admin_subscriptions()
+{
+    // Security check
+    if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();      
+    }
+
+  	// load handler class
+	Loader::requireOnce('modules/mailz/includes/classes/admin/subscriptions.php');
+
+	// Create output and call handler class
+	$render = FormUtil::newpnForm('mailz');
+
+    // Return the output
+    return $render->pnFormExecute('mailz_admin_subscriptions.htm', new mailz_admin_subscriptionsHandler());
+}
+
+/**
  * preview newsleter
  *
  * @param   $args['id']             newsletter id

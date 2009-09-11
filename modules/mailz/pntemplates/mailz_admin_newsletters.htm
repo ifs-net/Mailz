@@ -141,7 +141,7 @@
                     <!--[if $item.subscribable eq 0]-->
                         <img src="images/icons/extrasmall/button_cancel.gif" />
                     <!--[else]-->
-                        <!--[subscriptions id=$item.id]-->
+                        <a href="<!--[pnmodurl modname="mailz" type="admin" func="subscriptions" id=$item.id]-->"><!--[subscriptions id=$item.id]--></a>
                     <!--[/if]-->
                 </td>
                 <td>

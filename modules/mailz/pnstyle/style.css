@@ -33,3 +33,7 @@
 .mailz_link {
   cursor: pointer;
 }
+
+.mailz_pager {
+  text-align: center;
+}
