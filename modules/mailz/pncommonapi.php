@@ -652,13 +652,11 @@ function mailz_commonapi_systeminit()
             $items = DBUtil::selectObjectArray('mailz_queue','',$orderby,'',$numrows);
             // process items
             foreach ($items as $item) {
-                if (count($items > 2) && ($item['uid'] >= 0)) {
                     $result = pnModAPIFunc('mailz','common','sendNewsletter',array('id' => $item['nid'], 'uid' => $item['uid'], 'email' => $item['email'], 'contenttype' => $item['contenttype']));
     //                if ($result) {
     // We will handle each mail as sent at the moment. Error handling is written down on the ToDo list ;-)
                         DBUtil::deleteObject($item,'mailz_queue');
     //                }
-                }
             }
             pnModDelVar('mailz','lock');
         }
