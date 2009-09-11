@@ -20,6 +20,8 @@
         <p>
         <a href="<!--[pnmodurl modname="mailz" func="archive" ]-->"><!--[pnml name="_MAILZ_BACK_TO_ARCHIVE_OVERVIEW"]--></a>
         </p>
+
+        <!--[pager class="mailz_pager" show="page" rowcount=$archive_total limit=$numrows posvar=nlpager shift=1]-->
     
      	<table class="mailz_table">
       		<tr>
@@ -39,6 +41,9 @@
             </tr>
         <!--[/foreach]-->
         </table>
+
+    <!--[pager class="mailz_pager" show="page" rowcount=$archive_total limit=$numrows posvar=nlpager shift=1]-->
+
     <!--[/if]-->
 
 <!--[else]-->

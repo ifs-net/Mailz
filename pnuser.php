@@ -51,6 +51,13 @@ function mailz_user_main()
     $render->assign('uname', $uname);
     $render->assign('uid',   pnUserGetVar('uid'));
 
+    // Get archived newsletters
+   	$newsletters = pnModAPIFunc('mailz','common','getNewsletters',array('archived' => 1));
+   	if (count($newsletters > 0)) {
+   	    $render->assign('usearchive', 1);
+    }
+
+
     // Return the output
     return $render->fetch('mailz_user_main.htm');
 }
@@ -216,6 +223,12 @@ function mailz_user_archive()
 	// Create output and call handler class
 	$render = pnRender::getInstance('mailz');
 	
+    // Paging for archive:
+    $limitoffset = (int) FormUtil::getPassedValue('nlpager');
+    if ($limitoffset >= 0) {
+        $limitoffset--;
+    }
+    $numrows = 30;
     
     // If a special newsletter is chosen load data
     $id = (int) FormUtil::getPassedValue('id');
@@ -233,8 +246,11 @@ function mailz_user_archive()
                 }
             }
             // get Archive
-            $archive = pnModAPIFunc('mailz','common','getArchivedNewsletter',array('nid' => $id));
-            $render->assign('archive', $archive);
+            $archive       = pnModAPIFunc('mailz','common','getArchivedNewsletter',array('nid' => $id, 'limitoffset' => $limitoffset, 'numrows' => $numrows));
+            $archive_total = pnModAPIFunc('mailz','common','getArchivedNewsletter',array('nid' => $id, 'count' => 1));
+            $render->assign('archive',       $archive);
+            $render->assign('archive_total', $archive_total);
+            $render->assign('numrows',       $numrows);
         }
     }
     if (!$newsletter) {

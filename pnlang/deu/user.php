@@ -11,6 +11,8 @@
 // main
 define('_MAILZ_USER_PAGE', 'Verwaltung von Newslettern für');
 define('_MAILZ_NO_NEWSLETTERS_FOUND', 'Keine Newsletter zur Anzeige gefunden');
+define('_MAILZ_ARCHIVE', 'Newsletter-Archiv aufrufen');
+define('_MAILZ_VISIT_ARCHIVE', 'Früher verschickte Newsletter können im Archiv eingesehen werden');
 define('_NEWSLETTER_SHOW_OPTIONS', 'Abonnement-Optionen anzeigen');
 define('_NEWSLETTER_HIDE_OPTIONS', 'Abonnement-Optionen ausblenden');
 define('_MAILZ_DO_SUBSCRIBE_ACTION', 'Abonnement-Aktion durchführen');
