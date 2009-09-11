@@ -1,7 +1,7 @@
 <?php
 /**
  * @package      mailz
- * @version      $Id: mailz.php 11 2009-09-05 15:35:46Z quan $
+ * @version      $Id$
  * @author       Florian Schießl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
