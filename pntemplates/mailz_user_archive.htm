@@ -5,7 +5,10 @@
 
 <!--[if $newsletter.id gt 0]-->
 
-
+    <p>
+        <!--[pnml name="_MAILZ_NEWSLETTER_METADATA"]-->: <!--[pnml name="_MAILZ_NEWSLETTER_SERIALNUMBERS"]--> <!--[$newsletter.serialnumber]-->, <!--[pnml name="_MAILZ_LAST_SENT_DATE"]--> <!--[$newsletter.last|pndate_format]-->
+    </p>
+    
     <!--[if $archivenewsletter.id gt 0]-->
 
         <p>

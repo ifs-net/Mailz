@@ -15,10 +15,6 @@ class mailz_admin_newslettersHandler
     {
         // Get groups for target group selection
         $groups = pnModAPIFunc('mailz','common','getGroups');
-        if (!$groups || (!(count($groups) > 0))) {
-            LogUtil::registerStatus(_MAILZ_DEFINE_GROUPS_FIRST);
-            return $render->pnFormRedirect(pnModURL('mailz','admin','groups'));
-        }
 
         // Get Newsletters
         $newsletters = pnModAPIFunc('mailz','common','getNewsletters',array('inactive' => 1));

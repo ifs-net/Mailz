@@ -565,13 +565,6 @@ function mailz_commonapi_sendNewsletter($args)
     $subject = $newsletter['title'];
     $body = pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $newsletter['id'], 'uid' => $uid, 'contenttype' => $newsletter['contenttype']));
     $html = ($newsletter['contenttype'] == 'h');
-//    if ($newsletter['contenttype'] == 'h') {
-//        $header = array('header' => '\nMIME-Version: 1.0\nContent-type: text/html');
-//        $html = true;
-//    } else {
-//        $header = array('header' => '\nMIME-Version: 1.0\nContent-type: text/plain');
-//        $html = false;
-//    }
     
     // Set name or handle archive and core data updates for newsletter's core data here
     if ($uid > 1) {
@@ -591,8 +584,8 @@ function mailz_commonapi_sendNewsletter($args)
                 'body_html'     => pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $newsletter['id'], 'uid' => 0, 'contenttype' => 'h')),
                 'body_text'     => pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $newsletter['id'], 'uid' => 0, 'contenttype' => 't')),
                 'public'        => $newsletter['public'],
-                'date'          => date("Y-m-h H:i:s",time()),
-                'recipients'    => $args['email']
+                'date'          => date("Y-m-d H:i:s",time()),
+                'recipients'    => $args['email']   // Email field is used to transport the number or recipients
             );
         $result = DBUtil::insertObject($obj,'mailz_archive');
         // Object inserted into archive table and returning result now.
@@ -641,9 +634,7 @@ function mailz_commonapi_sendNewsletter($args)
  */
 function mailz_commonapi_systeminit()
 {
-    $uid = pnUserGetVar('uid');
-    $numrows = 10;
-    if ($uid > 1) {
+    if (pnUserLoggedIn()) {
         // Get lock; lock is timestamp
         $lock = (int) pnModGetVar('mailz','lock');
         $lock = $lock + (3*60);
@@ -653,6 +644,8 @@ function mailz_commonapi_systeminit()
         } else {
             // Set lock
             pnModSetVar('mailz','lock',$ts);
+            // numbers of newsletters that should be generated with one site call
+            $numrows = 10;
             // get $numrows items of mail queue
             // Order: newsletter by newsletter, lowest id (archivate order!) last, highest first
             $orderby = 'email DESC, nid ASC, uid DESC';
@@ -660,9 +653,10 @@ function mailz_commonapi_systeminit()
             // process items
             foreach ($items as $item) {
                 $result = pnModAPIFunc('mailz','common','sendNewsletter',array('id' => $item['nid'], 'uid' => $item['uid'], 'email' => $item['email'], 'contenttype' => $item['contenttype']));
-                if ($result) {
+//                if ($result) {
+// We will handle each mail as sent at the moment. Error handling is written down on the ToDo list ;-)
                     DBUtil::deleteObject($item,'mailz_queue');
-                }
+//                }
             }
             pnModDelVar('mailz','lock');
         }

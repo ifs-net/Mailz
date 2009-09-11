@@ -102,7 +102,6 @@ define('_MAILZ_IS_INACTIVE', 'Eintrag ist aktiv');
 define('_MAILZ_NL_CRONCODE', 'Cronjob-Passwort für Nutzung des automatisierten Versands (optional, leer lassen für Nichtnutzung)');
 define('_MAILZ_NO_NEWSLETTERS', 'Keine Newsletter bisher angelegt');
 define('_MAILZ_NEWSLETTER_CREATION_ERROR', 'Fehler beim Speichern des Newsletters');
-define('_MAILZ_DEFINE_GROUPS_FIRST', 'Zuerst müssen Zielgruppen angelegt werden - nur so können Newsletter angelegt und bearbeitet werden!');
 define('_MAILZ_MIN_DELAY', 'Verzögerung beim Versenden in Minuten');
 define('_MAILZ_ID', 'ID');
 define('_MAILZ_NL_DESCRIPTION', 'Beschreibung (wird öffentlich angezeigt) für den Newsletter');
