@@ -2,7 +2,7 @@
 /**
  * @package      mailz
  * @version      $Id$
- * @author       Florian Schießl
+ * @author       Florian SchieÃŸl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
@@ -14,16 +14,17 @@ class mailz_admin_pluginsHandler
     var $nl;
     function initialize(&$render)
     {
+        $dom = ZLanguage::getModuleDomain('mailz');
         // Get newsletter(s)
         $nl = (int) FormUtil::getPassedValue('nl');
         if ($nl > 0) {
             $this->nl = $nl;
             // Get single newsletter to work on with
-            $newsletter = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $nl, 'inactive' => 1));
-            $render->assign('newsletter',       $newsletter);
+            $newsletter = pnModAPIFunc('mailz', 'common', 'getNewsletters', array('id' => $nl, 'inactive' => 1));
+            $render->assign('newsletter', $newsletter);
 
             // Add plugins for Newsletter
-            $nl_plugins = pnModAPIFunc('mailz','common','getNewsletterPlugins',array('nid' => $this->nl));
+            $nl_plugins = pnModAPIFunc('mailz', 'common', 'getNewsletterPlugins', array('nid' => $this->nl));
             $render->assign('nl_plugins', $nl_plugins);
 
             // Should a plugin be added?
@@ -33,32 +34,32 @@ class mailz_admin_pluginsHandler
                 // Add plugin
                 $obj = array (
                     'nid'      => $this->nl,
-                    'title'    => _MAILZ_PLEASE_DESCRIBE,
+                    'title'    => __('Please enter the desired text here', $dom),
                     'module'   => $mod,
                     'pluginid' => $pluginid
                 );
                 $result = DBUtil::insertObject($obj,'mailz_plugins');
                 if ($result) {
                     // Register status message, update plugin sort order and redirect
-                    LogUtil::registerStatus(_MAILZ_PLUGIN_ADDED);
+                    LogUtil::registerStatus(__('Plugin has been added and can be edited now', $dom));
                     pnModAPIFunc('mailz','common','setNewsletterPluginOrder',array('nid' => $this->nl));
-                    return $render->pnFormRedirect(pnModURL('mailz','admin','plugins',array('nl' => $this->nl, 'id' => $obj['id'])));
+                    return $render->pnFormRedirect(pnModURL('mailz', 'admin', 'plugins', array('nl' => $this->nl, 'id' => $obj['id'])));
                 } else {
                     // Register error message and redirect
-                    LogUtil::registerError(_MAILZ_STORE_ERROR);
-                    return $render->pnFormRedirect(pnModURL('mailz','admin','plugins',array('nl' => $this->nl)));
+                    LogUtil::registerError(__('Error during saving the data', $dom));
+                    return $render->pnFormRedirect(pnModURL('mailz', 'admin', 'plugins', array('nl' => $this->nl)));
                 }
             }
             
             // Should a plugin be loaded?
             $id = (int) FormUtil::getPassedValue('id');
             if ($id > 0) {
-                $plugin = DBUtil::selectObjectByID('mailz_plugins',$id);
+                $plugin = DBUtil::selectObjectByID('mailz_plugins', $id);
                 if ($plugin && ($plugin['id'] == $id)) {
                     $this->plugin = $plugin;
                     $render->assign($this->plugin);
                     // Get additional data for plugin
-                    $plugindata = pnModAPIFunc('mailz','common','getPlugins',array('module' => $this->plugin['module'], 'pluginid' => $this->plugin['pluginid']));
+                    $plugindata = pnModAPIFunc('mailz', 'common', 'getPlugins', array('module' => $this->plugin['module'], 'pluginid' => $this->plugin['pluginid']));
                     $render->assign('plugindata', $plugindata[0]);
                     // Maybe preview action is called?
                     $preview = (string) FormUtil::getPassedValue('preview');
@@ -67,7 +68,7 @@ class mailz_admin_pluginsHandler
                     }
                 }
             }
-            
+
             // Should a plugin be switched (change order)
             $action = (string) FormUtil::getPassedValue('action');
             if (isset($action) && ($action == 'switch')) {
@@ -76,52 +77,52 @@ class mailz_admin_pluginsHandler
                 $p1 = DBUtil::selectObjectByID('mailz_plugins',$p1);
                 $p2 = DBUtil::selectObjectByID('mailz_plugins',$p2);
                 if (!$p1 || !$p2 || ($p1['nid'] != $p2['nid']) || ($p1['nid'] != $this->nl)) {
-                    LogUtil::registerError(_MAILT_SWITCH_ERROR);
+                    LogUtil::registerError(__('An error occured during resorting', $dom));
                 } else {
                     $dummy = $p1['position'];
                     $p1['position'] = $p2['position'];
                     $p2['position'] = $dummy;
-                    $res = DBUtil::updateObject($p1,'mailz_plugins');
+                    $res = DBUtil::updateObject($p1, 'mailz_plugins');
                     if ($res) {
-                        $res = DBUtil::updateObject($p2,'mailz_plugins');
+                        $res = DBUtil::updateObject($p2, 'mailz_plugins');
                         if (!$res) {
-                            LogUtil::registerError(_MAILT_SWITCH_ERROR);
+                            LogUtil::registerError(__('An error occured during resorting', $dom));
                         }
                     } else {
-                        LogUtil::registerError(_MAILT_SWITCH_ERROR);
+                        LogUtil::registerError(__('An error occured during resorting', $dom));
                     }
                 }
-                return $render->pnFormRedirect(pnModURL('mailz','admin','plugins',array('nl' => $this->nl)));
+                return $render->pnFormRedirect(pnModURL('mailz', 'admin', 'plugins', array('nl' => $this->nl)));
             }
 
         } else {
             // Get Newsletters
-            $newsletters = pnModAPIFunc('mailz','common','getNewsletters',array('inactive' => 1));
-            $render->assign('newsletters',       $newsletters);
+            $newsletters = pnModAPIFunc('mailz', 'common', 'getNewsletters', array('inactive' => 1));
+            $render->assign('newsletters', $newsletters);
         }
 
     	// add scribite support
     	if (pnModAvailable('scribite')) {
-    		$scribite = pnModFunc('scribite','user','loader', array(
+    		$scribite = pnModFunc('scribite', 'user', 'loader', array(
     									'modname' => 'mailz',
     		                            'editor'  => pnModGetVar('mailz', 'editor'),
-    		                            'areas'   => array('header_html','footer_html')
+    		                            'areas'   => array('header_html', 'footer_html')
                                         )
     								);
     	    PageUtil::AddVar('rawtext', $scribite);
         }
-    
 
-        
+
+
         // get all plugins
         $plugins = pnModAPIFunc('mailz','common','getPlugins');
         $render->assign('plugins', $plugins);
-        
-        
+
+
         // Assign some standard values
-        $inactive_items = array (
-            array('text' => _MAILZ_INACTIVE, 'value' => 1),
-            array('text' => _MAILZ_ACTIVE,   'value' => 0)
+        $inactive_items = array(
+            array('text' => __('inactive', $dom), 'value' => 1),
+            array('text' => __('active', $dom),   'value' => 0)
         );
  
         $render->assign('inactive_items',    $inactive_items);
@@ -130,14 +131,15 @@ class mailz_admin_pluginsHandler
     }
     function handleCommand(&$render, &$args)
     {
+        $dom = ZLanguage::getModuleDomain('mailz');
 	    // Security check
-	    if (!SecurityUtil::checkPermission('lobby::', '::', ACCESS_ADMIN)) {
+	    if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
 		  	return LogUtil::registerPermissionError();
 		}
-		if ($args['commandName']=='back') {
-		    return $render->pnFormRedirect(pnModURL('mailz','admin','plugins',array('nl' => $this->nl)));
+		if ($args['commandName'] == 'back') {
+		    return $render->pnFormRedirect(pnModURL('mailz', 'admin', 'plugins', array('nl' => $this->nl)));
 		}
-		else if ($args['commandName']=='update') {
+		else if ($args['commandName'] == 'update') {
 
 			// get the pnForm data and do a validation check
 		    $obj = $render->pnFormGetValues();
@@ -147,13 +149,13 @@ class mailz_admin_pluginsHandler
 
             // Should object be deleted?
             if ($obj['delete'] == 1) {
-                $result = DBUtil::deleteObject($obj,'mailz_plugins');
+                $result = DBUtil::deleteObject($obj, 'mailz_plugins');
                 if ($result) {
-                    LogUtil::registerStatus(_MAILZ_DELETED);
+                    LogUtil::registerStatus(__('Data deleted', $dom));
                 } else {
-                    LogUtil::registerError(_MAILZ_DELETE_ERROR);
+                    LogUtil::registerError(__('Error during deletion', $dom));
                 }
-                return $render->pnFormRedirect(pnModURL('mailz','admin','plugins',array('nl' => $this->nl)));
+                return $render->pnFormRedirect(pnModURL('mailz', 'admin', 'plugins', array('nl' => $this->nl)));
             }
 
 		    // Update Object
@@ -161,13 +163,13 @@ class mailz_admin_pluginsHandler
             $result = DBUtil::updateObject($obj,'mailz_plugins');
             if ($result) {
                     // Display status message
-                    LogUtil::registerStatus(_MAILZ_UPDATED);
+                    LogUtil::registerStatus(__('Data updated', $dom));
             } else {
-                LogUtil::registerError(_MAILZ_UPDATE_ERROR);
+                LogUtil::registerError(__('Error during updating the data', $dom));
             }
 
 			// Redirect
-			return $render->pnFormRedirect(pnModURL('mailz','admin','plugins',array('nl' => $this->nl)));
+			return $render->pnFormRedirect(pnModURL('mailz', 'admin', 'plugins', array('nl' => $this->nl)));
 		}
     }
 }

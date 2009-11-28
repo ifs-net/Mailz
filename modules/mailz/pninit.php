@@ -2,7 +2,7 @@
 /**
  * @package      mailz
  * @version      $Id$
- * @author       Florian Schießl
+ * @author       Florian SchieÃŸl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
@@ -13,6 +13,8 @@
   *
   */
 function mailz_init() {
+    $dom = ZLanguage::getModuleDomain('mailz');
+
   	// Create tables
     $tables = array (
   		'mailz_groups',
@@ -31,7 +33,7 @@ function mailz_init() {
 
 	// install system init hook
     if (!pnModRegisterHook('zikula', 'systeminit', 'API', 'mailz', 'common', 'systeminit')) {
-        LogUtil::registerError(_ERRORCREATINGHOOK);
+        LogUtil::registerError(__('Error creating hook', $dom));
         return false;
     }
     pnModAPIFunc('Modules', 'admin', 'enablehooks', array('callermodname' => 'zikula', 'hookmodname' => 'mailz'));
@@ -60,6 +62,8 @@ function mailz_upgrade($oldversion)
  *
  */
 function mailz_delete() {
+    $dom = ZLanguage::getModuleDomain('mailz');
+
   	// Drop tables
   	$tables = array (
   		'mailz_group_relations',
@@ -83,7 +87,7 @@ function mailz_delete() {
 
     // Unregister system init hook
     if (!pnModUnregisterHook('zikula', 'systeminit', 'API', 'mailz', 'common', 'systeminit')) {
-        LogUtil::registerError(_ERRORDELETINGHOOK);
+        LogUtil::registerError(__('Error removing hook', $dom));
         return false;
     }
 

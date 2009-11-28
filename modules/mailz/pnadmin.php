@@ -2,7 +2,7 @@
 /**
  * @package      mailz
  * @version      $Id$
- * @author       Florian Schießl
+ * @author       Florian SchieÃŸl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
@@ -17,7 +17,7 @@ function mailz_admin_main()
 {
     // Security check
     if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError();      
+        return LogUtil::registerPermissionError();
     }
 
   	// load handler class
@@ -39,7 +39,7 @@ function mailz_admin_groups()
 {
     // Security check
     if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError();      
+        return LogUtil::registerPermissionError();
     }
 
   	// load handler class
@@ -61,7 +61,7 @@ function mailz_admin_send()
 {
     // Security check
     if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError();      
+        return LogUtil::registerPermissionError();
     }
 
   	// load handler class
@@ -83,7 +83,7 @@ function mailz_admin_plugins()
 {
     // Security check
     if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError();      
+        return LogUtil::registerPermissionError();
     }
 
   	// load handler class
@@ -105,7 +105,7 @@ function mailz_admin_newsletters()
 {
     // Security check
     if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError();      
+        return LogUtil::registerPermissionError();
     }
 
   	// load handler class
@@ -127,7 +127,7 @@ function mailz_admin_subscriptions()
 {
     // Security check
     if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError();      
+        return LogUtil::registerPermissionError();
     }
 
   	// load handler class
@@ -149,7 +149,7 @@ function mailz_admin_archive()
 {
     // Security check
     if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError();      
+        return LogUtil::registerPermissionError();
     }
 
 	// Create output and call handler class
@@ -170,7 +170,7 @@ function mailz_admin_preview()
 {
     // Security check
     if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError();      
+        return LogUtil::registerPermissionError();
     }
 
     // Get parameters
@@ -185,7 +185,7 @@ function mailz_admin_preview()
     
     // Proceed with newsletter
     $uid = pnUserGetVar('uid');
-    $output = pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $id, 'contenttype' => $contenttype, 'uid' => $uid));
+    $output = pnModAPIFunc('mailz', 'common', 'getNewsletterOutput', array('id' => $id, 'contenttype' => $contenttype, 'uid' => $uid));
     if ($contenttype == 't') {
         print "<pre>";
         print $output;

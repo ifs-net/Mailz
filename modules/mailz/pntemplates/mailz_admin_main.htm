@@ -1,9 +1,7 @@
 <!--[* $Id$ *]-->
 <!--[include file="mailz_admin_header.htm"]-->
 
-<p>
-<!--[pnml name="_MAILZ_BACKEND_SETTINGS"]-->
-</p>
+<p><!--[gt text='Global newsletter settings']--></p>
 
 
 <!--[pnform]-->
@@ -11,12 +9,12 @@
     <!--[pnformvalidationsummary]-->
 
     <p>
-    <!--[pnformlabel for="myprofile_name" text=_MAILZ_MYPROFILE_NAME_FIELD]-->:<br />
+    <!--[pnformlabel for="myprofile_name" __text='You can choose a MyProfile data field that will later replace the string %%NAME%% in the sending process']-->:<br />
     <!--[pnformdropdownlist id="myprofile_name" items=$fields_items]--><br />
     </p>
 
     <p>
-    <!--[pnml name="_MAILZ_REPLACEMENTS"]-->
+    <!--[gt text='While sending takes place some replacements will be made automatically']-->
     <ul>
         <li>%%UID%% [user id]</li>
         <li>%%UNAME [username]</li>
@@ -25,12 +23,10 @@
     </p>
 
     <p>
-        <!--[pnml name="_MAILZ_CRON_URL"]-->: <!--[pnmodurl fqurl="true" modname="mailz" type="user" func="cron" id="NEWSLETTER_ID" pwd="CRON_PASSWORD"]-->
+        <!--[gt text='If a cron password is specified sending can be done automatically. The call of the cron url will put the newsletter in the sending queue and send the newsletter to all recipients. Please replace URL and ID for each newsletter. URL also can be seen in the newsletter configuration.']-->: <!--[pnmodurl fqurl="true" modname="mailz" type="user" func="cron" id="NEWSLETTER_ID" pwd="CRON_PASSWORD"]-->
     </p>
 
-    <p>
-    <!--[pnformbutton commandName="update" text="_MAILZ_STORE"]--> 
-    </p>
+    <p><!--[pnformbutton commandName="update" __text='store']--> </p>
 
 <!--[/pnform]-->
 

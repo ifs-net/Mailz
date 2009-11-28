@@ -2,17 +2,20 @@
 /**
  * @package      mailz
  * @version      $Id$
- * @author       Florian Schieﬂl
+ * @author       Florian Schie√ül
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
  */
 
+$dom = ZLanguage::getModuleDomain('mailz');
+
 $modversion['name']           = 'mailz';
 // the version string must not exceed 10 characters!
 $modversion['version']        = '1.0';
 $modversion['description']    = 'enhanced zk powered newsletter and mailing system';
-$modversion['displayname']    = 'mailz';
+$modversion['displayname']    = __('mailz', $dom);
+$modversion['url']            = __('mailz', $dom);
 
 // The following in formation is used by the credits module
 // to display the correct credits

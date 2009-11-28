@@ -3,15 +3,15 @@
 
 <!--[pnajaxheader prototype="1" scriptaculous="1"]-->
 
-<h1><!--[pnml name="_MAILZ_USER_PAGE"]--> <!--[pnconfiggetvar name="sitename"]--></h1>
+<h1><!--[gt name='Manage newsletter subscriptions at']--> <!--[pnconfiggetvar name="sitename"]--></h1>
 
 <p>
-<!--[pnml name="_MAILZ_USER_INTRO_TEXT"]-->
+<!--[gt text='All available newsletters that can be subscribed are listed here. If you have an account for this site and you are not logged in, please log in first and subscribe the newsletter for your account and not only for your email address. Newsletters can contain more content for registered users than they contain for guests.']-->
 </p>
 
 <!--[if $usearchive eq 1]-->
     <p>
-    <!--[pnml name="_MAILZ_VISIT_ARCHIVE"]-->: <a href="<!--[pnmodurl modname="mailz" func="archive"]-->"><!--[pnml name="_MAILZ_ARCHIVE"]--></a>
+    <!--[gt text='Older newsletters can be found in the newsletter archive']-->: <a href="<!--[pnmodurl modname="mailz" func="archive"]-->"><!--[gt text='Display newsletter archive']--></a>
     </p>
 <!--[/if]-->
 
@@ -19,19 +19,19 @@
     <h3><!--[$nl.title|pnvarprepfordisplay]--> <!--[subscribedinfo id=$nl.id uid=$uid]--></h3>
     <div><!--[$nl.description|pnvarprepfordisplay]--></div>
     <div id="mailz_nl_options_<!--[$nl.id]-->" class="mailz_hidden mailz_link">
-        <img src="images/icons/extrasmall/agt_forward.gif" alt="<!--[pnml name="_NEWSLETTER_SHOW_OPTIONS"]-->" title="<!--[pnml name="_NEWSLETTER_SHOW_OPTIONS"]-->" />
-        <!--[pnml name="_NEWSLETTER_SHOW_OPTIONS"]-->
+        <img src="images/icons/extrasmall/agt_forward.gif" alt="<!--[gt text='Show subscription options']-->" title="<!--[gt text='Show subscription options']-->" />
+        <!--[gt text='Show subscription options']-->
     </div>
     <div id="mailz_nl_options_close_<!--[$nl.id]-->" class="mailz_hidden mailz_link">
-        <img src="images/icons/extrasmall/agt_stop.gif" alt="<!--[pnml name="_NEWSLETTER_HIDE_OPTIONS"]-->" title="<!--[pnml name="_NEWSLETTER_HIDE_OPTIONS"]-->" />
-        <!--[pnml name="_NEWSLETTER_HIDE_OPTIONS"]-->
+        <img src="images/icons/extrasmall/agt_stop.gif" alt="<!--[gt text='Hide subscription options']-->" title="<!--[gt text='Hide subscription options']-->" />
+        <!--[gt text='Hide subscription options']-->
     </div>
     <div id="mailz_nl_options_content_<!--[$nl.id]-->">
         <div>
             <form method="post" action="<!--[pnmodurl modname="mailz" type="user" func="subscribe"]-->">
                 <p>
-                    <!--[pnml name="_MAILZ_UNAME"]-->: <!--[$uname]--><br />
-                    <!--[pnml name="_MAILZ_EMAIL"]-->:
+                    <!--[gt text='Username']-->: <!--[$uname]--><br />
+                    <!--[gt text='Email address']-->:
                     <!--[if $email ne '']-->
                         <!--[$email]-->
                     <!--[else]-->
@@ -40,32 +40,32 @@
                     <br />
                     <select name="action">
                     <!--[if $nl.subscribed ne 1]-->
-                        <option selected="selected" value="subscribe"><!--[pnml name="_MAILZ_SUBSCRIBE"]--></option>
+                        <option selected="selected" value="subscribe"><!--[gt text='Start subscription']--></option>
                     <!--[else]-->
                         <!--[if $nl.contenttype eq 'c' and $uid gt 1]-->
-                        <option selected="selected" value="update"><!--[pnml name="_MAILZ_UPDATE_CONTENTTYPE"]--></option>
+                        <option selected="selected" value="update"><!--[gt text='Update subscription']--></option>
                         <!--[/if]-->
                     <!--[/if]-->
                     <!--[if ($nl.subscribed eq 1) or ($uid lt 2)]-->
-                        <option value="unsubscribe"><!--[pnml name="_MAILZ_UNSUBSCRIBE"]--></option>
+                        <option value="unsubscribe"><!--[gt text='Cancel subscription']--></option>
                     <!--[/if]-->
                     </select><br />
                     <!--[if $nl.contenttype eq 'c']-->
                         <select name="contenttype">
-                            <option value="h"><!--[pnml name="_MAILZ_HTML"]--></option>
-                            <option value="t"><!--[pnml name="_MAILZ_TEXT"]--></option>
+                            <option value="h"><!--[gt text='HTML (formated text)']--></option>
+                            <option value="t"><!--[gt text='TEXT (plain text)']--></option>
                         </select><br />
                     <!--[/if]-->
                     <input type="hidden" name="authid" value="<!--[$authid]-->" />
                     <input type="hidden" name="id"     value="<!--[$nl.id]-->" />
-                    <input type="submit" value="<!--[pnml name="_MAILZ_DO_SUBSCRIBE_ACTION"]-->" />
+                    <input type="submit" value="<!--[gt text='send']-->" />
                 </p>
             </form>
         </div>
     </div>
     </p>
 <!--[foreachelse]-->
-    <!--[pnml name="_MAILZ_NO_NEWSLETTERS_FOUND"]-->
+    <!--[gt text='No newsletters to display']-->
 <!--[/foreach]-->
 
 

@@ -2,7 +2,7 @@
 /**
  * @package      mailz
  * @version      $Id$
- * @author       Florian Schießl
+ * @author       Florian SchieÃŸl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
@@ -13,26 +13,28 @@ class mailz_admin_newslettersHandler
     var $nl;
     function initialize(&$render)
     {
+        $dom = ZLanguage::getModuleDomain('mailz');
         // Get groups for target group selection
-        $groups = pnModAPIFunc('mailz','common','getGroups');
+        $groups = pnModAPIFunc('mailz', 'common', 'getGroups');
 
         // Get Newsletters
-        $newsletters = pnModAPIFunc('mailz','common','getNewsletters',array('inactive' => 1));
- 
+        $newsletters = pnModAPIFunc('mailz', 'common', 'getNewsletters', array('inactive' => 1));
+
         // Assign some standard values
         $yesno_items = array (
-            array('text' => _MAILZ_YES, 'value' => 1),
-            array('text' => _MAILZ_NO,  'value' => 0)
+            array('text' => __('yes', $dom), 'value' => 1),
+            array('text' => __('no', $dom),  'value' => 0)
         );
         $inactive_items = array (
-            array('text' => _MAILZ_INACTIVE, 'value' => 1),
-            array('text' => _MAILZ_ACTIVE,   'value' => 0)
+            array('text' => __('inactive', $dom), 'value' => 1),
+            array('text' => __('active', $dom),   'value' => 0)
         );
         $contenttype_items = array (
-            array('text' => _MAILZ_HTML,     'value' => 'h'),
-            array('text' => _MAILZ_TEXT,     'value' => 't'),
-            array('text' => _MAILZ_COMBINED, 'value' => 'c')
+            array('text' => __('html', $dom),                   'value' => 'h'),
+            array('text' => __('text only', $dom),              'value' => 't'),
+            array('text' => __('combined: text+html', $dom),    'value' => 'c')
         );
+
         $groups_items = array();
         foreach ($groups as $group) {
             $groups_items[] = array ('text' => $group['title'], 'value' => $group['id']);
@@ -47,29 +49,31 @@ class mailz_admin_newslettersHandler
         // Should group be loaded?
         $id = (int) FormUtil::getPassedValue('id');
         if ($id > 0) {
-            $nl = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id, 'inactive' => 1));
+            $nl = pnModAPIFunc('mailz', 'common', 'getNewsletters', array('id' => $id, 'inactive' => 1));
             if (isset($nl) && ($nl['id'] == $id)) {
                 // Load newsletter
                 $this->nl = $nl;
                 $render->assign($this->nl);
                 // Load group relations
-                $groups = pnModAPIFunc('mailz','common','getNewsletterGroups',array('id' => $this->nl['id']));
+                $groups = pnModAPIFunc('mailz', 'common', 'getNewsletterGroups', array('id' => $this->nl['id']));
                 $render->assign('groups', $groups);
             } else {
-                LogUtil::registerError(_MAILZ_LOAD_ERROR);
+                LogUtil::registerError(__('Error during loading the data', $dom));
             }
         }
 		return true;
     }
+
     function handleCommand(&$render, &$args)
     {
+        $dom = ZLanguage::getModuleDomain('mailz');
 	    // Security check
-	    if (!SecurityUtil::checkPermission('lobby::', '::', ACCESS_ADMIN)) {
+	    if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
 		  	return LogUtil::registerPermissionError();
 		}
-		if ($args['commandName']=='back') {
-		    return $render->pnFormRedirect(pnModURL('mailz','admin','newsletters'));
-		} else if ($args['commandName']=='update') {
+		if ($args['commandName'] == 'back') {
+		    return $render->pnFormRedirect(pnModURL('mailz', 'admin', 'newsletters'));
+		} else if ($args['commandName'] == 'update') {
 			// get the pnForm data and do a validation check
 		    $obj = $render->pnFormGetValues();
 		    if (!$render->pnFormIsValid()) return false;
@@ -78,37 +82,37 @@ class mailz_admin_newslettersHandler
 		    if (!isset($this->nl)) {
                 $result = DBUtil::insertObject($obj,'mailz_newsletters');
                 if (!$result) {
-                    LogUtil::registerError(_MAILZ_NEWSLETTER_CREATION_ERROR);
+                    LogUtil::registerError(__('Error during saving the newsletter', $dom));
                 } else {
                     // Store the assigned target groups
-        			LogUtil::registerStatus(_MAILZ_SETTINGS_STORED);
+        			LogUtil::registerStatus(__('Data saved', $dom));
                     // Store group associations
-                    $result = pnModAPIFunc('mailz','common','setNewsletterGroups',$obj);
+                    $result = pnModAPIFunc('mailz','common','setNewsletterGroups', $obj);
                     if (!$result) {
-                        LogUtil::registerError(_MAILZ_GROUPS_SET_ERROR);
+                        LogUtil::registerError(__('Error during saving the group assignments', $dom));
                         return false;
                     }
                 }
             } else {
                 $obj['id'] = $this->nl['id'];
-                $result = DBUtil::updateObject($obj,'mailz_newsletters');
+                $result = DBUtil::updateObject($obj, 'mailz_newsletters');
                 if ($result) {
                     // Update target groups
                     // Store group associations
                     $result = pnModAPIFunc('mailz','common','setNewsletterGroups',$obj);
                     if (!$result) {
-                        LogUtil::registerError(_MAILZ_GROUPS_SET_ERROR);
+                        LogUtil::registerError(__('Error during saving the group assignments', $dom));
                         return false;
                     }
                     // Display status message
-                    LogUtil::registerStatus(_MAILZ_UPDATED);
+                    LogUtil::registerStatus(__('Data updated', $dom));
                 } else {
-                    LogUtil::registerError(_MAILZ_UPDATE_ERROR);
+                    LogUtil::registerError(__('Error during updating the data', $dom));
                 }
             }
 
 			// Redirect
-			return $render->pnFormRedirect(pnModURL('mailz','admin','newsletters'));
+			return $render->pnFormRedirect(pnModURL('mailz', 'admin', 'newsletters'));
 		}
     }
 }

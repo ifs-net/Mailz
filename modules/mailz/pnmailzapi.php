@@ -2,7 +2,7 @@
 /**
  * @package      mailz
  * @version      $Id$
- * @author       Florian Schießl
+ * @author       Florian SchieÃŸl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
@@ -16,21 +16,20 @@
  */
 function mailz_mailzapi_getPlugins($args)
 {
-    // Load language definitions
-    pnModLangLoad('mailz','mailz');
-    
+    $dom = ZLanguage::getModuleDomain('mailz');
+
     $plugins = array();
     // Add first plugin.. You can add more using more arrays
     $plugins[] = array(
         'pluginid'      => 1,   // internal id for this module
-        'title'         => _MAILZ_PLUGIN_HTML_TITLE,
-        'description'   => _MAILZ_PLUGIN_HTML_DESCRIPTION,
+        'title'         => __('HTML-Text-Plugin', $dom),
+        'description'   => __('Defineable text that should be added to the newsletter. This plugin does not need any parameters and does not really display any content as plugin. The header (or footer) you define is the content that is later included in the newsletter.', $dom),
         'module'        => 'mailz'
     );
     $plugins[] = array(
         'pluginid'      => 2,   // internal id for this module
-        'title'         => _MAILZ_PLUGIN_TABLE_OF_CONTENTS,
-        'description'   => _MAILZ_PLUGIN_TABLE_OF_CONTENTS_DESCRIPTION,
+        'title'         => __('Table of content', $dom),
+        'description'   => __('This plugin will automatically generate a table of content for your newsletter that lists and links all used plugins.', $dom),
         'module'        => 'mailz'
     );
     return $plugins;
@@ -54,7 +53,7 @@ function mailz_mailzapi_getContent($args)
             return '';
         case 2:
             // Get Plugins
-            $plugins = pnModAPIFunc('mailz','common','getNewsletterPlugins',array('nid' => $args['nid']));
+            $plugins = pnModAPIFunc('mailz', 'common', 'getNewsletterPlugins', array('nid' => $args['nid']));
             if ($args['contenttype'] == 't') {
                 $counter = 0;
                 $output.="\n";

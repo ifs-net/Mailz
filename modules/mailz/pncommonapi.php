@@ -2,7 +2,7 @@
 /**
  * @package      mailz
  * @version      $Id$
- * @author       Florian Schießl
+ * @author       Florian SchieÃŸl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
@@ -301,6 +301,8 @@ function mailz_commonapi_getPluginContent($args)
  */
 function mailz_commonapi_outputReplacements($args)
 {
+    $dom = ZLanguage::getModuleDomain('mailz');
+
     // Get Parameters
     $output = $args['text'];
     $uid    = $args['uid'];
@@ -321,11 +323,11 @@ function mailz_commonapi_outputReplacements($args)
     if ($uid > 1) {
         $output = str_replace('%%UNAME%%', pnUserGetVar('uname',$uid), $output);
     } else {
-        $output = str_replace('%%UNAME%%', _MAILZ_UNREG_READER, $output);
+        $output = str_replace('%%UNAME%%', __('Guest', $dom), $output);
     }
-    
+
     // Return replaced output
-    return $output;    
+    return $output;
 }
 
 /** 
@@ -346,13 +348,13 @@ function mailz_commonapi_getNewsletterOutput($args)
     }
 
     // Get newsletter
-    $newsletter = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id));
+    $newsletter = pnModAPIFunc('mailz', 'common', 'getNewsletters', array('id' => $id));
     if (!$newsletter) {
         return false;
     }
     
     // Get plugins
-    $plugins = pnModAPIFunc('mailz','common','getNewsletterPlugins',array('nid' => $id));
+    $plugins = pnModAPIFunc('mailz', 'common', 'getNewsletterPlugins', array('nid' => $id));
 
     foreach ($plugins as $plugin) {
         $cargs = array(
@@ -362,7 +364,7 @@ function mailz_commonapi_getNewsletterOutput($args)
             'nid'           => $newsletter['id'],
             'last'          => $newsletter['last']
         );
-    $nl_content.= pnModAPIFunc('mailz','common','getPluginContent',$cargs);
+        $nl_content .= pnModAPIFunc('mailz', 'common', 'getPluginContent', $cargs);
     }
     return $nl_content;
 }
@@ -377,12 +379,12 @@ function mailz_commonapi_getGroupRecipients($args)
 {
     $id = (int) $args['id'];
     $recipients = array();
-    $group = pnModAPIFunc('mailz','common','getGroups',array('id' => $id));
+    $group = pnModAPIFunc('mailz', 'common', 'getGroups', array('id' => $id));
     if (!$group) {
         return false;
     } else {
         if ($group['query'] != '') {
-            $group['query'] = pnModAPIFunc('mailz','common','sqlReplacements',$group);
+            $group['query'] = pnModAPIFunc('mailz', 'common', 'sqlReplacements', $group);
             $result = DBUtil::executeSql($group['query']);
             foreach ($result as $uid) {
                 $uid = (int) $uid[0];
@@ -403,10 +405,10 @@ function mailz_commonapi_getGroupRecipients($args)
                 $d = explode(',',$item);
                 $key = $d[0];
                 $value = $d[1];
-                $argsArray[$key]=$value;
+                $argsArray[$key] = $value;
             }
             $args = $argsArray;
-            $result = pnModAPIFunc($mod,$type,$func,$args);
+            $result = pnModAPIFunc($mod, $type, $func, $args);
             if ($result) {
                 foreach ($result as $item) {
                     $recipients[$item] = $item;
@@ -425,16 +427,18 @@ function mailz_commonapi_getGroupRecipients($args)
  */
 function mailz_commonapi_queueNewsletter($args)
 {
+    $dom = ZLanguage::getModuleDomain('mailz');
+
     $id = (int) $args['id'];
     $newsletter = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id));
-    
+
     // Check for newsletter in queue that was not yet sent
     $where = 'nid = '.$newsletter['id'];
     $res = DBUtil::selectObjectCount('mailz_queue',$where);
     if ($res > 0) {
         // If user has admin permissions for mailz module display message!
         if (SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
-            LogUtil::registerError(_MAILZ_NEWSLETTER_ALREADY_IN_QUEUE);
+            LogUtil::registerError(__('This newsletter is already in the queue and a new creation process can only be started after a sending process is finished!', $dom));
         }
         return false;
     }
@@ -443,9 +447,9 @@ function mailz_commonapi_queueNewsletter($args)
         return false;
     } else {
         // get groups
-        $groups = pnModAPIFunc('mailz','common','getNewsletterGroups',array('id' => $id));
+        $groups = pnModAPIFunc('mailz', 'common', 'getNewsletterGroups', array('id' => $id));
         // get recipients
-            
+
         // Is newsletter subscribable and should these mails also be sent?
         if ($newsletter['subscribable'] == 1) {
             $where = "nid = ".$newsletter['id']." AND confirmed = 1";
@@ -469,10 +473,10 @@ function mailz_commonapi_queueNewsletter($args)
                 }
             }
         }
-        
+
         // Now retrieve target groups
         foreach ($groups as $group) {
-            $recipients = pnModAPIFunc('mailz','common','getGroupRecipients',array('id' => $group));
+            $recipients = pnModAPIFunc('mailz', 'common', 'getGroupRecipients', array('id' => $group));
             // Insert items into working queue
             // If a person is listed in multiple groups that person will only get one mail
             foreach ($recipients as $uid) {
@@ -523,10 +527,10 @@ function mailz_commonapi_sendNewsletter($args)
     if (!($id > 0)) {
         return false;
     }
-    
+
     // Check parameters, get and cache newsletter
     if (!isset($nl_cache) || !isset($nl_cache[$id]) || ($nl_cache[$id]['id'] != $id)) {
-        $newsletter = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id));
+        $newsletter = pnModAPIFunc('mailz', 'common', 'getNewsletters', array('id' => $id));
         if (!$newsletter) {
             return false;
         } else {
@@ -689,6 +693,8 @@ function mailz_commonapi_sqlReplacements($args)
  */
 function mailz_commonapi_subscribe($args) 
 {
+    $dom = ZLanguage::getModuleDomain('mailz');
+
     $id          = (int) $args['id'];
     $uid         = (int) $args['uid'];
     $contenttype = (string) $args['contenttype'];
@@ -733,7 +739,7 @@ function mailz_commonapi_subscribe($args)
     // Write object to DB if code == ''
     $result = DBUtil::insertObject($obj,'mailz_subscriptions');
     if (($code != '') && $result) {
-        $subject = _MAILZ_NEWSLETTER_CONFIRM;
+        $subject = __('Please confirm newsletter subscription', $dom);
         $render = pnRender::getInstance('mailz');
         $render->assign('obj', $obj);
         $render->assign('newsletter', $newsletter);
@@ -769,6 +775,8 @@ function mailz_commonapi_subscribe($args)
  */
 function mailz_commonapi_unsubscribe($args) 
 {
+    $dom = ZLanguage::getModuleDomain('mailz');
+
     $id          = (int) $args['id'];
     $uid         = (int) $args['uid'];
     $email       = (string) $args['email'];
@@ -791,7 +799,7 @@ function mailz_commonapi_unsubscribe($args)
         } else {
             $result = DBUtil::deleteObject($obj,'mailz_subscriptions');
             if ($result) {
-                LogUtil::registerStatus(_MAILZ_UNSUBSCRIBED);
+                LogUtil::registerStatus(__('Subscription cancelled!', $dom));
             }
             return $result;
         }
@@ -805,7 +813,7 @@ function mailz_commonapi_unsubscribe($args)
         } else {
             // Generate Code for user
             $obj['code'] = rand(100000000000000,999999999999999);
-            $subject = _MAILZ_NEWSLETTER_CONFIRM_DELETION;
+            $subject = __('Please confirm the deletion of your subscription', $dom);
             $render = pnRender::getInstance('mailz');
             $render->assign('obj', $obj);
             $render->assign('newsletter', $newsletter);
@@ -824,13 +832,13 @@ function mailz_commonapi_unsubscribe($args)
                 return false;
             } else {
                 DBUtil::updateObject($obj,'mailz_subscriptions');
-                LogUtil::registerStatus(_MAILZ_UNSUBSCRIPTION_MAIL_SENT);
+                LogUtil::registerStatus(__('An email with a confirmation code was sent!', $dom));
                 return true;
-                }
+            }
         }
     }
-    
-    return false;    
+
+    return false;
 }
 
 /**
@@ -988,3 +996,4 @@ function mailz_commonapi_getArchivedNewsletter($args)
     }
     return $result;
 }
+

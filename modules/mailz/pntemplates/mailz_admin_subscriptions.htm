@@ -2,34 +2,34 @@
 <!--[include file="mailz_admin_header.htm"]-->
 
 <p>
-<!--[pnml name="_MAILZ_SUBSCRIPTIONS_FOR"]--> "<!--[$nl.title|pnvarprepfordisplay]-->"
+<!--[gt text='Newsletter subscriptions']--> "<!--[$nl.title|pnvarprepfordisplay]-->"
 </p>
 
 <!--[pnform]-->
 <!--[pnformvalidationsummary]-->
 
 <p>
-<!--[pnformlabel for="uname" text="_MAILZ_SEARCH_UNAME"]-->:<br />
+<!--[pnformlabel for="uname" __text='Search for a user']-->:<br />
 <!--[pnformtextinput id="uname" textMode="singleLine" maxLength="255" mandatory="0"]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="email" text="_MAILZ_SEARCH_EMAIL"]-->:<br />
+<!--[pnformlabel for="email" __text='Use filter for email address']-->:<br />
 <!--[pnformtextinput id="email" textMode="singleLine" maxLength="255" mandatory="0"]--><br />
 </p>
 
 <p>
-<!--[pnformbutton commandName="update" text="_MAILZ_SEARCH"]--> 
+<!--[pnformbutton commandName="update" __text='search']--> 
 </p>
 <!--[/pnform]-->
 
 <div class="mailz_link mailz_hidden" id="mailz_nlcloser">
-    <img src="images/icons/extrasmall/agt_stop.gif" /> <!--[pnml name="_MAILZ_HIDE_CREATE_NL_FORM"]-->
+    <img src="images/icons/extrasmall/agt_stop.gif" /> <!--[gt text='Hide form']-->
 </div>
 
     <!--[if $recipients|@count eq 0]-->
     	<ul>
-    		<li><!--[pnml name="_MAILZ_NO_SUBSCRIPTIONS"]--></li>
+    		<li><!--[gt text='No subscriptions found. If you used the search form, the user or the email address could not be found']--></li>
     	</ul>
     <!--[else]-->
 
@@ -37,28 +37,23 @@
 
     	<table class="mailz_table">
     		<tr>
-    			<th><!--[pnml name="_MAILZ_UNAME"]--></th>
-    			<th><!--[pnml name="_MAILZ_EMAIL"]--></th>
-    			<th><!--[pnml name="_MAILZ_CONFIRMED"]--></th>
-    			<th><!--[pnml name="_MAILZ_CONTENTTYPE]--></th>
-    			<th><!--[pnml name="_MAILZ_DATE]--></th>
-    			<th><!--[pnml name="_MAILZ_IP]--></th>
-    			<th><!--[pnml name="_MAILZ_ACTION"]--></th>
+    			<th><!--[gt text='user name']--></th>
+    			<th><!--[gt text='email address']--></th>
+    			<th><!--[gt text='confirmed']--></th>
+    			<th><!--[gt text='content type preference']--></th>
+    			<th><!--[gt text='Date']--></th>
+    			<th><!--[gt text='IP adress']--></th>
+    			<th><!--[gt text='Actions']--></th>
     		</tr>
     	<!--[foreach from=$recipients item="item"]-->
     		<tr style="background-color: #<!--[cycle values="eee,ddd"]-->">
     			<td><!--[username uid=$item.uid]--></td>
     			<td><!--[$item.email|pnvarprepfordisplay]--></td>
+    			<td><!--[yesno item=$item.confirmed yes="1"]--></td>
     			<td>
-                    <!--[yesno item=$item.confirmed yes="1"]-->
-                </td>
-    			<td>
-                    <!--[if $item.contenttype == 't']-->
-                        text
-                    <!--[elseif $item.contenttype == 'h']-->
-                        html
-                    <!--[else]-->
-                        N/A
+                    <!--[if $item.contenttype == 't']-->text
+                    <!--[elseif $item.contenttype == 'h']-->html
+                    <!--[else]-->N/A
                     <!--[/if]-->
                 </td>
     			<td>
@@ -68,7 +63,7 @@
                     <!--[$item.ip]-->
                 </td>
     			<td>
-    	   			<a href="<!--[pnmodurl modname="mailz" type="admin" func="subscriptions" id=$nl.id action="delete" item=$item.id authid=$authid]-->"><img src="images/icons/extrasmall/editdelete.gif" alt="<!--[pnml name="_MAILZ_DELETE"]-->" title="<!--[pnml name="_MAILZ_DELETE"]-->" /></a>
+    	   			<a href="<!--[pnmodurl modname="mailz" type="admin" func="subscriptions" id=$nl.id action="delete" item=$item.id authid=$authid]-->"><img src="images/icons/extrasmall/editdelete.gif" alt="<!--[gt text='delete']-->" title="<!--[gt text='delete']-->" /></a>
     			</td>
     		</tr>
     	<!--[/foreach]-->

@@ -2,7 +2,7 @@
 /**
  * @package      mailz
  * @version      $Id$
- * @author       Florian Schießl
+ * @author       Florian SchieÃŸl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
@@ -32,8 +32,9 @@ class mailz_admin_mainHandler
     }
     function handleCommand(&$render, &$args)
     {
+        $dom = ZLanguage::getModuleDomain('mailz');
 	    // Security check
-	    if (!SecurityUtil::checkPermission('lobby::', '::', ACCESS_ADMIN)) {
+	    if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
 		  	return LogUtil::registerPermissionError();
 		}
 		if ($args['commandName']=='update') {
@@ -45,7 +46,7 @@ class mailz_admin_mainHandler
             pnModSetVar('mailz','myprofile_name',$obj['myprofile_name']);
 
 		    // Register status message
-			LogUtil::registerStatus(_MAILZ_UPDATED);
+			LogUtil::registerStatus(__('Data updated', $dom));
 
 			// redirect
 			return $render->pnFormRedirect(pnModURL('mailz','admin','main'));

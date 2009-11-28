@@ -1,18 +1,18 @@
 <!--[* $Id$ *]-->
 <!--[include file="mailz_user_header.htm"]-->
 
-<h1><!--[pnml name="_MAILZ_ARCHIVE_FOR"]--> <!--[pnconfiggetvar name="sitename"]--></h1>
+<h1><!--[gt text='Newsletter archive for']--> <!--[pnconfiggetvar name="sitename"]--></h1>
 
 <!--[if $newsletter.id gt 0]-->
 
     <p>
-        <!--[pnml name="_MAILZ_NEWSLETTER_METADATA"]-->: <!--[pnml name="_MAILZ_NEWSLETTER_SERIALNUMBERS"]--> <!--[$newsletter.serialnumber]-->, <!--[pnml name="_MAILZ_LAST_SENT_DATE"]--> <!--[$newsletter.last|pndate_format]-->
+        <!--[gt text='Information about the newsletter']-->: <!--[gt text='Sent newsletters up to now']--> <!--[$newsletter.serialnumber]-->, <!--[gt text='Date of last newsletter']--> <!--[$newsletter.last|pndate_format]-->
     </p>
     
     <!--[if $archivenewsletter.id gt 0]-->
 
         <p>
-        <a href="<!--[pnmodurl modname="mailz" func="archive" id=$newsletter.id]-->"><!--[pnml name="_MAILZ_BACK_TO_ARCHIVE_OVERVIEW"]--> "<!--[$newsletter.title|pnvarprepfordisplay]-->"</a>
+        <a href="<!--[pnmodurl modname="mailz" func="archive" id=$newsletter.id]-->"><!--[gt text='Back to the main newsletter archive page']--> "<!--[$newsletter.title|pnvarprepfordisplay]-->"</a>
         </p>
         <div class="mailz_nl_view">
             <!--[$archivenewsletter.body_html]-->
@@ -21,16 +21,16 @@
     <!--[else]-->
 
         <p>
-        <a href="<!--[pnmodurl modname="mailz" func="archive" ]-->"><!--[pnml name="_MAILZ_BACK_TO_ARCHIVE_OVERVIEW"]--></a>
+        <a href="<!--[pnmodurl modname="mailz" func="archive" ]-->"><!--[gt text='Back to the main newsletter archive page']--></a>
         </p>
 
         <!--[pager class="mailz_pager" show="page" rowcount=$archive_total limit=$numrows posvar=nlpager shift=1]-->
     
      	<table class="mailz_table">
       		<tr>
-       			<th><!--[pnml name="_MAILZ_DATE"]--></th>
-       			<th><!--[pnml name="_MAILZ_SUBJECT"]--></th>
-       			<th><!--[pnml name="_MAILZ_ACTION"]--></th>
+       			<th><!--[gt text='Date']--></th>
+       			<th><!--[gt text='Subject']--></th>
+       			<th><!--[gt text='Action']--></th>
        		</tr>
         
         
@@ -39,7 +39,7 @@
                 <td><!--[$item.date|pndate_format]--></td>
                 <td><!--[$item.subject]--></td>
                 <td>
-                        <a href="<!--[pnmodurl fqurl="true" modname="mailz" func="archive" id=$newsletter.id item=$item.id]-->"><img src="images/icons/extrasmall/demo.gif" alt="<!--[pnml name="_MAILZ_VIEW"]-->" title="<!--[pnml name="_MAILZ_VIEW"]-->"/></a>
+                        <a href="<!--[pnmodurl fqurl="true" modname="mailz" func="archive" id=$newsletter.id item=$item.id]-->"><img src="images/icons/extrasmall/demo.gif" alt="<!--[gt text='show']-->" title="<!--[gt text='show']-->"/></a>
                 </td>
             </tr>
         <!--[/foreach]-->
@@ -52,13 +52,14 @@
 <!--[else]-->
 
     <p>
-    <!--[pnml name="_MAILZ_ARCHIVE_HINTS"]-->
+    <!--[gt text='All newsletters stored in the archive can be found here. Please choose the newsletter first to see als mails stored for the newsletter in the archive']-->
+    </p>
 
     <ul>
     <!--[foreach item="item" from=$newsletters]-->
         <li><a href="<!--[pnmodurl modname="mailz" func="archive" id=$item.id]-->"><!--[$item.title|pnvarprepfordisplay]--></a></li>
     <!--[foreachelse]-->
-        <li><!--[pnml name="_MAILZ_NO_NEWSLETTER_ARCHIVED"]--></li>
+        <li><!--[gt text='No newsletter with an active archive was found']--></li>
     <!--[/foreach]-->
     </ul>
 

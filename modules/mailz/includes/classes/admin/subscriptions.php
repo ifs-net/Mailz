@@ -2,7 +2,7 @@
 /**
  * @package      mailz
  * @version      $Id$
- * @author       Florian Schießl
+ * @author       Florian SchieÃŸl
  * @link         http://www.ifs-net.de
  * @copyright    Copyright (C) 2009
  * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
@@ -13,14 +13,15 @@ class mailz_admin_subscriptionsHandler
     var $nl;
     function initialize(&$render)
     {
+        $dom = ZLanguage::getModuleDomain('mailz');
 	    // Security check
-	    if (!SecurityUtil::checkPermission('lobby::', '::', ACCESS_ADMIN)) {
+	    if (!SecurityUtil::checkPermission('mailz::', '::', ACCESS_ADMIN)) {
 		  	return LogUtil::registerPermissionError();
 		}
         // Should group be loaded?
         $id = (int) FormUtil::getPassedValue('id');
         if ($id > 0) {
-            $nl = pnModAPIFunc('mailz','common','getNewsletters',array('id' => $id, 'inactive' => 1));
+            $nl = pnModAPIFunc('mailz', 'common', 'getNewsletters', array('id' => $id, 'inactive' => 1));
             if (isset($nl) && ($nl['id'] == $id)) {
                 // Load newsletter
                 $this->nl = $nl;
@@ -33,15 +34,15 @@ class mailz_admin_subscriptionsHandler
                     } else {
                         // delete Recipient
                         $item = (int) FormUtil::getPassedValue('item');
-                        $obj = DBUtil::selectObjectByID('mailz_subscriptions',$item);
+                        $obj = DBUtil::selectObjectByID('mailz_subscriptions', $item);
                         if (!obj) {
-                            LogUtil::registerError(_MAILZ_SUBSCRIPTION_DELETION_ERROR);
+                            LogUtil::registerError(__('Error deleting a subscription', $dom));
                         } else {
-                            $result = DBUtil::deleteObject($obj,'mailz_subscriptions');
+                            $result = DBUtil::deleteObject($obj, 'mailz_subscriptions');
                             if ($result) {
-                                LogUtil::registerStatus(_MAILZ_SUBSCRIPTION_DELETED);
+                                LogUtil::registerStatus(__('Subscription deleted', $dom));
                             } else {
-                                LogUtil::registerError(_MAILZ_SUBSCRIPTION_DELETION_ERROR);
+                                LogUtil::registerError(__('Error deleting a subscription', $dom));
                             }
                         }
                     }
@@ -53,24 +54,26 @@ class mailz_admin_subscriptionsHandler
                     $limitoffset--;
                 }
                 $render->assign('numrows', $numrows);
-                $recipients_total = pnModAPIFunc('mailz','common','getSubscriptions',array('id' => $this->nl['id'],'count' => 1 , 'uname' => FormUtil::getPassedValue('uname'), 'email' => FormUtil::getPassedValue('email'), 'unconfirmed' => 1));
+                $recipients_total = pnModAPIFunc('mailz', 'common', 'getSubscriptions', array('id' => $this->nl['id'], 'count' => 1 , 'uname' => FormUtil::getPassedValue('uname'), 'email' => FormUtil::getPassedValue('email'), 'unconfirmed' => 1));
                 $render->assign('recipients_total', $recipients_total);
-                $recipients = pnModAPIFunc('mailz','common','getSubscriptions',array('id' => $this->nl['id'],'numrows' => $numrows, 'limitoffset' => $limitoffset, 'uname' => FormUtil::getPassedValue('uname'), 'email' => FormUtil::getPassedValue('email'), 'unconfirmed' => 1));
+                $recipients = pnModAPIFunc('mailz', 'common', 'getSubscriptions', array('id' => $this->nl['id'], 'numrows' => $numrows, 'limitoffset' => $limitoffset, 'uname' => FormUtil::getPassedValue('uname'), 'email' => FormUtil::getPassedValue('email'), 'unconfirmed' => 1));
                 $render->assign('recipients', $recipients);
                 $authid = SecurityUtil::generateAuthKey();
                 $render->assign('authid', $authid);
             } else {
-                LogUtil::registerError(_MAILZ_LOAD_ERROR);
+                LogUtil::registerError(__('Error loading data', $dom));
             }
         } else {
-            LogUtil::registerError(_MAILZ_LOAD_ERROR);
+            LogUtil::registerError(__('Error loading data', $dom));
             return $render->pnFormRedirect(pnModURL('mailz','admin','newsletters'));
         }
 		return true;
     }
+
     function handleCommand(&$render, &$args)
     {
-        if ($args['commandName']=='update') {
+        $dom = ZLanguage::getModuleDomain('mailz');
+        if ($args['commandName'] == 'update') {
 			// get the pnForm data and do a validation check
 		    $obj = $render->pnFormGetValues();
 		    if (!$render->pnFormIsValid()) return false;
@@ -80,7 +83,7 @@ class mailz_admin_subscriptionsHandler
 		      'uname'     => $obj['uname'],
 		      'nlpager'   => 0
             );
-		    return $render->pnFormRedirect(pnModURL('mailz','admin','subscriptions',$args));
+		    return $render->pnFormRedirect(pnModURL('mailz', 'admin', 'subscriptions', $args));
 		}
     }
 }

@@ -4,96 +4,94 @@
 <!--[pnajaxheader prototype="1" scriptaculous="1"]-->
 
 <div class="mailz_link mailz_hidden" id="mailz_nlopener">
-    <img src="images/icons/extrasmall/agt_forward.gif" /> <!--[pnml name="_MAILZ_SHOW_CREATE_NL_FORM"]-->
+    <img src="images/icons/extrasmall/agt_forward.gif" /> <!--[gt text='Show create new newsletter form']-->
 </div>
 
 <div id="mailz_nlform">
-<p>
-<!--[pnml name="_MAILZ_NEWSLETTERS_DESCRIPTION"]-->
-</p>
+<p><!--[gt text='You are now able to define newsletters and mailings here. Active newsletters are subscribable by your users immediately.']--></p>
 
 <!--[pnform]-->
 <!--[pnformvalidationsummary]-->
 
 <p>
-<!--[pnformlabel for="title" text="_MAILZ_TITLE"]-->:<br />
+<!--[pnformlabel for="title" __text="Title"]-->:<br />
 <!--[pnformtextinput id="title" textMode="singleLine" maxLength="255" mandatory="1"]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="description" text="_MAILZ_NL_DESCRIPTION"]-->:<br />
+<!--[pnformlabel for="description" __text="Public description"]-->:<br />
 <!--[pnformtextinput id="description" textMode="multiLine" rows="4" cols="40" mandatory="0"]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="fromaddress" text="_MAILZ_FROMADDRESS"]-->:<br />
+<!--[pnformlabel for="fromaddress" __text="Use another emailadress than it is configures in Mailer module"]-->:<br />
 <!--[pnformtextinput id="fromaddress" textMode="singleLine" maxLength="255" mandatory="0"]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="archive" text=_MAILZ_USE_ARCHIVE]-->:<br />
+<!--[pnformlabel for="archive" __text='Put sent newsletters into the archive']-->:<br />
 <!--[pnformdropdownlist id="archive" items=$yesno_items]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="contenttype" text=_MAILZ_CONTENT_TYPE]-->:<br />
+<!--[pnformlabel for="contenttype" __text='Content type of sent mails']-->:<br />
 <!--[pnformdropdownlist id="contenttype" items=$contenttype_items]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="subscribable" text=_MAILZ_IS_SUBSCRIBABLE]-->:<br />
+<!--[pnformlabel for="subscribable" __text='Newsletter should be subscribable']-->:<br />
 <!--[pnformdropdownlist id="subscribable" items=$yesno_items]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="public" text=_MAILZ_IS_PUBLIC]-->:<br />
+<!--[pnformlabel for="public" __text='Sending and subscription should be public (guests will be able to subscribe)']-->:<br />
 <!--[pnformdropdownlist id="public" items=$yesno_items]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="ignoretemplates" text=_MAILZ_IGNORE_MAILER_TEMPLATES]-->:<br />
+<!--[pnformlabel for="ignoretemplates" __text='Ignore the templates set up in advMailer module']-->:<br />
 <!--[pnformdropdownlist id="ignoretemplates" items=$yesno_items]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="croncode" text="_MAILZ_NL_CRONCODE"]-->:<br />
+<!--[pnformlabel for="croncode" __text='Cronjob password for automatical sending (optional, emtpy field = disabled)']-->:<br />
 <!--[pnformtextinput id="croncode" textMode="singleLine" maxLength="255" mandatory="0"]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="delay" text="_MAILZ_MIN_DELAY"]-->:<br />
+<!--[pnformlabel for="delay" __text='Individual delay for each mail']-->:<br />
 <!--[pnformintinput id="delay" textMode="singleLine" maxValue="9999" minValue="0" mandatory="0"]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="priority" text="_MAILZ_PRIORITY"]-->:<br />
+<!--[pnformlabel for="priority" __text='Priority for mail queue (1=high, 10=low)']-->:<br />
 <!--[pnformintinput id="priority" textMode="singleLine" maxValue="10" minValue="1" mandatory="1"]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="adddate" text=_MAILZ_ADD_DATE_TO_SUBJECT]-->:<br />
+<!--[pnformlabel for="adddate" __text='Add actual date to mail subject']-->:<br />
 <!--[pnformdropdownlist id="adddate" items=$yesno_items]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="inactive" text=_MAILZ_IS_INACTIVE]-->:<br />
+<!--[pnformlabel for="inactive" __text='Newsletter activated']-->:<br />
 <!--[pnformdropdownlist id="inactive" items=$inactive_items]--><br />
 </p>
 
 <p>
-<!--[pnformlabel for="groups" text=_MAILZ_TARGET_GROUPS]-->:<br />
+<!--[pnformlabel for="groups" __text='Target groups']-->:<br />
 <!--[pnformcheckboxlist id="groups" items=$groups_items mandatory="0"]--><br />
 </p>
 
 <p>
-<!--[pnformbutton commandName="update" text="_MAILZ_STORE"]--> 
-<!--[pnformbutton commandName="back" text="_MAILZ_BACK"]--> 
+<!--[pnformbutton commandName="update" __text="store"]--> 
+<!--[pnformbutton commandName="back" __text="back"]--> 
 </p>
 <!--[/pnform]-->
 </div>
 
 <div class="mailz_link mailz_hidden" id="mailz_nlcloser">
-    <img src="images/icons/extrasmall/agt_stop.gif" /> <!--[pnml name="_MAILZ_HIDE_CREATE_NL_FORM"]-->
+    <img src="images/icons/extrasmall/agt_stop.gif" /> <!--[gt text='Hide form']-->
 </div>
 
 <!--[if $id gt 0]-->
@@ -101,23 +99,23 @@
 
     <!--[if $newsletters|@count eq 0]-->
     	<ul>
-    		<li><!--[pnml name="_MAILZ_NO_NEWSLETTERS"]--></li>
+    		<li><!--[gt text='No Newsletters defined yet']--></li>
     	</ul>
     <!--[else]-->
 
     	<table class="mailz_table">
     		<tr>
-    			<th><!--[pnml name="_MAILZ_ID"]--></th>
-			<th><!--[pnml name="_MAILZ_TITLE"]--></th>
-    <!--			<th><!--[pnml name="_MAILZ_NL_DESCRIPTION"]--></th> -->
-    			<th><img src="images/icons/extrasmall/recur.gif" alt="<!--[pnml name="_MAILZ_SERIAL_NR"]-->" title="<!--[pnml name="_MAILZ_SERIAL_NR"]-->" /></th>
-    			<th><!--[pnml name="_MAILZ_NL_USE_ARCHIVE"]--></th>
-    			<th><!--[pnml name="_MAILZ_NL_CONTENT_TYPE"]--></th>
-    			<th><!--[pnml name="_MAILZ_NL_PUBLIC"]--></th>
-    			<th><!--[pnml name="_MAILZ_ACTIVE"]--></th>
-    			<th><!--[pnml name="_MAILZ_SUBSCRIPTIONS]--></th>
-    			<th><!--[pnml name="_MAILZ_TARGET_GROUPS"]--></th>
-    			<th><!--[pnml name="_MAILZ_ACTION"]--></th>
+    			<th><!--[gt text='ID']--></th>
+			<th><!--[gt text='Title']--></th>
+    <!--			<th><!--[gt text='Description']--></th> -->
+    			<th><img src="images/icons/extrasmall/recur.gif" alt="<!--[gt text='Passes']-->" title="<!--[gt text='Passes']-->" /></th>
+    			<th><!--[gt text='Archive']--></th>
+    			<th><!--[gt text='Content']--></th>
+    			<th><!--[gt text='Public']--></th>
+    			<th><!--[gt text='Active']--></th>
+    			<th><!--[gt text='Subscriptions']--></th>
+    			<th><!--[gt text='Target groups']--></th>
+    			<th><!--[gt text='Actions']--></th>
     		</tr>
     	<!--[foreach from=$newsletters item="item"]-->
     		<tr style="background-color: #<!--[cycle values="eee,ddd"]-->">
@@ -125,18 +123,10 @@
     			<td><!--[$item.title|pnvarprepfordisplay]--></td>
     <!--			<td><!--[$item.description|pnvarprepfordisplay|truncate:25:'...']--></td> -->
     			<td><!--[$item.serialnumber]--></td>
-    			<td>
-                    <!--[yesno item=$item.archive yes="1"]-->
-                </td>
-    			<td>
-                    <!--[nlcontenttype newsletter=$item]-->
-                </td>
-                <td>
-                    <!--[yesno item=$item.public yes="1"]-->
-                </td>
-                <td>
-                    <!--[yesno item=$item.inactive yes="0"]-->
-                </td>
+    			<td><!--[yesno item=$item.archive yes="1"]--></td>
+    			<td><!--[nlcontenttype newsletter=$item]--></td>
+                <td><!--[yesno item=$item.public yes="1"]--></td>
+                <td><!--[yesno item=$item.inactive yes="0"]--></td>
                 <td>
                     <!--[if $item.subscribable eq 0]-->
                         <img src="images/icons/extrasmall/button_cancel.gif" />
@@ -145,13 +135,13 @@
                     <!--[/if]-->
                 </td>
                 <td>
-                        <!--[pnmodapifunc modname="mailz" type="common" func="getNewsletterGroups" id=$item.id assign="relations"]-->
+                    <!--[pnmodapifunc modname="mailz" type="common" func="getNewsletterGroups" id=$item.id assign="relations"]-->
                     <!--[targetgroups groups=$relations]-->
                 </td>
     			<td>
-    	   			<a href="<!--[pnmodurl modname="mailz" type="admin" func="newsletters" id=$item.id]-->"><img src="images/icons/extrasmall/xedit.gif" alt="<!--[pnml name="_MAILZ_MODIFY"]-->" title="<!--[pnml name="_MAILZ_MODIFY"]-->" /></a>
-        			<a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" nl=$item.id]-->"><img src="images/icons/extrasmall/utilities.gif" alt="<!--[pnml name="_MAILZ_PLUGINS"]-->" title="<!--[pnml name="_MAILZ_PLUGINS"]-->" /></a>
-        			<a href="<!--[pnmodurl modname="mailz" type="admin" func="send" id=$item.id]-->"><img src="images/icons/extrasmall/mail_send.gif" alt="<!--[pnml name="_MAILZ_MANAGE_PREVIEW_SEND"]-->" title="<!--[pnml name="_MAILZ_MANAGE_PREVIEW_SEND"]-->" /></a>
+    	   			<a href="<!--[pnmodurl modname="mailz" type="admin" func="newsletters" id=$item.id]-->"><img src="images/icons/extrasmall/xedit.gif" alt="<!--[gt text='edit']-->" title="<!--[gt text='edit']-->" /></a>
+        			<a href="<!--[pnmodurl modname="mailz" type="admin" func="plugins" nl=$item.id]-->"><img src="images/icons/extrasmall/utilities.gif" alt="<!--[gt text='Plugins']-->" title="<!--[gt text='Plugins']-->" /></a>
+        			<a href="<!--[pnmodurl modname="mailz" type="admin" func="send" id=$item.id]-->"><img src="images/icons/extrasmall/mail_send.gif" alt="<!--[gt text='Preview and send']-->" title="<!--[gt text='Preview and send']-->" /></a>
     			</td>
     		</tr>
     	<!--[/foreach]-->
