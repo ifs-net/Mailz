@@ -203,7 +203,7 @@ function mailz_commonapi_getPlugins($args)
 {
     $pluginid   = $args['pluginid'];
     $module     = $args['module'];
-    $mods       = pnModGetUserMods();
+    $mods       = pnModGetAllMods();//pnModGetUserMods();
     foreach ($mods as $mod) {
       	if ($mod['displayname'] != "MyProfile") {
 	      	$file_modules	= 'modules/'.$mod['directory'].'/pnmailzapi.php';
