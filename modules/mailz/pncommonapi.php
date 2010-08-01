@@ -205,7 +205,7 @@ function mailz_commonapi_getPlugins($args)
     $module     = $args['module'];
     $mods       = pnModGetAllMods();//pnModGetUserMods();
     foreach ($mods as $mod) {
-      	if ($mod['displayname'] != "MyProfile") {
+//      	if ($mod['displayname'] != "MyProfile") {
 	      	$file_modules	= 'modules/'.$mod['directory'].'/pnmailzapi.php';
 	      	$file_system	= 'system/'.$mod['directory'].'/pnmailzapi.php';
 	      	$found = false;
@@ -229,7 +229,7 @@ function mailz_commonapi_getPlugins($args)
                     }
                 }
 			}
-		}
+//		}
 	}
 	return $res;
 }
@@ -264,7 +264,7 @@ function mailz_commonapi_getPluginContent($args)
     if (!$plugin || (!($plugin['id'] == $id))) {
         return 'PLUGIN '.$id.' NOT FOUND IN DATABASE';
     }
-    
+
     // extract parameters
     $new_params = array();
     $param_pairs = explode("&",$plugin['params']);
@@ -280,7 +280,7 @@ function mailz_commonapi_getPluginContent($args)
         'last'          => $args['last'],
         'params'        => $new_params
     );
-    
+
     $content = pnModAPIFunc($plugin['module'],'mailz','getContent',$params);
     if ($contenttype == 'h') {
         $output="<p><h2 id=\"".$plugin['id']."\">".$plugin['title']."</h2></p><p>".$plugin['header_html'].$content.$plugin['footer_html']."</p>";
@@ -294,7 +294,7 @@ function mailz_commonapi_getPluginContent($args)
 /**
  * make replacements in text
  *
- * @param   $args['text']       string      output 
+ * @param   $args['text']       string      output
  * @param   $args['email']      string      email address if different from user's email
  * @param   $args['uid']        int         user id for the recpipient
  * @return  string
@@ -330,7 +330,7 @@ function mailz_commonapi_outputReplacements($args)
     return $output;
 }
 
-/** 
+/**
  * get newsletter output
  *
  * @param   $args['id']             int     newsletter id
@@ -352,7 +352,7 @@ function mailz_commonapi_getNewsletterOutput($args)
     if (!$newsletter) {
         return false;
     }
-    
+
     // Get plugins
     $plugins = pnModAPIFunc('mailz', 'common', 'getNewsletterPlugins', array('nid' => $id));
 
@@ -416,7 +416,7 @@ function mailz_commonapi_getGroupRecipients($args)
             }
         }
     }
-    return $recipients;   
+    return $recipients;
 }
 
 /**
@@ -546,12 +546,12 @@ function mailz_commonapi_sendNewsletter($args)
     } else {
         $toaddress = $args['email'];
     }
-    
+
     if ((!isset($toaddress) || ($toaddress == '')) && ($uid >= 0)) {
         return false;
     }
 
-    // If the newsletter is available in both formats and there is no format 
+    // If the newsletter is available in both formats and there is no format
     // specified we will take html format - Todo: Take user's preferences later
     if ($newsletter['contenttype'] == 'c') {
         $uc = (string) $args['contenttype'];
@@ -563,13 +563,13 @@ function mailz_commonapi_sendNewsletter($args)
             $newsletter['contenttype'] = 'h';
         }
     }
-    
+
     // Send mail now
     // Create body and subject for email and set content tyoe
     $subject = $newsletter['title'];
     $body = pnModAPIFunc('mailz','common','getNewsletterOutput',array('id' => $newsletter['id'], 'uid' => $uid, 'contenttype' => $newsletter['contenttype']));
     $html = ($newsletter['contenttype'] == 'h');
-    
+
     // Set name or handle archive and core data updates for newsletter's core data here
     if ($uid > 1) {
         $toname = pnUserGetVar('uname');
@@ -684,14 +684,14 @@ function mailz_commonapi_sqlReplacements($args)
 
 /**
  * subscibe to a newsletter
- * 
+ *
  * @param   $args['uid']            int     optional user id
  * @param   $args['email']          string  optional email address
  * @param   $args['contenttype']    string  optional content type
  * @param   $args['id']             int     id of newsletter to apply action
  * @return  boolean
  */
-function mailz_commonapi_subscribe($args) 
+function mailz_commonapi_subscribe($args)
 {
     $dom = ZLanguage::getModuleDomain('mailz');
 
@@ -708,12 +708,12 @@ function mailz_commonapi_subscribe($args)
     if (($contenttype != 'h') && ($contenttype != 't')) {
         $contenttype = 'c';
     }
-    
+
     // Check for existing subscription
     if (pnModAPIFunc('mailz','common','isSubscribed',$args)) {
         return false;
     }
-    
+
     // Construct object
     if ($uid > 1) {
         $obj = array(
@@ -735,7 +735,7 @@ function mailz_commonapi_subscribe($args)
             'code'          => $code
         );
     }
-    
+
     // Write object to DB if code == ''
     $result = DBUtil::insertObject($obj,'mailz_subscriptions');
     if (($code != '') && $result) {
@@ -766,14 +766,14 @@ function mailz_commonapi_subscribe($args)
 }
 /**
  * unsubscibe to a newsletter
- * 
+ *
  * @param   $args['uid']            int     optional user id
  * @param   $args['email']          string  optional emaila ddress
  * @param   $args['contenttype']    string  optional emaila ddress
  * @param   $args['id']             int     id of newsletter to apply action
  * @return  boolean
  */
-function mailz_commonapi_unsubscribe($args) 
+function mailz_commonapi_unsubscribe($args)
 {
     $dom = ZLanguage::getModuleDomain('mailz');
 
@@ -790,7 +790,7 @@ function mailz_commonapi_unsubscribe($args)
     if (!pnModAPIFunc('mailz','common','isSubscribed',$args)) {
         return false;
     }
-    
+
     if ($uid > 1) {
         $where = 'nid = '.$id.' AND uid = '.$uid;
         $obj = DBUtil::selectObject('mailz_subscriptions',$where);
@@ -803,9 +803,9 @@ function mailz_commonapi_unsubscribe($args)
             }
             return $result;
         }
-      
+
     } else {
-        // Send a email to recipient with a generated validation code 
+        // Send a email to recipient with a generated validation code
         $where = "email like '".$email."' AND nid = ".$id." AND uid = 0";
         $obj = DBUtil::selectObject('mailz_subscriptions',$where);
         if (!$obj) {
@@ -843,14 +843,14 @@ function mailz_commonapi_unsubscribe($args)
 
 /**
  * update subscription to a newsletter
- * 
+ *
  * @param   $args['uid']            int     optional user id
  * @param   $args['email']          string  optional emaila ddress
  * @param   $args['contenttype']    string  optional emaila ddress
  * @param   $args['id']             int     id of newsletter to apply action
  * @return  boolean
  */
-function mailz_commonapi_update($args) 
+function mailz_commonapi_update($args)
 {
     $id          = (int) $args['id'];
     $uid         = (int) $args['uid'];
@@ -864,7 +864,7 @@ function mailz_commonapi_update($args)
     if (!pnModAPIFunc('mailz','common','isSubscribed',$args)) {
         return false;
     }
-    
+
     $where = 'nid = '.$id.' AND uid = '.$uid;
     $obj = DBUtil::selectObject('mailz_subscriptions',$where);
     if (!$obj) {
@@ -875,7 +875,7 @@ function mailz_commonapi_update($args)
         return $result;
     }
 
-    return false;    
+    return false;
 }
 
 /**
@@ -892,7 +892,7 @@ function mailz_commonapi_isSubscribed($args)
     $id    = (int)    $args['id'];
     $uid   = (int)    $args['uid'];
     $email = (string) $args['email'];
-    
+
     if (!($id > 0)) {
         return false;
     }
@@ -966,7 +966,7 @@ function mailz_commonapi_getSubscriptions($args)
  * get Newsletter archive
  *
  * @param   $args['nid']            int     general newsletter id
- * @param   $args['id']             int     get specific newsletter 
+ * @param   $args['id']             int     get specific newsletter
  * @param   $args['count']          int     count items only
  * @param   $args['limitoffset']    int     optional limit offset
  * @param   $args['numrows']        int     optional items to display
