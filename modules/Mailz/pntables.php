@@ -94,7 +94,7 @@ function mailz_pntables()
         'adddate'       => "I(1) NOTNULL DEFAULT 0",
         'inactive'      => "I(1) NOTNULL DEFAULT 0",
         'delay'         => "I NOTNULL DEFAULT 0",
-        'last'          => "T NOTNULL DEFAULT '0000-00-00 00:00:00'",
+        'last'          => "T NOTNULL DEFAULT '1970-01-01 00:00:00'",
         'fromaddress'   => "XL NOTNULL",
         'serialnumber'  => "I NOTNULL DEFAULT 0",
         'ignoretemplates' => "I(1) NOTNULL DEFAULT 0",
@@ -119,7 +119,7 @@ function mailz_pntables()
         'subject'       => "XL NOTNULL",
         'body_html'     => "XL NOTNULL",
         'body_text'     => "XL NOTNULL",
-        'date'          => "T NOTNULL DEFAULT '0000-00-00 00:00:00'",
+        'date'          => "T NOTNULL DEFAULT '1970-01-01 00:00:00'",
         'public'        => "I(1) NOTNULL DEFAULT 0"
     );
     // queue table
@@ -153,7 +153,7 @@ function mailz_pntables()
         'id'            => "I AUTOINCREMENT PRIMARY",
         'nid'           => "I NOTNULL DEFAULT 0",
         'uid'           => "I NOTNULL DEFAULT 0",
-        'date'          => "T NOTNULL DEFAULT '0000-00-00 00:00:00'",
+        'date'          => "T NOTNULL DEFAULT '1970-01-01 00:00:00'",
         'ip'            => "C(30) NOTNULL DEFAULT ''",
         'email'         => "C(125) NOTNULL DEFAULT ''",
         'confirmed'     => "I(1)$ NOTNULL DEFAULT 0",
