@@ -1,0 +1,55 @@
+<!--[* $Id$ *]-->
+<!--[include file="mailz_admin_header.htm"]-->
+
+
+<!--[if $id gt 0]-->
+
+    <h1><!--[$title|pnvarprepfordisplay]--></h1>
+    <ul>
+    <!--[if $contenttype ne 't']-->
+    <li><a target="_blanc" href="<!--[pnmodurl modname="mailz" type="admin" func="preview" id=$id contenttype="h"]-->"><!--[gt text='Open preview']--> (html)</a></li>
+    <!--[/if]-->
+    <!--[if $contenttype ne 'h']-->
+    <li><a target="_blanc" href="<!--[pnmodurl modname="mailz" type="admin" func="preview" id=$id contenttype="t"]-->"><!--[gt text='Open preview']--> (text)</a></li>
+    <!--[/if]-->
+    </ul>
+
+    <!--[pnform]-->
+    <!--[pnformvalidationsummary]-->
+    
+    <p>
+    <!--[pnformlabel for="uname" __text='Send mail with newsletter content to a specified user']-->:<br />
+    <!--[pnformtextinput id="uname" textMode="singleLine" maxLength="255" mandatory="1"]--><br />
+    </p>
+    
+    <p>
+    <!--[pnformbutton commandName="update" __text='send']--> 
+    </p>
+    <!--[/pnform]-->
+
+    <h3><!--[gt text='Start creation and sending process']--></h3>
+    <p>
+        <a href="<!--[pnmodurl modname="mailz" type="admin" func="send" id=$id authid=$authid send="1"]-->"><!--[gt text='Start sending process now']--></a> (<!--[gt text='The sending process will completely take place in the background.After the newsletter is created and sent successfully the newsletter data is being updated and - if configured - the newsletter is stored in the archive.']-->)
+    </p>
+    
+<!--[else]-->
+
+    <!--[if $newsletters|@count eq 0]-->
+    	<ul>
+    		<li><!--[gt text='No Newsletters defined yet']--></li>
+    	</ul>
+    <!--[else]-->
+
+    <!--[gt text='Please load the newsletter first']-->
+
+    <ul>
+	<!--[foreach from=$newsletters item="item"]-->
+	   <li>
+	       <a href="<!--[pnmodurl modname="mailz" type="admin" func="send" id=$item.id]-->"><!--[$item.title|pnvarprepfordisplay]--></a>
+	   </li>
+	<!--[/foreach]-->
+    </ul>
+    <!--[/if]-->
+    
+<!--[/if]-->
+<!--[include file="mailz_admin_footer.htm"]-->

@@ -1,0 +1,851 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Zikula component\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-28 00:59+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pnmailzapi.php:25
+msgid "HTML-Text-Plugin"
+msgstr ""
+
+#: pnmailzapi.php:26
+msgid ""
+"Defineable text that should be added to the newsletter. This plugin does not "
+"need any parameters and does not really display any content as plugin. The "
+"header (or footer) you define is the content that is later included in the "
+"newsletter."
+msgstr ""
+
+#: pnmailzapi.php:31
+msgid "Table of content"
+msgstr ""
+
+#: pnmailzapi.php:32
+msgid ""
+"This plugin will automatically generate a table of content for your "
+"newsletter that lists and links all used plugins."
+msgstr ""
+
+#: pncommonapi.php:326 pnuser.php:51
+msgid "Guest"
+msgstr ""
+
+#: pncommonapi.php:441
+msgid ""
+"This newsletter is already in the queue and a new creation process can only "
+"be started after a sending process is finished!"
+msgstr ""
+
+#: pncommonapi.php:742
+msgid "Please confirm newsletter subscription"
+msgstr ""
+
+#: pncommonapi.php:802
+msgid "Subscription cancelled!"
+msgstr ""
+
+#: pncommonapi.php:816
+msgid "Please confirm the deletion of your subscription"
+msgstr ""
+
+#: pncommonapi.php:835
+msgid "An email with a confirmation code was sent!"
+msgstr ""
+
+#: pntemplates/plugins/function.yesno.php:21
+#: includes/classes/admin/newsletters.php:25
+msgid "yes"
+msgstr ""
+
+#: pntemplates/plugins/function.yesno.php:23
+#: includes/classes/admin/newsletters.php:26
+msgid "no"
+msgstr ""
+
+#: pntemplates/plugins/function.subscribedinfo.php:20
+msgid "subscribed"
+msgstr ""
+
+#: pntemplates/plugins/function.subscribedinfo.php:22
+msgid "is not subscribed"
+msgstr ""
+
+#: pntemplates/plugins/function.nlcontenttype.php:17
+#: pntemplates/mailz_user_main.htm:55
+msgid "HTML (formated text)"
+msgstr ""
+
+#: pntemplates/plugins/function.nlcontenttype.php:19
+#: pntemplates/mailz_user_main.htm:56
+msgid "TEXT (plain text)"
+msgstr ""
+
+#: pntemplates/plugins/function.nlcontenttype.php:21
+#: includes/classes/admin/newsletters.php:35
+msgid "combined: text+html"
+msgstr ""
+
+#: pnuser.php:82 pnuser.php:89
+msgid "Error occured while trying to load newsletter data!"
+msgstr ""
+
+#: pnuser.php:105
+msgid "Subscription exists already"
+msgstr ""
+
+#: pnuser.php:111
+msgid ""
+"The newsletter is not subscribed - a subscription could not be cancelled!"
+msgstr ""
+
+#: pnuser.php:118
+msgid "Subscription stored"
+msgstr ""
+
+#: pnuser.php:120
+msgid ""
+"The subscription was stored. Please check your mailbox and follow the "
+"instructions to activate your subscription!"
+msgstr ""
+
+#: pnuser.php:124
+msgid "Subscription has been updated"
+msgstr ""
+
+#: pnuser.php:130
+msgid "The action could not be done - an error occured"
+msgstr ""
+
+#: pnuser.php:184 pnuser.php:207
+msgid "The activation code is invalid or was already used"
+msgstr ""
+
+#: pnuser.php:189
+msgid "The subscription has been confirmed and is not active"
+msgstr ""
+
+#: pnuser.php:211
+msgid "Subscription was cancelled!"
+msgstr ""
+
+#: pnuser.php:213
+msgid ""
+"An error occured, subscription could not be cancelled. Please try again and "
+"inform the administrator about this error!"
+msgstr ""
+
+#: includes/classes/admin/main.php:49 includes/classes/admin/plugins.php:166
+#: includes/classes/admin/newsletters.php:108
+#: includes/classes/admin/groups.php:73
+msgid "Data updated"
+msgstr ""
+
+#: includes/classes/admin/plugins.php:37
+msgid "Please enter the desired text here"
+msgstr ""
+
+#: includes/classes/admin/plugins.php:44
+msgid "Plugin has been added and can be edited now"
+msgstr ""
+
+#: includes/classes/admin/plugins.php:49
+msgid "Error during saving the data"
+msgstr ""
+
+#: includes/classes/admin/plugins.php:80 includes/classes/admin/plugins.php:89
+#: includes/classes/admin/plugins.php:92
+msgid "An error occured during resorting"
+msgstr ""
+
+#: includes/classes/admin/plugins.php:124
+#: includes/classes/admin/newsletters.php:29
+msgid "inactive"
+msgstr ""
+
+#: includes/classes/admin/plugins.php:125
+#: includes/classes/admin/newsletters.php:30
+msgid "active"
+msgstr ""
+
+#: includes/classes/admin/plugins.php:154 includes/classes/admin/groups.php:53
+msgid "Data deleted"
+msgstr ""
+
+#: includes/classes/admin/plugins.php:156 includes/classes/admin/groups.php:55
+msgid "Error during deletion"
+msgstr ""
+
+#: includes/classes/admin/plugins.php:168
+#: includes/classes/admin/newsletters.php:110
+#: includes/classes/admin/groups.php:75
+msgid "Error during updating the data"
+msgstr ""
+
+#: includes/classes/admin/newsletters.php:33
+#: pntemplates/mailz_admin_plugins.htm:147
+msgid "html"
+msgstr ""
+
+#: includes/classes/admin/newsletters.php:34
+msgid "text only"
+msgstr ""
+
+#: includes/classes/admin/newsletters.php:61
+#: includes/classes/admin/groups.php:29
+msgid "Error during loading the data"
+msgstr ""
+
+#: includes/classes/admin/newsletters.php:85
+msgid "Error during saving the newsletter"
+msgstr ""
+
+#: includes/classes/admin/newsletters.php:88
+#: includes/classes/admin/groups.php:67
+msgid "Data saved"
+msgstr ""
+
+#: includes/classes/admin/newsletters.php:92
+#: includes/classes/admin/newsletters.php:104
+msgid "Error during saving the group assignments"
+msgstr ""
+
+#: includes/classes/admin/send.php:43
+msgid ""
+"The newsletter was queued for creation and for sending. You can see the "
+"created newsletter in advMailers mail queue."
+msgstr ""
+
+#: includes/classes/admin/send.php:45
+msgid "An error occured while trying to queue the newsletter for creation."
+msgstr ""
+
+#: includes/classes/admin/send.php:53
+#: includes/classes/admin/subscriptions.php:64
+#: includes/classes/admin/subscriptions.php:67
+msgid "Error loading data"
+msgstr ""
+
+#: includes/classes/admin/send.php:99
+msgid "Newsletter was send as a test to the user"
+msgstr ""
+
+#: includes/classes/admin/send.php:101
+msgid "User could not be found"
+msgstr ""
+
+#: includes/classes/admin/groups.php:26
+msgid "Data loaded"
+msgstr ""
+
+#: includes/classes/admin/groups.php:65
+msgid "Error during target group creation"
+msgstr ""
+
+#: includes/classes/admin/subscriptions.php:39
+#: includes/classes/admin/subscriptions.php:45
+msgid "Error deleting a subscription"
+msgstr ""
+
+#: includes/classes/admin/subscriptions.php:43
+msgid "Subscription deleted"
+msgstr ""
+
+#: pninit.php:36
+msgid "Error creating hook"
+msgstr ""
+
+#: pninit.php:90
+msgid "Error removing hook"
+msgstr ""
+
+#: pnversion.php:17 pnversion.php:18
+msgid "mailz"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:4
+msgid "Newsletter archive for"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:9
+msgid "Information about the newsletter"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:9
+msgid "Sent newsletters up to now"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:9
+msgid "Date of last newsletter"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:15 pntemplates/mailz_user_archive.htm:24
+msgid "Back to the main newsletter archive page"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:31
+#: pntemplates/mailz_admin_subscriptions.htm:44
+msgid "Date"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:32
+msgid "Subject"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:33
+msgid "Action"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:42
+msgid "show"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:55
+msgid ""
+"All newsletters stored in the archive can be found here. Please choose the "
+"newsletter first to see als mails stored for the newsletter in the archive"
+msgstr ""
+
+#: pntemplates/mailz_user_archive.htm:62
+msgid "No newsletter with an active archive was found"
+msgstr ""
+
+#: pntemplates/mailz_email_confirm_deletion.htm:2
+msgid "Cancel subscription for"
+msgstr ""
+
+#: pntemplates/mailz_email_confirm_deletion.htm:4
+msgid ""
+"We have to be sure that it is really you who wants to cancel the "
+"subscription. This is why we sent an email to your email account with a "
+"confirmation link. Clicking the confirmation link inside the email cancels "
+"your subscription immediately!"
+msgstr ""
+
+#: pntemplates/mailz_email_confirm_deletion.htm:7
+#: pntemplates/mailz_email_confirm.htm:7
+msgid "Confirm subscription"
+msgstr ""
+
+#: pntemplates/mailz_email_confirm_deletion.htm:10
+#: pntemplates/mailz_email_confirm.htm:10
+msgid "Newsletter subscription management for recipients"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:4
+msgid ""
+"You can define several target groups here. Groups can be used in different "
+"newsletters and mailings and newsletters can use more than one group later."
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:10
+msgid "Target group title"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:15 pntemplates/mailz_admin_groups.htm:59
+msgid "Description for group (internal only)"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:20 pntemplates/mailz_admin_groups.htm:60
+msgid "SQL query for resulting list of user IDs"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:22
+msgid "The following replacements will always be applied to a SQL query"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:24
+msgid "actual day, 2 numbers"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:25
+msgid "actual month, 2 numbers"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:26
+msgid "actual year, 4 numbers"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:32
+msgid ""
+"API-Call in format MODNAME:TYPE:FUNC::param1,value1;param2,value2 with a "
+"resulting array of user IDs"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:39
+#: pntemplates/mailz_admin_plugins.htm:80
+msgid "Data will be deleted!"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:44 pntemplates/mailz_admin_main.htm:29
+#: pntemplates/mailz_admin_plugins.htm:84
+#: pntemplates/mailz_admin_newsletters.htm:87
+msgid "store"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:51
+msgid "No groups defined yet"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:57
+msgid "Group ID"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:58
+#: pntemplates/mailz_admin_plugins.htm:40
+#: pntemplates/mailz_admin_plugins.htm:123
+#: pntemplates/mailz_admin_newsletters.htm:17
+#: pntemplates/mailz_admin_newsletters.htm:109
+msgid "Title"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:61
+msgid "API call"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:62
+msgid "Range"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:63
+#: pntemplates/mailz_admin_plugins.htm:125
+#: pntemplates/mailz_admin_subscriptions.htm:46
+#: pntemplates/mailz_admin_newsletters.htm:118
+msgid "Actions"
+msgstr ""
+
+#: pntemplates/mailz_admin_groups.htm:74
+#: pntemplates/mailz_admin_newsletters.htm:142
+msgid "edit"
+msgstr ""
+
+#: pntemplates/mailz_admin_send.htm:10 pntemplates/mailz_admin_send.htm:13
+msgid "Open preview"
+msgstr ""
+
+#: pntemplates/mailz_admin_send.htm:21
+msgid "Send mail with newsletter content to a specified user"
+msgstr ""
+
+#: pntemplates/mailz_admin_send.htm:26 pntemplates/mailz_user_main.htm:61
+msgid "send"
+msgstr ""
+
+#: pntemplates/mailz_admin_send.htm:30
+msgid "Start creation and sending process"
+msgstr ""
+
+#: pntemplates/mailz_admin_send.htm:32
+msgid "Start sending process now"
+msgstr ""
+
+#: pntemplates/mailz_admin_send.htm:32
+msgid ""
+"The sending process will completely take place in the background.After the "
+"newsletter is created and sent successfully the newsletter data is being "
+"updated and - if configured - the newsletter is stored in the archive."
+msgstr ""
+
+#: pntemplates/mailz_admin_send.htm:39 pntemplates/mailz_admin_plugins.htm:168
+#: pntemplates/mailz_admin_newsletters.htm:102
+msgid "No Newsletters defined yet"
+msgstr ""
+
+#: pntemplates/mailz_admin_send.htm:43
+msgid "Please load the newsletter first"
+msgstr ""
+
+#: pntemplates/mailz_admin_archive.htm:5
+msgid "You can view the archive in the user interface."
+msgstr ""
+
+#: pntemplates/mailz_admin_archive.htm:5
+msgid "Show newsletter archive"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:9
+msgid ""
+"All available newsletters that can be subscribed are listed here. If you "
+"have an account for this site and you are not logged in, please log in first "
+"and subscribe the newsletter for your account and not only for your email "
+"address. Newsletters can contain more content for registered users than they "
+"contain for guests."
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:14
+msgid "Older newsletters can be found in the newsletter archive"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:14
+msgid "Display newsletter archive"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:22 pntemplates/mailz_user_main.htm:23
+msgid "Show subscription options"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:26 pntemplates/mailz_user_main.htm:27
+msgid "Hide subscription options"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:33
+msgid "Username"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:34
+msgid "Email address"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:43
+msgid "Start subscription"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:46
+msgid "Update subscription"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:50
+msgid "Cancel subscription"
+msgstr ""
+
+#: pntemplates/mailz_user_main.htm:68
+msgid "No newsletters to display"
+msgstr ""
+
+#: pntemplates/mailz_admin_main.htm:4
+msgid "Global newsletter settings"
+msgstr ""
+
+#: pntemplates/mailz_admin_main.htm:12
+#, php-format
+msgid ""
+"You can choose a MyProfile data field that will later replace the string %%"
+"NAME%% in the sending process"
+msgstr ""
+
+#: pntemplates/mailz_admin_main.htm:17
+msgid "While sending takes place some replacements will be made automatically"
+msgstr ""
+
+#: pntemplates/mailz_admin_main.htm:26
+msgid ""
+"If a cron password is specified sending can be done automatically. The call "
+"of the cron url will put the newsletter in the sending queue and send the "
+"newsletter to all recipients. Please replace URL and ID for each newsletter. "
+"URL also can be seen in the newsletter configuration."
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:7
+msgid "You can activate some plugins for your newsletter here"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:12
+msgid "Plugin management for"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:18
+msgid "Plugin description"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:25
+#: pntemplates/mailz_admin_plugins.htm:145
+msgid "Preview"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:31
+#: pntemplates/mailz_admin_plugins.htm:85
+#: pntemplates/mailz_admin_newsletters.htm:88
+msgid "back"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:46
+msgid ""
+"This content will be shown above the output of the plugin for the "
+"contenttype html"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:51
+msgid ""
+"This content will be shown below the output of the plugin for the "
+"contenttype html"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:58
+msgid ""
+"This content will be shown above the output of the plugin for the "
+"contenttype text"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:63
+msgid ""
+"This content will be shown below the output of the plugin for the "
+"contenttype text"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:69
+msgid ""
+"Plugin parameter. Make pairs and separate them with \"&\". Parameter and "
+"value in a pair is always separated with \"=\".Example: param1,value1;param2,"
+"value2"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:74
+#: pntemplates/mailz_admin_newsletters.htm:77
+msgid "Newsletter activated"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:93
+msgid ""
+"Just choose the plugin from the list and add some header and footer text for "
+"it. Also some parameters can be used."
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:97
+msgid "Show plugin list"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:105
+msgid "add"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:111
+msgid "Hide plugin list"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:115
+msgid "No plugins added yet"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:120
+msgid "Plugin ID"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:121
+msgid "position"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:122
+msgid "Editor module"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:124
+#: pntemplates/mailz_admin_newsletters.htm:115
+msgid "Active"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:144
+msgid "modify"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:151
+msgid "text"
+msgstr ""
+
+#: pntemplates/mailz_admin_plugins.htm:163
+msgid "Please choose a newsletter first!"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:5
+msgid "Newsletter subscriptions"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:12
+msgid "Search for a user"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:17
+msgid "Use filter for email address"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:22
+msgid "search"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:27
+#: pntemplates/mailz_admin_newsletters.htm:94
+msgid "Hide form"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:32
+msgid ""
+"No subscriptions found. If you used the search form, the user or the email "
+"address could not be found"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:40
+msgid "user name"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:41
+msgid "email address"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:42
+msgid "confirmed"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:43
+msgid "content type preference"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:45
+msgid "IP adress"
+msgstr ""
+
+#: pntemplates/mailz_admin_subscriptions.htm:66
+msgid "delete"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:5
+msgid "Admin backend MAILZ"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:10
+msgid "Version"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:10
+msgid "powered by"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:10
+msgid "This module is useful and you like it"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:10
+msgid "support this module"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:16
+msgid "Module settings"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:17
+#: pntemplates/mailz_admin_newsletters.htm:82
+#: pntemplates/mailz_admin_newsletters.htm:117
+msgid "Target groups"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:18
+msgid "Newsletters and mailings"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:19
+#: pntemplates/mailz_admin_newsletters.htm:143
+msgid "Plugins"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:20
+msgid "preview and send"
+msgstr ""
+
+#: pntemplates/mailz_admin_header.htm:21
+#: pntemplates/mailz_admin_newsletters.htm:112
+msgid "Archive"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:7
+msgid "Show create new newsletter form"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:11
+msgid ""
+"You are now able to define newsletters and mailings here. Active newsletters "
+"are subscribable by your users immediately."
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:22
+msgid "Public description"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:27
+msgid "Use another emailadress than it is configures in Mailer module"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:32
+msgid "Put sent newsletters into the archive"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:37
+msgid "Content type of sent mails"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:42
+msgid "Newsletter should be subscribable"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:47
+msgid ""
+"Sending and subscription should be public (guests will be able to subscribe)"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:52
+msgid "Ignore the templates set up in advMailer module"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:57
+msgid ""
+"Cronjob password for automatical sending (optional, emtpy field = disabled)"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:62
+msgid "Individual delay for each mail"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:67
+msgid "Priority for mail queue (1=high, 10=low)"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:72
+msgid "Add actual date to mail subject"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:108
+msgid "ID"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:110
+msgid "Description"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:111
+msgid "Passes"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:113
+msgid "Content"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:114
+msgid "Public"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:116
+msgid "Subscriptions"
+msgstr ""
+
+#: pntemplates/mailz_admin_newsletters.htm:144
+msgid "Preview and send"
+msgstr ""
+
+#: pntemplates/mailz_email_confirm.htm:2
+msgid "Subscription request for"
+msgstr ""
+
+#: pntemplates/mailz_email_confirm.htm:4
+msgid ""
+"The subscription request was stored and will get active after you have "
+"clicked the confirmation link in the email that was right now sent to your "
+"email account!"
+msgstr ""
